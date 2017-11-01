@@ -1,37 +1,26 @@
-## Welcome to GitHub Pages
+# Terrovizm
 
-You can use the [editor on GitHub](https://github.com/gsurrel/Terrovizm/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This is a project for visualizing the data from the [Global Terrorism Database](http://www.start.umd.edu/gtd/):
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+> National Consortium for the Study of Terrorism and Responses to Terrorism (START). (2017). Global Terrorism Database [Data file]. Retrieved from https://www.start.umd.edu/gtd
 
-### Markdown
+It can be downloaded through the [following form](http://www.start.umd.edu/gtd/contact/), even though a direct link for downlaoding the data [is available](http://apps.start.umd.edu/gtd/downloads/dataset/GTD_0617dist.zip) but not given publicly.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+The [vizualization itself is hosted on Github Pages](https://gsurrel.github.io/Terrovizm/).
 
-```markdown
-Syntax highlighted code block
+## To do
 
-# Header 1
-## Header 2
-### Header 3
+- [x] Create Github project and pages
+- [ ] [Register the project](https://docs.google.com/forms/d/e/1FAIpQLSc_boP3m3UtulHvia8WgLoFYemn9yEZmuq4-glNSgGfc3O2pw/viewform)
+- [ ] Contact the GTD to ask for permission to publicly use the viz or it stays private
+- [ ] Check exactly the data available and what we keep for the Viz
+- [ ] Python scriting to clean and shrink the dataset. Most textual details can probably be removed as we can give just a link to the official GTD event description and details. Scripting has the benefit of maintainability to update our dataset according to the original DB updates.
+- [ ] Do all the mockups, blueprints and sketiching required
+- [ ] Use this Readme as a progress report?
 
-- Bulleted
-- List
+## Database description
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+## Mockups
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gsurrel/Terrovizm/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
