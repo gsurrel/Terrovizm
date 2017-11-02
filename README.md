@@ -12,7 +12,7 @@ The [vizualization itself is hosted on Github Pages](https://gsurrel.github.io/T
 
 - [x] Create Github project and pages
 - [ ] [Register the project](https://docs.google.com/forms/d/e/1FAIpQLSc_boP3m3UtulHvia8WgLoFYemn9yEZmuq4-glNSgGfc3O2pw/viewform)
-- [ ] Contact the GTD to ask for permission to publicly use the viz or it stays private
+- [x] Contact the GTD to ask for permission to publicly use the viz or it stays private
 - [ ] Check exactly the data available and what we keep for the Viz
 - [ ] Python scriting to clean and shrink the dataset. Most textual details can probably be removed as we can give just a link to the official GTD event description and details. Scripting has the benefit of maintainability to update our dataset according to the original DB updates.
 - [ ] Do all the mockups, blueprints and sketiching required
