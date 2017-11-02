@@ -39,7 +39,7 @@ The [vizualization itself is hosted on Github Pages](https://gsurrel.github.io/T
 
 ## Related work and inspiration
 
-- [/r/dataisbeautiful](https://www.reddit.com/r/dataisbeautiful/comments/533ieu/higres_world_map_of_all_terrorism_events_between/)
+- [Hig-res world map of all terrorism events between 1970-2016 (/r/dataisbeautiful)](https://www.reddit.com/r/dataisbeautiful/comments/533ieu/higres_world_map_of_all_terrorism_events_between/)
 
 ## Questions
 
