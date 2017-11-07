@@ -57,6 +57,15 @@ The [vizualization itself is hosted on Github Pages](https://gsurrel.github.io/T
 
 *What are the different visualizations you considered? Justify the design decisions you made using the perceptual and design principles.*
 
+The following first blueprint show an initial idea for showing the data:
+
+- Main view: a map displaying each act as a (clickable to open more info?) dot, according to the data filtered. It can also be used to brush data.
+- Bottom: a timeline showing the number of terrorist acts. It can be collapsed according to the main categories of motivation (independence, religion, etc). It supports brushing. Each category can be enabled or disabled?
+- Right panels: horizontal histograms ranking, according to the filtered data, the perpetrators, targets, etc. Each can be enabled or disabled according to the filters.
+- Top-left button: resets all filters (as a failsafe feature if the discoverability is poor)
+
+![First blueprint](blueprint-01.jpg)
+
 ## Did you deviate from your initial proposal?
 
 ## Implementation
