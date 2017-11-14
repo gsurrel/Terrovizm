@@ -209,14 +209,14 @@ The database contains several different fields. [Here is for example a single ev
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | gname | Text | Name of the group that carried out the attack | yes |
-| gsubname | Text | Ndditional qualifiers or details about the name of the group that carried out the attack. This includes but is not limited to the name of the specific faction when available | ? |
+| gsubname | Text | Additional qualifiers or details about the name of the group that carried out the attack. This includes but is not limited to the name of the specific faction when available | ? |
 | gname2 | Text | cf. `gname` | yes |
 | gsubname2 | Text | cf. `gsubname` | ? |
 | gname3 | Text | cf. `gname` | yes |
 | gsubname3 | Text | cf. `gsubname` | ? |
-| guncertain1 | Boolean | Is `1` if act attribution is only suspected | ? |
-| guncertain2 | Boolean | Is `1` if act attribution is only suspected | ? |
-| guncertain3 | Boolean | Is `1` if act attribution is only suspected | ? |
+| guncertain1 | Boolean | Is `1` if act attribution is only suspected | yes? |
+| guncertain2 | Boolean | Is `1` if act attribution is only suspected | yes? |
+| guncertain3 | Boolean | Is `1` if act attribution is only suspected | yes? |
 | individual | Boolean | Is `1` if not linked to an specific group of people. Systematic after 1997 | no |
 | nperps | Number | Total number of terrorists participating in the incident. `-99` or `Unknown` when unknown | no |
 | nperpcap | Number | Total number of terrorists captured into custody. `-99` or `Unknown` when unknown. Systematic after 1997 | no |
@@ -228,16 +228,54 @@ The database contains several different fields. [Here is for example a single ev
 | claimmode2 | Number | cf. `claimmode` | no? |
 | claim3 | Boolean | cf. `claimed` | yes? |
 | claimmode3 | Number | cf. `claimmode` | no? |
+| claim2 | Number | cf. `claimed` | yes? |
 
 #### Casualties and Consequences
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
+| nkill | Number | Total confirmed fatalities for the incident (victims *and* attackers) | yes |
+| nkillus | Number | Number of U.S. citizens who died | no |
+| nkillter | Number | Number of perpetrators who died | no |
+| nwould | Number | Number of confirmed non-fatal injuries to both perpetrators *and* victims | yes |
+| nwouldus | Number | Number of confirmed non-fatal injuries to U.S. citizens | no |
+| nwoundte | Number | Number of non-fatal injuries to perpetrators | no |
+| property | Number | Evidence of property damage. `-9` = Unknown | no |
+| propextent | Number | Extent code of property damage, from 1 to 4 | no |
+| propextent_txt | Text | Extent text of property damage, **1** = Catastrophic (likely > $1 billion), **2** = Major (likely > $1 million but < $1 billion), **3** = Minor (likely < $1 million), **4** = Unknown | no |
+| propvalue | Number | If `property == 1`, exact U.S. dollar amount of direct damages listed | no |
+| propcomment | Number | If `property == 1`, description of imprecise damage measures | no |
+| ishostkid | Number | Victims were taken as hostages. `-9` = Unknown | ? |
+| nhostkid | Number | Total number of hostages or kidnapping victims | ? |
+| ishostkidus | Number | US victims were taken as hostages. `-9` = Unknown | no |
+| nhostkidus | Number | Total US number of hostages or kidnapping victims | no |
+| nhours | Number | Hours of kidnapping. Empty if a matter of days, `-99` if unknown | no |
+| ndays | Number | Days of kidnapping. Empty if a matter of hours, `-99` if unknown | no |
+| divert | Text | Country that kidnappers/hijackers diverted to | no |
+| kidhijcountry | Text | Country of kidnapping/hijacking resolution | no |
+| ransom | Number | Whether there was a ransom demanded. `-9` for unknown, `[NULL]` if not applicable | no? |
+| ransomamt | Number | Amount (in U.S. dollars) of the ransom | no? |
+| ransomus | Number | Whether there was a ransom demanded from US source. `-9` for unknown | no |
+| ransomamtus | Number | Amount (in U.S. dollars) of the ransom from US source | no |
+| ransompaid | Number | Ransom amount paid. `-99` for unknown | no |
+| ransomnote | Text | Additional details relating to a ransom. Systematic after 1997 | no |
+| hostkidoutcome | Number | Kidnapping/Hostage outcome code, from 1 to 7 | no |
+| hostkidoutcome_txt | Text | Kidnapping/Hostage outcome text, **1** = attempted rescue, **2** = hostages released, **3** = hostages escaped, **4** = hostages killed, **5** = successful rescue, **6** = Combination, **7** = unknown | no |
+| nreleased | Number | Number released/escaped/rescued, `-99` if unknown | no |
 
 #### Additional Information and Sources
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
+| addnotes | Text | Additional relevant details about the attack. Systematic after 1997 | no |
+| INT_LOG | Number | Whether a perpetrator group crossed a border to carry out an attack. `-9` for unknown | no |
+| INT_IDEO | Number | Whether a perpetrator group attacked a target of a different nationality. `-9` for unknown | no |
+| INT_MISC | Number | Whether a perpetrator group attacked a target of a different nationality. Does not require information about the nationality of the perpetrator group. `-9` for unknown | no |
+| INT_ANY | Number | Any of `INT_LOG`, `INT_IDEO`, or `INT_MISC`. `-9` for unknown | no |
+| scite1 | Text | First source that was used to compile information on the specific incident | no |
+| scite2 | Text | Second source that was used to compile information on the specific incident | no |
+| scite3 | Text | Third source that was used to compile information on the specific incident | no |
+| dbsource | Text | Identifies the original data collection effort in which each event was recorded | no |
 
 ## Exploratory data analysis
 
