@@ -208,6 +208,26 @@ The database contains several different fields. [Here is for example a single ev
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
+| gname | Text | Name of the group that carried out the attack | yes |
+| gsubname | Text | Ndditional qualifiers or details about the name of the group that carried out the attack. This includes but is not limited to the name of the specific faction when available | ? |
+| gname2 | Text | cf. `gname` | yes |
+| gsubname2 | Text | cf. `gsubname` | ? |
+| gname3 | Text | cf. `gname` | yes |
+| gsubname3 | Text | cf. `gsubname` | ? |
+| guncertain1 | Boolean | Is `1` if act attribution is only suspected | ? |
+| guncertain2 | Boolean | Is `1` if act attribution is only suspected | ? |
+| guncertain3 | Boolean | Is `1` if act attribution is only suspected | ? |
+| individual | Boolean | Is `1` if not linked to an specific group of people. Systematic after 1997 | no |
+| nperps | Number | Total number of terrorists participating in the incident. `-99` or `Unknown` when unknown | no |
+| nperpcap | Number | Total number of terrorists captured into custody. `-99` or `Unknown` when unknown. Systematic after 1997 | no |
+| claimed | Boolean | Whether the responsibility has been claimed for `gname` or not. Systematic after 1997 | yes? |
+| claimmode | Number | Claim mode code, from 1 to 10. Systematic after 1997 | no? |
+| claimmode_txt | Text | Claim mode text: **1** = Letter, **2** = Call (pre-incident), **3** = Call (post-incident), **4** = E-Mail, **5** = Note left, **6** = Video, **7** = Posted online, **8** = Personal claim, **9** = Other, **10** = Unknown. Systematic after 1997 | no? |
+| compclaim | Number | More than one group claimed separate responsibility for the attack. `-9` for no indication, `[null]` if not applicable. Systematic after 1997 | no? |
+| claim2 | Boolean | cf. `claimed` | yes? |
+| claimmode2 | Number | cf. `claimmode` | no? |
+| claim3 | Boolean | cf. `claimed` | yes? |
+| claimmode3 | Number | cf. `claimmode` | no? |
 
 #### Casualties and Consequences
 
