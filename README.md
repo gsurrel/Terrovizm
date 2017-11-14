@@ -98,19 +98,19 @@ The database contains several different fields. [Here is for example a single ev
 
 ### Processing
 
-#### Incident ID and date (1-7)
+#### Incident ID and date
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | eventid | Number | GTD unique ID of the event | as is |
 | iyear | Number | Year | as is |
-| imonth | Number | Month. '0' if unknown. | as is |
-| iday | Number | Day. '0' if unknown | as is |
+| imonth | Number | Month. `0` if unknown. | as is |
+| iday | Number | Day. `0` if unknown | as is |
 | approxdate | **Text** | Approximate date | no |
 | extended | Boolean | Whether it happened for more than 24h | no |
 | resolution | Date | End date for `extended=1` events. Format DD.MM.YY | no |
 
-#### Incident description (8-16)
+#### Incident description
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
@@ -124,7 +124,7 @@ The database contains several different fields. [Here is for example a single ev
 | multiple | Boolean | Several attacks are connected, but as differents events. Systematic after 1997 | no |
 | related | Text | Text reference to `eventid` to connected attacks. Systematic after 1997 | no |
 
-#### Indicent location (17-27)
+#### Indicent location
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
@@ -140,16 +140,16 @@ The database contains several different fields. [Here is for example a single ev
 | longitude | Number | Longitude (WGS1984) of the *city* | as is |
 | specificity | Number | Geospatial resolution of the latitude and longitude fields. **1** = event occurred in city/village/town and lat/long is for that location, **2** = event occurred in city/village/town and no lat/long could be found, so coordinates are for centroid of smallest subnational administrative region identified, **3** = event did not occur in city/village/town, so coordinates are for centroid of smallest subnational administrative region identified, **4** = no 2nd order or smaller region could be identified, so coordinates are for center of 1st order administrative region, **5** = no 1st order administrative region could be identified for the location of the attack, so latitude and longitude are unknown | ? |
 
-#### Attack information (28-35)
+#### Attack information
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | attacktype1 | Number | General method code of attack, from 1 to 9 | as is |
 | attacktype1_txt | Text | Attack text: **1** = Assassination, **2** = Hijacking, **3** = Kidnapping, **4** = Barricade Incident, **5** = Bombing/Explosion, **6** = Armed Assault, **7** = Unarmed Assault, **8** =  Facility/Infrastructure Attack, **9** = Unknown | ref |
-| attacktype2 | Number | General method code of attack, from 1 to 9 | as is |
-| attacktype2_txt | Text | Attack text: **1** = Assassination, **2** = Hijacking, **3** = Kidnapping, **4** = Barricade Incident, **5** = Bombing/Explosion, **6** = Armed Assault, **7** = Unarmed Assault, **8** =  Facility/Infrastructure Attack, **9** = Unknown | ref |
-| attacktype3 | Number | General method code of attack, from 1 to 9 | as is |
-| attacktype3_txt | Text | Attack text: **1** = Assassination, **2** = Hijacking, **3** = Kidnapping, **4** = Barricade Incident, **5** = Bombing/Explosion, **6** = Armed Assault, **7** = Unarmed Assault, **8** =  Facility/Infrastructure Attack, **9** = Unknown | ref |
+| attacktype2 | Number | cf. `attacktype1` | as is |
+| attacktype2_txt | Text | cf. `attacktype1_txt` | ref |
+| attacktype3 | Number | cf. `attacktype1` | as is |
+| attacktype3_txt | Text | cf. `attacktype1_txt` | ref |
 | success | Boolean | Success of a terrorist strike is defined according to the tangible effects of the attack. Success is not judged in terms of the larger goals of the perpetrators | ? |
 | suicide | Boolean | The perpetrator did not intend to escape from the attack alive | yes |
 
@@ -157,11 +157,52 @@ The database contains several different fields. [Here is for example a single ev
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
+| weaptype1 | Number | General weapon code, from 1 to 13 | as is |
+| weaptype1_txt | Text | Weapon text: **1** = Biological, **2** = Chemical, **3** = Radiological, **4** = Nuclear, **5** = Firearms, **6** = Explosives/Bombs/Dynamite, **7** = Fake Weapons, **8** = Incendiary, **9** = Melee, **10** = Vehicle, **11** = Sabotage Equipment, **12** = Other, **13** = Unknown | ref |
+| weapsubtype1 | Number | More specific weapon code, changing depending on the `weapontype` | no? |
+| weapsubtype1_txt | Text | Subweapon text | no? |
+| weaptype2 | Number | cf. `weaptype1` | as is |
+| weaptype2_txt | Text | cf. `weaptype1_txt` | ref |
+| weapsubtype2 | Text | cf. `weapsubtype1` | no? |
+| weapsubtype2_txt | Text | cf. `weapsubtype1_txt` | no? |
+| weaptype3 | Number | cf. `weaptype1` | as is |
+| weaptype3_txt | Text | cf. `weaptype1_txt` | ref |
+| weapsubtype3 | Text | cf. `weapsubtype1` | no? |
+| weapsubtype3_txt | Text | cf. `weapsubtype1_txt` | no? |
+| weaptype4 | Number | cf. `weaptype1` | as is |
+| weaptype4_txt | Text | cf. `weaptype1_txt` | ref |
+| weapsubtype4 | Text | cf. `weapsubtype1` | no? |
+| weapsubtype4_txt | Text | cf. `weapsubtype1_txt` | no? |
+| weapdetail | Text | Information on the type of weapon, novel usage, origin, etc. | no |
 
 #### Target/Victim Information
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
+| targtype1 | Number | Target code, from 1 to 22 | as is |
+| targtype1_txt | Text | Target text: **1** = Business, **2** = Government (general), **3** = Police, **4** = Military, **5** = Aborption related, **6** = Airports/aircrafts, **7** = Government (diplomatic), **8** = Educational institutions, **9** = Food or water supply, **10** = Journalists or media, **11** = Maritime, **12** = NGOs, **13** = Other, **14** = Private citizens and property, **15** = Religious figures/institutions, **16** = Telecommunications, **17** = Terrorists/Non-state militas, **18** = Tourists, **19** = Transportation, **20** = Unknown, **21** = Utilities, **22** = Violent political parties | ref |
+| targsubtype1 | Number | More specific target code, changing depending on the `targtype1` | yes? |
+| targsubtype1_txt | Text | Subtarget text | yes? |
+| corp1 | Text | Name of the corporate entity or government agency that was targeted | no |
+| target1 | Text | This is the specific person, building, installation, etc., that was targeted | no |
+| natlty1 | Number | Nationality code of the target that was attacked (same codes as for countries) | no |
+| natlty1_txt | Text | Nationality text of the target that was attacked (same codes as for countries) | no |
+| targtype2 | Number | cf. `targtype1` | as is |
+| targtype2_txt | Text | cf. `targtype1_txt` | as ref |
+| targsubtype2 | Number | cf. `targsubtype1` | yes? |
+| targsubtype2_txt | Text | cf. `targsubtype1_txt` | yes? |
+| corp2 | Text | cf. `corp1` | no |
+| target2 | Text | cf. `target1` | no |
+| natlty2 | Number | cf. `natlty1` | no |
+| natlty2_txt | Text | cf. `natlty1_txt` | no |
+| targtype3 | Number | cf. `targtype1` | as is |
+| targtype3_txt | Text | cf. `targtype1_txt` | as ref |
+| targsubtype3 | Number | cf. `targsubtype1` | yes? |
+| targsubtype3_txt | Text | cf. `targsubtype1_txt` | yes? |
+| corp3 | Text | cf. `corp1` | no |
+| target3 | Text | cf. `target1` | no |
+| natlty3 | Number | cf. `natlty1` | no |
+| natlty3_txt | Text | cf. `natlty1_txt` | no |
 
 #### Perpetrator information
 
