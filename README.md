@@ -188,7 +188,7 @@ The database contains several different fields. [Here is for example a single ev
 | natlty1 | Number | Nationality code of the target that was attacked (same codes as for countries) | no |
 | natlty1_txt | Text | Nationality text of the target that was attacked (same codes as for countries) | no |
 | targtype2 | Number | cf. `targtype1` | as is |
-| targtype2_txt | Text | cf. `targtype1_txt` | as ref |
+| targtype2_txt | Text | cf. `targtype1_txt` | ref |
 | targsubtype2 | Number | cf. `targsubtype1` | yes? |
 | targsubtype2_txt | Text | cf. `targsubtype1_txt` | yes? |
 | corp2 | Text | cf. `corp1` | no |
@@ -196,7 +196,7 @@ The database contains several different fields. [Here is for example a single ev
 | natlty2 | Number | cf. `natlty1` | no |
 | natlty2_txt | Text | cf. `natlty1_txt` | no |
 | targtype3 | Number | cf. `targtype1` | as is |
-| targtype3_txt | Text | cf. `targtype1_txt` | as ref |
+| targtype3_txt | Text | cf. `targtype1_txt` | ref |
 | targsubtype3 | Number | cf. `targsubtype1` | yes? |
 | targsubtype3_txt | Text | cf. `targsubtype1_txt` | yes? |
 | corp3 | Text | cf. `corp1` | no |
