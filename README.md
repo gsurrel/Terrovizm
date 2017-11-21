@@ -58,6 +58,13 @@ Therefore, we think the visualization we plan to build is useful both for the ge
 ### Inspiration
 
 - https://www.mapd.com/demos/tweetmap/
+- [Hexagon clustering (for the map, though example unrelated to map)](https://bl.ocks.org/mbostock/4248145)
+- [Hexagon clustering, another](http://bl.ocks.org/nbremer/6052814)
+- [Facetting and filtering](http://www.cs.umd.edu/~bederson/papers/index.html)
+- [Crossfilter](https://square.github.io/crossfilter/)
+- [Winds map, show at low zoom, shows specific data-dependent markers at high zoom](http://windhistory.com/map.html)
+- [Transition from individual graphs to stacked ones](https://bl.ocks.org/mbostock/1256572)
+- [Collapsable categories](https://bl.ocks.org/mbostock/1093025)
 
 ## Questions
 
