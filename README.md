@@ -136,9 +136,9 @@ The database contains several different fields. [Here is for example a single ev
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | country | Number | Country (at time of the event) code where the event happened | as is |
-| country_txt | Text | Country (at time of the event) text where the event happened | ref |
+| country_txt | Text | Country (at time of the event) text where the event happened | as ref |
 | region | Number | Region code where the event happened | as is |
-| region_txt | Text | Region text where the event happened | ref |
+| region_txt | Text | Region text where the event happened | as ref |
 | provstate | Text | First administrative subdivision | no |
 | city | Text | City/village/town name. Smallest administrative subdivision if unknown | no |
 | vicinity | Boolean | Has the event happened in the vicinity of the city? | no |
@@ -152,32 +152,32 @@ The database contains several different fields. [Here is for example a single ev
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | attacktype1 | Number | General method code of attack, from 1 to 9 | as is |
-| attacktype1_txt | Text | Attack text: **1** = Assassination, **2** = Hijacking, **3** = Kidnapping, **4** = Barricade Incident, **5** = Bombing/Explosion, **6** = Armed Assault, **7** = Unarmed Assault, **8** =  Facility/Infrastructure Attack, **9** = Unknown | ref |
+| attacktype1_txt | Text | Attack text: **1** = Assassination, **2** = Hijacking, **3** = Kidnapping, **4** = Barricade Incident, **5** = Bombing/Explosion, **6** = Armed Assault, **7** = Unarmed Assault, **8** =  Facility/Infrastructure Attack, **9** = Unknown | as ref |
 | attacktype2 | Number | cf. `attacktype1` | as is |
-| attacktype2_txt | Text | cf. `attacktype1_txt` | ref |
+| attacktype2_txt | Text | cf. `attacktype1_txt` | as ref |
 | attacktype3 | Number | cf. `attacktype1` | as is |
-| attacktype3_txt | Text | cf. `attacktype1_txt` | ref |
+| attacktype3_txt | Text | cf. `attacktype1_txt` | as ref |
 | success | Boolean | Success of a terrorist strike is defined according to the tangible effects of the attack. Success is not judged in terms of the larger goals of the perpetrators | ? |
-| suicide | Boolean | The perpetrator did not intend to escape from the attack alive | yes |
+| suicide | Boolean | The perpetrator did not intend to escape from the attack alive | as is |
 
 #### Weapon information
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | weaptype1 | Number | General weapon code, from 1 to 13 | as is |
-| weaptype1_txt | Text | Weapon text: **1** = Biological, **2** = Chemical, **3** = Radiological, **4** = Nuclear, **5** = Firearms, **6** = Explosives/Bombs/Dynamite, **7** = Fake Weapons, **8** = Incendiary, **9** = Melee, **10** = Vehicle, **11** = Sabotage Equipment, **12** = Other, **13** = Unknown | ref |
+| weaptype1_txt | Text | Weapon text: **1** = Biological, **2** = Chemical, **3** = Radiological, **4** = Nuclear, **5** = Firearms, **6** = Explosives/Bombs/Dynamite, **7** = Fake Weapons, **8** = Incendiary, **9** = Melee, **10** = Vehicle, **11** = Sabotage Equipment, **12** = Other, **13** = Unknown | as ref |
 | weapsubtype1 | Number | More specific weapon code, changing depending on the `weapontype` | no? |
 | weapsubtype1_txt | Text | Subweapon text | no? |
 | weaptype2 | Number | cf. `weaptype1` | as is |
-| weaptype2_txt | Text | cf. `weaptype1_txt` | ref |
+| weaptype2_txt | Text | cf. `weaptype1_txt` | as ref |
 | weapsubtype2 | Text | cf. `weapsubtype1` | no? |
 | weapsubtype2_txt | Text | cf. `weapsubtype1_txt` | no? |
 | weaptype3 | Number | cf. `weaptype1` | as is |
-| weaptype3_txt | Text | cf. `weaptype1_txt` | ref |
+| weaptype3_txt | Text | cf. `weaptype1_txt` | as ref |
 | weapsubtype3 | Text | cf. `weapsubtype1` | no? |
 | weapsubtype3_txt | Text | cf. `weapsubtype1_txt` | no? |
 | weaptype4 | Number | cf. `weaptype1` | as is |
-| weaptype4_txt | Text | cf. `weaptype1_txt` | ref |
+| weaptype4_txt | Text | cf. `weaptype1_txt` | as ref |
 | weapsubtype4 | Text | cf. `weapsubtype1` | no? |
 | weapsubtype4_txt | Text | cf. `weapsubtype1_txt` | no? |
 | weapdetail | Text | Information on the type of weapon, novel usage, origin, etc. | no |
@@ -187,7 +187,7 @@ The database contains several different fields. [Here is for example a single ev
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
 | targtype1 | Number | Target code, from 1 to 22 | as is |
-| targtype1_txt | Text | Target text: **1** = Business, **2** = Government (general), **3** = Police, **4** = Military, **5** = Aborption related, **6** = Airports/aircrafts, **7** = Government (diplomatic), **8** = Educational institutions, **9** = Food or water supply, **10** = Journalists or media, **11** = Maritime, **12** = NGOs, **13** = Other, **14** = Private citizens and property, **15** = Religious figures/institutions, **16** = Telecommunications, **17** = Terrorists/Non-state militas, **18** = Tourists, **19** = Transportation, **20** = Unknown, **21** = Utilities, **22** = Violent political parties | ref |
+| targtype1_txt | Text | Target text: **1** = Business, **2** = Government (general), **3** = Police, **4** = Military, **5** = Aborption related, **6** = Airports/aircrafts, **7** = Government (diplomatic), **8** = Educational institutions, **9** = Food or water supply, **10** = Journalists or media, **11** = Maritime, **12** = NGOs, **13** = Other, **14** = Private citizens and property, **15** = Religious figures/institutions, **16** = Telecommunications, **17** = Terrorists/Non-state militas, **18** = Tourists, **19** = Transportation, **20** = Unknown, **21** = Utilities, **22** = Violent political parties | as ref |
 | targsubtype1 | Number | More specific target code, changing depending on the `targtype1` | yes? |
 | targsubtype1_txt | Text | Subtarget text | yes? |
 | corp1 | Text | Name of the corporate entity or government agency that was targeted | no |
@@ -195,7 +195,7 @@ The database contains several different fields. [Here is for example a single ev
 | natlty1 | Number | Nationality code of the target that was attacked (same codes as for countries) | no |
 | natlty1_txt | Text | Nationality text of the target that was attacked (same codes as for countries) | no |
 | targtype2 | Number | cf. `targtype1` | as is |
-| targtype2_txt | Text | cf. `targtype1_txt` | ref |
+| targtype2_txt | Text | cf. `targtype1_txt` | as ref |
 | targsubtype2 | Number | cf. `targsubtype1` | yes? |
 | targsubtype2_txt | Text | cf. `targsubtype1_txt` | yes? |
 | corp2 | Text | cf. `corp1` | no |
@@ -203,7 +203,7 @@ The database contains several different fields. [Here is for example a single ev
 | natlty2 | Number | cf. `natlty1` | no |
 | natlty2_txt | Text | cf. `natlty1_txt` | no |
 | targtype3 | Number | cf. `targtype1` | as is |
-| targtype3_txt | Text | cf. `targtype1_txt` | ref |
+| targtype3_txt | Text | cf. `targtype1_txt` | as ref |
 | targsubtype3 | Number | cf. `targsubtype1` | yes? |
 | targsubtype3_txt | Text | cf. `targsubtype1_txt` | yes? |
 | corp3 | Text | cf. `corp1` | no |
@@ -215,11 +215,11 @@ The database contains several different fields. [Here is for example a single ev
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
-| gname | Text | Name of the group that carried out the attack | yes |
+| gname | Text | Name of the group that carried out the attack | as is |
 | gsubname | Text | Additional qualifiers or details about the name of the group that carried out the attack. This includes but is not limited to the name of the specific faction when available | ? |
-| gname2 | Text | cf. `gname` | yes |
+| gname2 | Text | cf. `gname` | as is |
 | gsubname2 | Text | cf. `gsubname` | ? |
-| gname3 | Text | cf. `gname` | yes |
+| gname3 | Text | cf. `gname` | as is |
 | gsubname3 | Text | cf. `gsubname` | ? |
 | guncertain1 | Boolean | Is `1` if act attribution is only suspected | yes? |
 | guncertain2 | Boolean | Is `1` if act attribution is only suspected | yes? |
@@ -241,10 +241,10 @@ The database contains several different fields. [Here is for example a single ev
 
 | Name | Type | Description | Keep |
 |------|------|-------------|------|
-| nkill | Number | Total confirmed fatalities for the incident (victims *and* attackers) | yes |
+| nkill | Number | Total confirmed fatalities for the incident (victims *and* attackers) | as is |
 | nkillus | Number | Number of U.S. citizens who died | no |
 | nkillter | Number | Number of perpetrators who died | no |
-| nwould | Number | Number of confirmed non-fatal injuries to both perpetrators *and* victims | yes |
+| nwould | Number | Number of confirmed non-fatal injuries to both perpetrators *and* victims | as is |
 | nwouldus | Number | Number of confirmed non-fatal injuries to U.S. citizens | no |
 | nwoundte | Number | Number of non-fatal injuries to perpetrators | no |
 | property | Number | Evidence of property damage. `-9` = Unknown | no |
