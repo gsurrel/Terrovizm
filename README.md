@@ -13,7 +13,7 @@ The [vizualization itself is hosted on Github Pages](https://gsurrel.github.io/T
 - [x] Create Github project and pages
 - [x] [Register the project](https://docs.google.com/forms/d/e/1FAIpQLSc_boP3m3UtulHvia8WgLoFYemn9yEZmuq4-glNSgGfc3O2pw/viewform)
 - [x] Contact the GTD to ask for permission to publicly use the viz or it stays private
-- [ ] Check exactly the data available and what we keep for the Viz ([process book link](#dataset))
+- [x] Check exactly the data available and what we keep for the Viz ([process book link](#dataset))
 - [ ] Use the [deisgn worksheets](https://design-worksheets.github.io/) mentionned in the course ([process book link](#designs))
 - [ ] Do all the mockups, blueprints and sketching required ([process book link](#designs))
     - [x] Initial sketch done
