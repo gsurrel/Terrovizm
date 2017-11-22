@@ -1,0 +1,76 @@
+{
+  "refs": {
+    "comment": "Here come the mappings between number (ref) and values",
+    "comment2": "In the array, the cell N is for reference N",
+    "comment3": "Country code 1 is Azerbaidjan in this example",
+    "countries": [
+      "Azerbaidjan",
+      "Angola",
+      "..."
+    ],
+    "weapons": [
+      "Bomb",
+      "Assault rifle",
+      "..."
+    ],
+    "comment4": "It would be easier to create our own ref with all the types and subtypes building on the fileds with _txt",
+    "targettypes": [
+      "NGO",
+      "Government",
+      "Shop",
+      "Ambassy"
+    ]
+  },
+  "events": [
+    {
+      "comment": "We have to check if all IDs are INT, to save the quotes",
+      "id": 201401236574,
+      "comment2": "Numbers must not start with a leading zero!",
+      "date": [
+        2014,
+        1,
+        23
+      ],
+      "country": 4,
+      "region": 5,
+      "latlon": [
+        45.123456,
+        4.112233
+      ],
+      "comment3": "Maybe for booleans we can use 0/1 to save space again",
+      "suicide": true,
+      "comment4": "We combine attacktype1/2/3 in a single array",
+      "attacktypes": [
+        13
+      ],
+      "comment5": "The key is target type, the value is the subtype",
+      "targettypes": {
+        "7": 4,
+        "14": 2
+      },
+      "comment6": "We combine the groups in a single array",
+      "gnames": [
+        "Maybe we could make it as our own ref",
+        "Al Quaeda",
+        "The funny clowns"
+      ],
+      "comment7": "For now, I'd drop the 'yes?' fields as we know that the full data we might use is small enough",
+      "weapontypes": [
+        2,
+        3,
+        5
+      ],
+      "nkill": 42,
+      "nwound": 120
+    },
+    {
+      "id": 201511036574,
+      "date": [
+        2015,
+        11,
+        3
+      ],
+      "comment": "etc, etc etc..."
+    }
+  ]
+}
