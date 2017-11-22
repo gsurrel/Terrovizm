@@ -1,6 +1,7 @@
 {
   "refs": {
-    "comment": "Here come the mappings between number (ref) and values",
+    "comment0": "Basically your conventions.json file contents",
+    "comment1": "Here come the mappings between number (ref) and values",
     "comment2": "In the array, the cell N is for reference N",
     "comment3": "Country code 1 is Azerbaidjan in this example",
     "countries": [
