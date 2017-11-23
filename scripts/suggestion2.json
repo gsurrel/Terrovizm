@@ -1,0 +1,50 @@
+{
+  "refs": {
+    "comment0": "Basically your conventions.json file contents"
+  },
+  "events": [
+    [
+      201401236574,
+      [
+        2014,
+        1,
+        23
+      ],
+      4,
+      5,
+      [
+        45.123456,
+        4.112233
+      ],
+      true,
+      [
+        13
+      ],
+      {
+        "7": 4,
+        "14": 2
+      },
+      [
+        "Maybe we could make it as our own ref",
+        "Al Quaeda",
+        "The funny clowns"
+      ],
+      [
+        2,
+        3,
+        5
+      ],
+      42,
+      120
+    ],
+    [
+      201511036574,
+      [
+        2015,
+        11,
+        3
+      ],
+      "etc, etc etc..."
+    ]
+  ]
+}
