@@ -170,6 +170,28 @@ refs_dict['region'] = dict(zip(data['region'].astype(str), data['region_txt']))
 textual_columns_to_drop = data.columns[data.columns.str.endswith('_txt')] 
 data = data.drop(textual_columns_to_drop,axis=1)
 
+def merge_column(row, base_column_name, number_of_columns):
+    res = []
+    for i in range(1,number_of_columns + 1):
+        col_name = base_column_name + str(i)
+        if row[col_name] == row[col_name]:
+            res.append(row[col_name])
+    return res
+
+data.rename(columns={'gname':'gname1'}, inplace=True)
+
+data['attacktype'], data['targtype'], data['weaptype'], data['gname'] = \
+            zip(*data.apply(lambda row: (merge_column(row, 'attacktype', 3),
+                                         merge_column(row, 'targtype', 3),
+                                         merge_column(row, 'weaptype', 4),
+                                         merge_column(row, 'gname', 3)), 
+                            axis=1)
+               )
+
+cols_to_drop = ['attacktype1', 'attacktype2','attacktype3','targtype1','targtype2','targtype3','weaptype1','weaptype2','weaptype3','weaptype4','gname1','gname2','gname3']
+
+data.drop(cols_to_drop, axis=1, inplace=True)
+
 columns_dict = {}
 for col, idx in zip(data.columns.astype(str), range(len(data.columns))):
     columns_dict[col] = idx
