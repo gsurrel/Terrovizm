@@ -1,6 +1,6 @@
+
 import pandas as pd
 import os
-
 data_filepath = os.path.join('data','globalterrorismdb_0617dist.xlsx')
 
 data = pd.read_excel(data_filepath)
@@ -94,65 +94,95 @@ columns_to_drop = [
     'dbsource'
 ]
 
-data.drop(columns_to_drop, axis=1, inplace=True)
 
-full_country_counts = data['country_txt'].value_counts()
-missing_country_counts = data[data.latitude.isnull()]['country_txt'].value_counts()
+columns_to_keep = [
+    'eventid',
+    'iyear',
+    'imonth',
+    'iday',
+    'country',
+    'country_txt',
+    'region',
+    'region_txt',
+    'latitude',
+    'longitude',
+    'attacktype1',
+    'attacktype1_txt',
+    'attacktype2',
+    'attacktype2_txt',
+    'attacktype3',
+    'attacktype3_txt',
+    'suicide',
+    'weaptype1',
+    'weaptype1_txt',
+    'weaptype2',
+    'weaptype2_txt',
+    'weaptype3',
+    'weaptype3_txt',
+    'weaptype4',
+    'weaptype4_txt',
+    'targtype1',
+    'targtype1_txt',
+    'targtype2',
+    'targtype2_txt',
+    'targtype3',
+    'targtype3_txt',
+    'gname',
+    'gname2',
+    'gname3',
+    'nkill',
+    'nwould',
+    
+]
 
-missing_fraction_country = missing_country_counts.divide(full_country_counts, fill_value=0)
+columns_dropped = data.columns.difference(columns_to_keep)
+data.drop(columns_dropped, axis=1, inplace=True)
 
-significant_missing = missing_fraction_country[missing_fraction_country >= 0.5]
-
-full_yearly_counts = data['iyear'].value_counts()
-missing_yearly_counts = data[data.latitude.isnull()]['iyear'].value_counts()
-
-missing_fraction_yearly = missing_yearly_counts.divide(full_yearly_counts, fill_value=0)
 
 andorra_lat = 42.544033
 andorra_long = 1.556309
 data.loc[data['country_txt']=='Andorra', 'latitude'] = andorra_lat
 data.loc[data['country_txt']=='Andorra', 'longitude'] = andorra_long
 
+
 data = data[~data.latitude.isnull()]
 
-conventions_dict = {}
+refs_dict = {}
 
-conventions_dict['attacktype'] = data[['attacktype1', 'attacktype1_txt']].set_index('attacktype1').to_dict()['attacktype1_txt']
-conventions_dict['attacktype']
+refs_dict['attacktype'] = dict(zip(data['attacktype1'].astype(str), data['attacktype1_txt']))
 
-conventions_dict['targtype'] = data[['targtype1','targtype1_txt']].set_index('targtype1').to_dict()['targtype1_txt']
-conventions_dict['targtype']
+refs_dict['targtype'] = dict(zip(data['targtype1'].astype(str), data['targtype1_txt']))
 
-targsubtype_notnull_index = data.targsubtype1.notnull()
-conventions_dict['targsubtype'] = data[targsubtype_notnull_index][['targsubtype1','targsubtype1_txt']].set_index('targsubtype1').to_dict()['targsubtype1_txt']
-conventions_dict['targsubtype']
+if 'targsubtype1' in data.columns:
+    targsubtype_notnull = data[data.targsubtype1.notnull()]
+    reft_dict['targsubtype'] = dict(zip(targsubtype_notnull['targsubtype1'].astype(str),                                        targsubtype_notnull['targsubtype1_txt'])) 
 
-conventions_dict['weaptype'] = data[['weaptype1','weaptype1_txt']].set_index('weaptype1').to_dict()['weaptype1_txt']
-if 4 not in conventions_dict['weaptype']:
-    conventions_dict['weaptype'][4]='Nuclear'
-conventions_dict['weaptype']
 
-conventions_dict['country'] = data[['country', 'country_txt']].set_index('country').to_dict()['country_txt']
-conventions_dict['country']
+refs_dict['weaptype'] = dict(zip(data['weaptype1'].astype(str), data['weaptype1_txt']))
+if '4' not in refs_dict['weaptype']:
+    refs_dict['weaptype']['4']='Nuclear'
 
-conventions_dict['region'] = data[['region','region_txt']].set_index('region').to_dict()['region_txt']
-conventions_dict['region']
+refs_dict['country'] = dict(zip(data['country'].astype(str), data['country_txt']))
 
-textual_columns_to_drop = ['country_txt','region_txt','attacktype1_txt','attacktype2_txt','attacktype3_txt',
-                          'targtype1_txt','targsubtype1_txt','targtype2_txt','targsubtype2_txt','targtype3_txt',
-                          'targsubtype3_txt','weaptype1_txt','weaptype2_txt','weaptype3_txt',
-                          'weaptype4_txt']
+refs_dict['region'] = dict(zip(data['region'].astype(str), data['region_txt']))
+
+
+textual_columns_to_drop = data.columns[data.columns.str.endswith('_txt')] 
 data = data.drop(textual_columns_to_drop,axis=1)
 
-data.to_json('cleaned_data.json', orient='values')
 columns_dict = {}
-for col, idx in zip(data.columns, range(len(data.columns))):
+for col, idx in zip(data.columns.astype(str), range(len(data.columns))):
     columns_dict[col] = idx
 
-import json
-with open('conventions.json', 'w') as fp:
-    json.dump(str(conventions_dict), fp)
-    
-with open('columns.json', 'w') as fp:
-    json.dump(str(columns_dict), fp)
+# we create a mapping for both ways: from column names to indices and from indices to column names
+refs_dict['columns'] = {**{str(v): k for k, v in columns_dict.items()}, **columns_dict}
 
+
+import json
+
+events_list = json.loads(data.to_json(orient='values'))
+final_data = {"refs":refs_dict,
+             "events":events_list}
+
+with open('db.json', 'w') as fp:
+    json.dump(final_data, fp)
