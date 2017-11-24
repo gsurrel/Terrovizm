@@ -199,6 +199,8 @@ for col, idx in zip(data.columns.astype(str), range(len(data.columns))):
 # we create a mapping for both ways: from column names to indices and from indices to column names
 refs_dict['columns'] = {**{str(v): k for k, v in columns_dict.items()}, **columns_dict}
 
+data.fillna(value={'nkill':0}, inplace=True)
+
 
 import json
 
