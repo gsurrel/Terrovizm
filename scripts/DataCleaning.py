@@ -130,8 +130,7 @@ columns_to_keep = [
     'gname2',
     'gname3',
     'nkill',
-    'nwould',
-    
+    'nwound',
 ]
 
 columns_dropped = data.columns.difference(columns_to_keep)
