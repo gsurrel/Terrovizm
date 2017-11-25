@@ -83,19 +83,20 @@ function loadMap() {
     let markers = topLats.map(x => new PruneCluster.Marker(
         x.latitude,
         x.longitude,
-        {"popup": `<h3>Casualties</h3>
+        {"popup": `<h2>${(new Date(x.date)).toDateString()}</h2>
+        <h3>Casualties</h3>
         <ul>
             <li>Killed: ${x.nkill}</li>
-            <li>Wounded: ${x.nkill}</li>
+            <li>Wounded: ${x.nwound}</li>
             <li>Suicide: ${x.suicide ? "yes" : "no"}</li>
         </ul>
         <h3>Target(s)</h3>
         <ul>
-            ${x.targtype.reduce((acc, x) => `<li>${data.refs.targtype[x]}</li>`, "")}
+            ${x.targtype.reduce((acc, y) => `<li>${data.refs.targtype[y]}</li>`, "")}
         </ul>
         <h3>Weapons(s)</h3>
         <ul>
-            ${x.weaptype.reduce((acc, x) => `<li>${data.refs.weaptype[x]}</li>`, "")}
+            ${x.weaptype.reduce((acc, y) => `<li>${data.refs.weaptype[y]}</li>`, "")}
         </ul>
         <h3>More…</h3>
         <a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${x.eventid}" target="_blank">Details</a>`},
