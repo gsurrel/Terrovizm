@@ -1,5 +1,5 @@
 // Commented out for prototyping in the browser's console
-"use strict"
+//"use strict"
 
 // Main data object
 let data = new Object();
@@ -45,11 +45,35 @@ function reformatData(json) {
     delete json.refs.columns;
     data.refs = json.refs;
 
+    // Set unknown days and months to 1st day and month
+    json.events.filter(x => x[columns.iday] == 0).map(x => x[columns.iday] = 1);
+    json.events.filter(x => x[columns.imonth] == 0).map(x => x[columns.imonth] = 1);
+
+    // Create the date in the iyear field, which we rename
+    let imonth = columns["imonth"], iday = columns["iday"];
+    json.events.map(function(x) {
+        x[columns.iyear] = Date.UTC(
+            x[columns.iyear],
+            x[columns.imonth]-1,
+            x[columns.iday]);
+        x.splice(imonth, 1);
+        x.splice(iday, 1)
+        return x;
+    });
+    columns[columns["iyear"]] = "date";
+    columns = _.omit(columns, ['imonth', 'iday']);
+
     // Create a placeholder object
     let eventKeys = Object.values(columns).filter(x => _.isString(x));
 
     // Fill-in the data object
     data.events = json.events.map(x => _.object(eventKeys, x));
+
+    // Remove date leftovers
+    data.events = data.events.map(function(x) {
+        x.date = Date.UTC(x.iyear, x.imonth-1, x.iday);
+        return _.omit(x, ['iyear', 'imonth', 'iday']);
+    });
 
     // Log
     reformatTime = new Date();
