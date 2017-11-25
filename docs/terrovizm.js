@@ -1,8 +1,9 @@
 // Commented out for prototyping in the browser's console
-//"use strict"
+"use strict"
 
-// Main data object
+// Main data object and crossfilter reference
 let data = new Object();
+let xf;
 
 // Performance timers
 let startTime = new Date();
@@ -15,7 +16,7 @@ let map;
 function main() {
     d3.select("body")
         .append("h1")
-        .text("Terrovizm");
+        .text("Terr💣vizm");
 
     setupMap();
 
@@ -31,8 +32,8 @@ function main() {
         // Process data
         reformatData(json);
 
-        // TODO: Load in crossbar
-
+        // Load data on the map
+        loadMap();
     });
 }
 
@@ -60,11 +61,36 @@ function reformatData(json) {
 
     // Fill-in the data crossfiltered
     let eventKeys = Object.keys(columns);
-    data.events = crossfilter(json.events.map(x => _.object(eventKeys, x)));
+    data.events = json.events.map(x => _.object(eventKeys, x));
+    xf = crossfilter(data.events);
 
     // Log
     reformatTime = new Date();
     console.log("Reformatting of data finished", `Time ${(reformatTime - downloadTime)/1000} seconds`);
+}
+
+function loadMap() {
+    // Log
+    console.log("Start load markers in map");
+    let t1 = new Date();
+
+    let lat = xf.dimension(x => x.latitude),
+        lon = xf.dimension(x => x.longitude);
+
+    let topLats = lat.top(Infinity);
+
+    let pruneCluster = new PruneClusterForLeaflet(100, 20);
+    let markers = topLats.map(x => new PruneCluster.Marker(
+        x.latitude,
+        x.longitude,
+        {"popup": `<a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${x.eventid}" target="_blank">Details</a>`},
+        x.country));
+    markers.forEach(x => pruneCluster.RegisterMarker(x));
+    map.addLayer(pruneCluster);
+
+    // Log
+    let t2 = new Date();
+    console.log("Time in ms: ", t2-t1);
 }
 
 function setupMap() {
@@ -72,7 +98,7 @@ function setupMap() {
         .append("div")
         .attr("id","map");
 
-    map = L.map('map').setView([0, 0], 1);
+    map = L.map('map').setView([0, 0], 2);
 
     L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
         attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
