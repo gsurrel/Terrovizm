@@ -30,7 +30,13 @@ The [visualization is hosted on Github Pages](https://gsurrel.github.io/Terroviz
     - [ ] Create different panels on the web interface
     - [x] Load and make data nice
     - [x] Load it in [Crossfilter.js](https://github.com/crossfilter/crossfilter)
-    - [x] Have a [Leaflet](https://github.com/Leaflet/Leaflet) map view, with regional filtering
+    - [ ] Have a [Leaflet](https://github.com/Leaflet/Leaflet)
+        - [x] Instantiate library
+        - [x] Setup base layer
+        - [x] Kill it without clustering
+        - [x] Use prune plugin to display the data
+        - [ ] Add filtering of the data
+        - [ ] React to filtering updates
     - [ ] Have a timeline, with time filtering
     - [ ] Have facets, with enable/disable toggles
     - [ ] Update the other views according to the filters
