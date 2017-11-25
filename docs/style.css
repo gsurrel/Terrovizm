@@ -1,4 +1,15 @@
+html {
+    height: 100%;
+}
+
 body {
     background: #000;
     color: #fff;
+    height: 100%;
+}
+
+#map {
+    width: 80%;
+    height: 50%;
+    border: thin #333 solid;
 }

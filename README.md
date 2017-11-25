@@ -29,8 +29,8 @@ The [visualization is hosted on Github Pages](https://gsurrel.github.io/Terroviz
     - [x] [Script it (notebook)](scripts/DataCleaning.ipynb), [standalone-script](scripts/DataCleaning.py)
     - [ ] Create different panels on the web interface
     - [x] Load and make data nice
-    - [ ] Load it in [Crossfilter.js](https://square.github.io/crossfilter/)
-    - [ ] Have a map view, with regional filtering
+    - [x] Load it in [Crossfilter.js](https://github.com/crossfilter/crossfilter)
+    - [x] Have a [Leaflet](https://github.com/Leaflet/Leaflet) map view, with regional filtering
     - [ ] Have a timeline, with time filtering
     - [ ] Have facets, with enable/disable toggles
     - [ ] Update the other views according to the filters
