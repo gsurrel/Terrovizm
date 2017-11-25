@@ -200,6 +200,7 @@ for col, idx in zip(data.columns.astype(str), range(len(data.columns))):
 refs_dict['columns'] = columns_dict
 
 data.fillna(value={'nkill':0}, inplace=True)
+data.fillna(value={'nwound':0}, inplace=True)
 
 
 import json
