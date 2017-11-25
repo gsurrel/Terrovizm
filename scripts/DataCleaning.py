@@ -1,4 +1,3 @@
-
 import pandas as pd
 import os
 data_filepath = os.path.join('data','globalterrorismdb_0617dist.xlsx')
@@ -188,7 +187,10 @@ data['attacktype'], data['targtype'], data['weaptype'], data['gname'] = \
                             axis=1)
                )
 
-cols_to_drop = ['attacktype1', 'attacktype2','attacktype3','targtype1','targtype2','targtype3','weaptype1','weaptype2','weaptype3','weaptype4','gname1','gname2','gname3']
+# merge year month day into date
+data['date'] = data.apply(lambda row: (row['iyear'], row['imonth'], row['iday']), axis=1)
+
+cols_to_drop = ['attacktype1', 'attacktype2','attacktype3','targtype1','targtype2','targtype3','weaptype1','weaptype2','weaptype3','weaptype4','gname1','gname2','gname3', 'iyear','imonth','iday']
 
 data.drop(cols_to_drop, axis=1, inplace=True)
 
@@ -196,8 +198,7 @@ columns_dict = {}
 for col, idx in zip(data.columns.astype(str), range(len(data.columns))):
     columns_dict[col] = idx
 
-# we create a mapping for both ways: from column names to indices and from indices to column names
-refs_dict['columns'] = {**{str(v): k for k, v in columns_dict.items()}, **columns_dict}
+refs_dict['columns'] = columns_dict
 
 data.fillna(value={'nkill':0}, inplace=True)
 
