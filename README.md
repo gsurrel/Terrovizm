@@ -14,8 +14,7 @@ The [visualization is hosted on Github Pages](https://gsurrel.github.io/Terroviz
 - [x] Do all the mockups, blueprints and sketching required ([process book link](ProcessBook/book.md#designs))
     - [x] Initial sketch done
 - [x] Python scripting to clean and **shrink** the dataset. Most textual details can probably be removed as we can give just a link to the official GTD event description and details. Scripting has the benefit of maintainability to update our dataset according to the original DB updates. ([process book link](ProcessBook/book.md#technical-setup))
-- [ ] Reprocess transferred data to have nice a JavaScript object to use
-- [ ] Use this Readme as a process book?
+- [x] Reprocess transferred data to have nice a JavaScript object to use
 - [ ] Screencast:
     - Demonstrate what you can do with your viz in a fun, engaging and impactful manner
     - Talk about your main contributions rather than on technical details
@@ -29,7 +28,7 @@ The [visualization is hosted on Github Pages](https://gsurrel.github.io/Terroviz
     - [x] Have an initial JSON structure. [Suggestion](scripts/suggestion.json). [Suggestion 2](scripts/suggestion2.json).
     - [x] [Script it (notebook)](scripts/DataCleaning.ipynb), [standalone-script](scripts/DataCleaning.py)
     - [ ] Create different panels on the web interface
-    - [ ] Load and make data nice
+    - [x] Load and make data nice
     - [ ] Load it in [Crossfilter.js](https://square.github.io/crossfilter/)
     - [ ] Have a map view, with regional filtering
     - [ ] Have a timeline, with time filtering
