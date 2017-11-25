@@ -1,17 +1,17 @@
 # Terrovizm
 
-All non-development information is in the [Process Book](/Process book/book.md).
+All non-development information is in the [Process Book](Process book/book.md).
 
 ## To do
 
 - [x] Create Github project and pages
 - [x] [Register the project](https://docs.google.com/forms/d/e/1FAIpQLSc_boP3m3UtulHvia8WgLoFYemn9yEZmuq4-glNSgGfc3O2pw/viewform)
 - [x] Contact the GTD to ask for permission to publicly use the viz or it stays private
-- [x] Check exactly the data available and what we keep for the Viz ([process book link](#dataset))
-- [x] Use the [deisgn worksheets](https://design-worksheets.github.io/) mentionned in the course ([process book link](#designs))
-- [x] Do all the mockups, blueprints and sketching required ([process book link](#designs))
+- [x] Check exactly the data available and what we keep for the Viz ([process book link](Process book/book.md#dataset))
+- [x] Use the [deisgn worksheets](https://design-worksheets.github.io/) mentionned in the course ([process book link](Process book/book.md#designs))
+- [x] Do all the mockups, blueprints and sketching required ([process book link](Process book/book.md#designs))
     - [x] Initial sketch done
-- [x] Python scripting to clean and **shrink** the dataset. Most textual details can probably be removed as we can give just a link to the official GTD event description and details. Scripting has the benefit of maintainability to update our dataset according to the original DB updates. ([process book link](#technical-setup))
+- [x] Python scripting to clean and **shrink** the dataset. Most textual details can probably be removed as we can give just a link to the official GTD event description and details. Scripting has the benefit of maintainability to update our dataset according to the original DB updates. ([process book link](Process book/book.md#technical-setup))
 - [ ] Reprocess transferred data to have nice a Javascript object to use
 - [ ] Use this Readme as a process book?
 - [ ] Screencast:
