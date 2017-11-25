@@ -83,7 +83,22 @@ function loadMap() {
     let markers = topLats.map(x => new PruneCluster.Marker(
         x.latitude,
         x.longitude,
-        {"popup": `<a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${x.eventid}" target="_blank">Details</a>`},
+        {"popup": `<h3>Casualties</h3>
+        <ul>
+            <li>Killed: ${x.nkill}</li>
+            <li>Wounded: ${x.nkill}</li>
+            <li>Suicide: ${x.suicide ? "yes" : "no"}</li>
+        </ul>
+        <h3>Target(s)</h3>
+        <ul>
+            ${x.targtype.reduce((acc, x) => `<li>${data.refs.targtype[x]}</li>`, "")}
+        </ul>
+        <h3>Weapons(s)</h3>
+        <ul>
+            ${x.weaptype.reduce((acc, x) => `<li>${data.refs.weaptype[x]}</li>`, "")}
+        </ul>
+        <h3>More…</h3>
+        <a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${x.eventid}" target="_blank">Details</a>`},
         x.country));
     markers.forEach(x => pruneCluster.RegisterMarker(x));
     map.addLayer(pruneCluster);
