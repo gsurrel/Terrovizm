@@ -1,5 +1,5 @@
 // Commented out for prototyping in the browser's console
-"use strict"
+//"use strict"
 
 // Main data object and crossfilter reference
 let data = new Object();
@@ -13,8 +13,28 @@ let reformatTime;
 // References to UI objects
 let map;
 
-function createMarkerPie(nkill, nwound, clustersize) {
-    let len = 32;
+function createrMarkerText(event) {
+    return `<h2>${(new Date(event.date)).toDateString()}</h2>
+    <h3>Casualties</h3>
+    <ul>
+        <li>Killed: ${event.nkill}</li>
+        <li>Wounded: ${event.nwound}</li>
+        <li>Suicide: ${event.suicide ? "yes" : "no"}</li>
+    </ul>
+    <h3>Target(s)</h3>
+    <ul>
+        ${event.targtype.reduce((acc, y) => `<li>${data.refs.targtype[y]}</li>`, "")}
+    </ul>
+    <h3>Weapons(s)</h3>
+    <ul>
+        ${event.weaptype.reduce((acc, y) => `<li>${data.refs.weaptype[y]}</li>`, "")}
+    </ul>
+    <h3>More…</h3>
+    <a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">Details</a>`
+}
+
+function createMarkerPie(nkill, nwound, markersize, clustersize) {
+    let len = markersize;
     let svg = d3.select(document.createElement("div"))
     //let svg = d3.select("body")
         .append("svg")
@@ -39,15 +59,15 @@ function createMarkerPie(nkill, nwound, clustersize) {
         .attr("r", len*2/5)
         .attr("cx", len/2)
         .attr("cy", len/2)
-        .attr("fill", "white");
+        .attr("fill", clustersize === void 0 ? "white" : "#ddd");
     if(nkill + nwound == 0) {
         circle.attr("stroke", "black");
     }
-    if (clustersize === void 0) {
+    if (clustersize !== void 0) {
         svg.append("text")
             .attr("x", len/2)
             .attr("y", len/2)
-            .attr("dy", 6)
+            .attr("dy", 5)
             .attr("text-anchor", "middle")
             .attr("fill", "black")
             .text(clustersize);
@@ -112,30 +132,16 @@ function reformatData(json) {
             x.latitude,
             x.longitude,
             {
+                "nkill": x.nkill,
+                "nwound": x.nwound,
                 "icon": function(data, category){
                     return new L.divIcon({
-                        html: createMarkerPie(x.nkill, x.nwound).node().outerHTML,
+                        html: createMarkerPie(x.nkill, x.nwound, 32).node().outerHTML,
                         iconAnchor: [16, 16],
                         className: "killwoundmarker"
                     });
                 },
-                "popup": `<h2>${(new Date(x.date)).toDateString()}</h2>
-                <h3>Casualties</h3>
-                <ul>
-                    <li>Killed: ${x.nkill}</li>
-                    <li>Wounded: ${x.nwound}</li>
-                    <li>Suicide: ${x.suicide ? "yes" : "no"}</li>
-                </ul>
-                <h3>Target(s)</h3>
-                <ul>
-                    ${x.targtype.reduce((acc, y) => `<li>${data.refs.targtype[y]}</li>`, "")}
-                </ul>
-                <h3>Weapons(s)</h3>
-                <ul>
-                    ${x.weaptype.reduce((acc, y) => `<li>${data.refs.weaptype[y]}</li>`, "")}
-                </ul>
-                <h3>More…</h3>
-                <a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${x.eventid}" target="_blank">Details</a>`
+                "popup": (() => createrMarkerText(x))
             },
             null,
             true);
@@ -192,5 +198,18 @@ function setupMap() {
 
     // Create and add the PruneCluster layer
     map["pruneCluster"] = new PruneClusterForLeaflet(100, 20);
+    PruneCluster.Cluster.ENABLE_MARKERS_LIST = true
+    map.pruneCluster.BuildLeafletClusterIcon = function(cluster) {
+        let markers = cluster.GetClusterMarkers();
+        let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
+        let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
+        let iconSize = 24 + Math.sqrt(cluster.population/80);
+        return new L.divIcon({
+            html: createMarkerPie(nkill, nwound, iconSize, cluster.population).node().outerHTML,
+            iconAnchor: [iconSize/2, iconSize/2],
+            className: "killwoundmarker"
+        });
+    };
     map.addLayer(map.pruneCluster);
+
 }
