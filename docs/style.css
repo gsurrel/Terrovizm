@@ -13,3 +13,8 @@ body {
     height: 80%;
     border: thin #333 solid;
 }
+
+.killwoundmarker {
+    border: none;
+    background: none;
+}

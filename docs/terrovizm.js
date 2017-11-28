@@ -13,6 +13,49 @@ let reformatTime;
 // References to UI objects
 let map;
 
+function createMarkerPie(nkill, nwound, clustersize) {
+    let len = 32;
+    let svg = d3.select(document.createElement("div"))
+    //let svg = d3.select("body")
+        .append("svg")
+        .attr("width", len)
+        .attr("height", len);
+    if(nkill + nwound != 0) {
+        svg.append("circle")
+            .attr("r", len/2)
+            .attr("cx", len/2)
+            .attr("cy", len/2)
+            .attr("fill", "red");
+        svg.append("path")
+            .attr("d", d3.svg.arc()
+                .innerRadius(0)
+                .outerRadius(len/2)
+                .startAngle(0)
+                .endAngle(nwound / (nwound + nkill) * Math.PI * 2))
+            .attr("fill", "orange")
+            .attr("transform", `translate(${len/2},${len/2})`);
+    }
+    let circle = svg.append("circle")
+        .attr("r", len*2/5)
+        .attr("cx", len/2)
+        .attr("cy", len/2)
+        .attr("fill", "white");
+    if(nkill + nwound == 0) {
+        circle.attr("stroke", "black");
+    }
+    if (clustersize === void 0) {
+        svg.append("text")
+            .attr("x", len/2)
+            .attr("y", len/2)
+            .attr("dy", 6)
+            .attr("text-anchor", "middle")
+            .attr("fill", "black")
+            .text(clustersize);
+    }
+
+    return svg;
+}
+
 function main() {
     d3.select("body")
         .append("h1")
@@ -70,27 +113,11 @@ function reformatData(json) {
             x.longitude,
             {
                 "icon": function(data, category){
-                    // Pie chart for markers
-                    /*console.log(`<span>${x.nkill} ${x.nwound}</span>`);
-                    let span = document.createElement("span");
-                    let length = 32, radius = length/2;
-                    var arc = d3.svg.arc()
-                        .outerRadius(radius - 10)
-                        .innerRadius(0);
-                    let pie = d3.layout.pie()
-                        .sort(null)
-                        .value(d => ({nkill: x.nkill, nwound: x.nwound}));
-                    let g = d3.select(span)
-                        .append("svg")
-                        .attr("width", length)
-                        .attr("height", length)
-                        .append("g")
-                        .attr("transform", "translate(" + length / 2 + "," + length / 2 + ")");
-                    g.append("path")
-                        .data(d => ({nkill: x.nkill, nwound: x.nwound}))
-                        .attr("d", arc)
-                        .style("fill", "red")*/
-                    return new L.divIcon({html: `<span>${x.nkill} ${x.nwound}</span>`});
+                    return new L.divIcon({
+                        html: createMarkerPie(x.nkill, x.nwound).node().outerHTML,
+                        iconAnchor: [16, 16],
+                        className: "killwoundmarker"
+                    });
                 },
                 "popup": `<h2>${(new Date(x.date)).toDateString()}</h2>
                 <h3>Casualties</h3>
