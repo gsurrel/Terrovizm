@@ -18,3 +18,18 @@ body {
     border: none;
     background: none;
 }
+
+#loader{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #333;
+    padding: 1cm;
+    z-index: 1500; /* Above leaflet */
+}
+
+#loader > h1, #loader > #footer {
+    text-align: center;
+}

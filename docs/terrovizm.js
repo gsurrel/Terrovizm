@@ -1,9 +1,12 @@
 // Commented out for prototyping in the browser's console
-//"use strict"
+"use strict"
 
 // Main data object and crossfilter reference
 let data = new Object();
 let xf;
+
+// Ready flag
+let ready = false;
 
 // Performance timers
 let startTime = new Date();
@@ -79,10 +82,29 @@ function createMarkerPie(nkill, nwound, markersize, clustersize, nocasualties) {
     return svg;
 }
 
+function updateLoader() {
+    let strings = ["Downloading terrorists",
+        "Planning evil plots",
+        "Building master plan",
+        "Contacting law enforcment",
+        "Downloading cocktails molotov",
+        "Freeing hostages",
+        "Investigating really hard",
+        "Imposing massive surveillance",
+    ];
+    document.getElementById("footer").textContent = strings[Math.floor(Math.random()*strings.length)];
+    if(ready) window.setTimeout((() => document.getElementById("loader").style.display = "none"), 500);
+    if(!ready) {
+        window.setTimeout(updateLoader, 200*Math.random()+100);
+    }
+}
+
 function main() {
     d3.select("body")
         .append("h1")
         .text("Terr💣vizm");
+
+    updateLoader();
 
     setupMap();
 
@@ -101,6 +123,8 @@ function main() {
         // Load data on the map
         loadMap();
     });
+
+    ready = true;
 }
 
 function reformatData(json) {
