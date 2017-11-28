@@ -33,7 +33,7 @@ function createrMarkerText(event) {
     <a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">Details</a>`
 }
 
-function createMarkerPie(nkill, nwound, markersize, clustersize) {
+function createMarkerPie(nkill, nwound, markersize, clustersize, nocasualties) {
     let len = markersize;
     let svg = d3.select(document.createElement("div"))
     //let svg = d3.select("body")
@@ -41,17 +41,20 @@ function createMarkerPie(nkill, nwound, markersize, clustersize) {
         .attr("width", len)
         .attr("height", len);
     if(nkill + nwound != 0) {
-        svg.append("circle")
-            .attr("r", len/2)
-            .attr("cx", len/2)
-            .attr("cy", len/2)
-            .attr("fill", "red");
         svg.append("path")
             .attr("d", d3.svg.arc()
                 .innerRadius(0)
                 .outerRadius(len/2)
                 .startAngle(0)
-                .endAngle(nwound / (nwound + nkill) * Math.PI * 2))
+                .endAngle(-nkill / (nwound + nkill) * Math.PI * 2 * (clustersize === void 0 ? 1 : (1-nocasualties/clustersize))))
+            .attr("fill", "red")
+            .attr("transform", `translate(${len/2},${len/2})`);
+        svg.append("path")
+            .attr("d", d3.svg.arc()
+                .innerRadius(0)
+                .outerRadius(len/2)
+                .startAngle(0)
+                .endAngle(nwound / (nwound + nkill) * Math.PI * 2 * (clustersize === void 0 ? 1 : (1-nocasualties/clustersize))))
             .attr("fill", "orange")
             .attr("transform", `translate(${len/2},${len/2})`);
     }
@@ -203,9 +206,10 @@ function setupMap() {
         let markers = cluster.GetClusterMarkers();
         let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
         let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
+        let nocasualties = markers.reduce((acc, x) => acc + x.data.nkill == 0 & x.data.nwound == 0, 0);
         let iconSize = 24 + Math.sqrt(cluster.population/80);
         return new L.divIcon({
-            html: createMarkerPie(nkill, nwound, iconSize, cluster.population).node().outerHTML,
+            html: createMarkerPie(nkill, nwound, iconSize, cluster.population, nocasualties).node().outerHTML,
             iconAnchor: [iconSize/2, iconSize/2],
             className: "killwoundmarker"
         });
