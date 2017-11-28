@@ -6,10 +6,77 @@ body {
     background: #000;
     color: #fff;
     height: 100%;
+    overflow: hidden;
+}
+
+.row-plot-title{
+    align-content: center;
 }
 
 #map {
+    position:fixed;
+    top: 0;
+    left: 0;
     width: 80%;
     height: 80%;
     border: thin #333 solid;
 }
+
+#row-plots{
+    display: block;
+    height: 80%;
+    width: 20%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    overflow: auto;
+}
+
+#stacked-plots{
+    height: 20%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+/*
+------- Row plots CSS------
+
+ Row plots label color and font-size
+ */
+.dc-chart g.row text {
+    fill: white;
+    font-size: 0.8em;
+}
+/*
+Row plots xticks label color and font size
+ */
+.dc-chart g.tick text {
+    fill: white;
+    font-size: 0.8em;
+}
+
+/*
+Row plots bars - on click change color of the other bars
+ */
+.dc-chart rect.deselected {
+    stroke: none;
+    fill: #a7a8a7; }
+
+.dc-chart .selected path{
+    stroke-width: 3;
+    stroke: #ccc;
+    fill-opacity: 1; }
+
+
+/*
+Row plots - nice cursor pointer when hover over bars
+ */
+.dc-chart g.row rect {
+    stroke: none;
+    cursor: pointer; }
+
+.dc-chart g.row text {
+    stroke: none;
+    cursor: pointer; }

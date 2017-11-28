@@ -3,7 +3,7 @@
 
 // Main data object and crossfilter reference
 let data = new Object();
-let xf;
+var xf;
 
 // Performance timers
 let startTime = new Date();
@@ -32,8 +32,11 @@ function main() {
         // Process data
         reformatData(json);
 
+        // Create row plots
+        createRowPlots();
+
         // Load data on the map
-        loadMap();
+        // loadMap();
     });
 }
 
