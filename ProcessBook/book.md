@@ -272,6 +272,18 @@ It's possible to have a general idea of the contents by creating facets over the
 
 ![First facetting](facets1.png) ![Second facetting](facets2.png)
 
+## Data wrangling
+The data provided by the Global Terrorism Database, as described above, containes a lot of information that goes beyond the scope of our visualization so we have to reshape and extract the data that was required for our project. In this sense, we make the following decisions, most of them are made in the idea of reducing the size of the data sent to client:
+1. Given that a big part of our project relies on the geo-location dimension of the database, we drop the attacks that do not have the latitude and longitude specified. This is analysed more in the jupyter notebook DataCleaning.ipynb
+2. We map the categorical variables in our database to integer values in order to save space. These are the columns with "_txt" suffix mostly and are specified in the columns analysis above by the **as ref** in the **keep** column. 
+3. We aggregate the columns expressing multiple values of the same attribute, like attacktype1, attacktype2, attacktype3 into an array for each attribute.
+4. In order to reduce the size of the JSON object sent to client, we serialize the terrorist events to a special JSON format in the following way:
+    * we create a mapping from the column position to column name
+    * we keep the events data as rows in a matrix where each column number can be correlated to a column name through the above mentioned mapping
+5. We serializa the data to a special formatted JSON with 2 main fields:
+    * refs - containing the mapping of the text values as specified above
+    * events - containing an array of arrays, described at point 4.
+
 ## Designs
 
 *What are the different visualizations you considered? Justify the design decisions you made using the perceptual and design principles.*
