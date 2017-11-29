@@ -42,20 +42,26 @@ function createRowPlots(){
 
     let rowPlots = [];
 
-    let countryDim = xf.dimension(d => data.refs.country[d.country]);
-    rowPlots.push(new RowPlot("country-row-plot", countryDim, 10, "Attacks by country"));
-
     let regionDim = xf.dimension(d => data.refs.region[d.region]);
     rowPlots.push(new RowPlot("region-row-plot", regionDim, Infinity, "Attacks by region"));
 
-    let suicideDim = xf.dimension(d => d.suicide == 1 ? "Yes":"No");
-    rowPlots.push(new RowPlot("suicide-row-plot", suicideDim, Infinity, "Suicide attacks"));
+    let countryDim = xf.dimension(d => data.refs.country[d.country]);
+    rowPlots.push(new RowPlot("country-row-plot", countryDim, 10, "Attacks by country"));
+
+    let gnameDim = xf.dimension(d => d.gname, true);
+    rowPlots.push(new RowPlot("gname-row-plot", gnameDim, 15, "Terrorist group"));
 
     let attackTypeDim = xf.dimension(d => data.refs.attacktype[d.attacktype], true);
     rowPlots.push(new RowPlot("attacktype-row-plot", attackTypeDim, 10, "Type of attacks"));
 
     let targTypeDim = xf.dimension(d => d.targtype.map(targ => data.refs.targtype[targ]));
     rowPlots.push(new RowPlot("targtype-row-plot", targTypeDim, 10, "Type of target"));
+
+    let weapTypeDim = xf.dimension(d => data.refs.weaptype[d.weaptype],true);
+    rowPlots.push(new RowPlot("weaptype-row-plot", weapTypeDim, 10, "Type of weapon"));
+
+    let suicideDim = xf.dimension(d => d.suicide == 1 ? "Yes":"No");
+    rowPlots.push(new RowPlot("suicide-row-plot", suicideDim, Infinity, "Suicide attacks"));
 
     dc.renderAll();
 }
