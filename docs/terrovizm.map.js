@@ -5,10 +5,6 @@ class TerroMap {
     //let map;
 
     constructor() {
-        d3.select("body")
-            .append("div")
-            .attr("id","map");
-
         this.map = L.map('map').setView([0, 0], 2);
 
         L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {

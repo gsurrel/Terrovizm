@@ -8,6 +8,7 @@ body {
     background: #000;
     color: #fff;
     height: 100%;
+    overflow: hidden;
 }
 
 /* Splash screen */
@@ -28,6 +29,9 @@ body {
 
 /* Map properties */
 #map {
+    position:fixed;
+    top: 0;
+    left: 0;
     width: 80%;
     height: 80%;
     border: thin #333 solid;
@@ -43,3 +47,136 @@ body {
     margin-left: 3mm;
     margin-bottom: 0;
 }
+
+#row-plots{
+    display: block;
+    height: 80%;
+    width: 20%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    overflow: auto;
+}
+
+#stacked-plot{
+    height: 15%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 5%;
+}
+
+#range-plot{
+    height: 5%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+/*
+------- Row plots CSS------
+
+ Row plots label color and font-size
+ */
+.dc-chart g.row text {
+    fill: white;
+    font-size: 0.8em;
+}
+/*
+Row plots xticks label color and font size
+ */
+.dc-chart g.tick text {
+    fill: white;
+    font-size: 0.8em;
+}
+
+/*
+Row plots bars - on click change color of the other bars
+ */
+.dc-chart rect.deselected {
+    stroke: none;
+    fill: #a7a8a7; }
+
+.dc-chart .selected path{
+    stroke-width: 3;
+    stroke: #ccc;
+    fill-opacity: 1; }
+
+
+/*
+Row plots - nice cursor pointer when hover over bars
+ */
+.dc-chart g.row rect {
+    stroke: none;
+    cursor: pointer; }
+
+.dc-chart g.row rect:hover {
+    fill-opacity: 0.6; }
+
+.dc-chart g.row text {
+    stroke: none;
+    cursor: pointer; }
+
+.dc-chart g.axis text {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none; }
+
+/*
+-------------------
+ */
+.dc-chart .axis path, .dc-chart .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges; }
+
+.dc-chart .axis text {
+    font: 10px sans-serif; }
+
+.dc-chart .grid-line, .dc-chart .axis .grid-line, .dc-chart .grid-line line, .dc-chart .axis .grid-line line {
+    fill: none;
+    stroke: #ccc;
+    opacity: .5;
+    shape-rendering: crispEdges; }
+
+.dc-chart .brush rect.background {
+    z-index: -999; }
+
+.dc-chart .brush rect.extent {
+    fill: #4682b4;
+    fill-opacity: .125; }
+
+.dc-chart .brush .resize path {
+    fill: #eee;
+    stroke: #666; }
+
+.dc-chart path.line {
+    fill: none;
+    stroke-width: 1.5px; }
+
+.dc-chart path.area {
+    fill-opacity: .3;
+    stroke: none; }
+
+.dc-chart path.highlight {
+    stroke-width: 3;
+    fill-opacity: 1;
+    stroke-opacity: 1; }
+
+.dc-chart g.state {
+    cursor: pointer; }
+.dc-chart g.state :hover {
+    fill-opacity: .8; }
+.dc-chart g.state path {
+    stroke: #fff; }
+
+.dc-chart g.deselected path {
+    fill: #808080; }
+
+.dc-chart g.deselected text {
+    display: none; }

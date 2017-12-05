@@ -74,6 +74,9 @@ function main() {
 
         mapT.refreshMarkers();
 
+        createRowPlots();
+        createStackedPlots();
+
         ready = true;
     }
 }
