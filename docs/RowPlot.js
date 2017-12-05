@@ -26,9 +26,9 @@ class RowPlot{
             .html(this.title + " ");
 
         // Create the reset functionality for the plot. This is mostly taken care of by dc.js library
-        this.placeholder.append('a')
+        this.placeholder.append('span')
             .attr('class','reset')
-            .attr('href',`javascript:rowPlots["${id}"].plot.filterAll();dc.renderAll();`)
+            .attr('onclick',`javascript:rowPlots["${id}"].plot.filterAll();dc.renderAll();`)
             .attr('style','visibility:hidden')
             .html('reset');
 
