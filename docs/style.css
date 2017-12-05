@@ -1,5 +1,7 @@
+/* General properties */
 html {
     height: 100%;
+    font-family: sans-serif;
 }
 
 body {
@@ -8,17 +10,7 @@ body {
     height: 100%;
 }
 
-#map {
-    width: 80%;
-    height: 80%;
-    border: thin #333 solid;
-}
-
-.killwoundmarker {
-    border: none;
-    background: none;
-}
-
+/* Splash screen */
 #loader{
     position: absolute;
     top: 0;
@@ -32,4 +24,22 @@ body {
 
 #loader > h1, #loader > #footer {
     text-align: center;
+}
+
+/* Map properties */
+#map {
+    width: 80%;
+    height: 80%;
+    border: thin #333 solid;
+}
+
+.killwoundmarker {
+    border: none;
+    background: none;
+}
+
+/* Side charts */
+.dc-chart > h3 {
+    margin-left: 3mm;
+    margin-bottom: 0;
 }
