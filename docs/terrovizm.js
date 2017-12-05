@@ -32,14 +32,10 @@ function main() {
         // Process data
         reformatData(json);
 
-        // Create row plots
-        createRowPlots();
-
         // Load data on the map
-        // loadMap();
+        loadMap();
     });
 }
-
 function reformatData(json) {
     // We did not use a dictionnary for the events to save network space.
     // Let's recreate a nice data structure.
@@ -77,8 +73,8 @@ function loadMap() {
     console.log("Start load markers in map");
     let t1 = new Date();
 
-    let lat = xf.dimension(x => x.latitude),
-        lon = xf.dimension(x => x.longitude);
+    let lat = xf.rangeDimension(x => x.latitude),
+        lon = xf.rangeDimension(x => x.longitude);
 
     let topLats = lat.top(Infinity);
 

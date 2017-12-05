@@ -32,8 +32,16 @@ body {
     overflow: auto;
 }
 
-#stacked-plots{
-    height: 20%;
+#stacked-plot{
+    height: 15%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 5%;
+}
+
+#range-plot{
+    height: 5%;
     width: 100%;
     position: fixed;
     left: 0;
@@ -77,6 +85,72 @@ Row plots - nice cursor pointer when hover over bars
     stroke: none;
     cursor: pointer; }
 
+.dc-chart g.row rect:hover {
+    fill-opacity: 0.6; }
+
 .dc-chart g.row text {
     stroke: none;
     cursor: pointer; }
+
+.dc-chart g.axis text {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none; }
+
+/*
+-------------------
+ */
+.dc-chart .axis path, .dc-chart .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges; }
+
+.dc-chart .axis text {
+    font: 10px sans-serif; }
+
+.dc-chart .grid-line, .dc-chart .axis .grid-line, .dc-chart .grid-line line, .dc-chart .axis .grid-line line {
+    fill: none;
+    stroke: #ccc;
+    opacity: .5;
+    shape-rendering: crispEdges; }
+
+.dc-chart .brush rect.background {
+    z-index: -999; }
+
+.dc-chart .brush rect.extent {
+    fill: #4682b4;
+    fill-opacity: .125; }
+
+.dc-chart .brush .resize path {
+    fill: #eee;
+    stroke: #666; }
+
+.dc-chart path.line {
+    fill: none;
+    stroke-width: 1.5px; }
+
+.dc-chart path.area {
+    fill-opacity: .3;
+    stroke: none; }
+
+.dc-chart path.highlight {
+    stroke-width: 3;
+    fill-opacity: 1;
+    stroke-opacity: 1; }
+
+.dc-chart g.state {
+    cursor: pointer; }
+.dc-chart g.state :hover {
+    fill-opacity: .8; }
+.dc-chart g.state path {
+    stroke: #fff; }
+
+.dc-chart g.deselected path {
+    fill: #808080; }
+
+.dc-chart g.deselected text {
+    display: none; }
