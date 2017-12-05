@@ -14,7 +14,9 @@ class TerroMap {
         // Add the map filtering
         let locationFilter = new L.LocationFilter().addTo(this.map);
         locationFilter.on("change", function (e) {
-            console.log("Bounds changed", e.bounds);
+            xf.lat.filter([e.bounds.getSouth(), e.bounds.getNorth()]);
+            xf.lon.filter([e.bounds.getEast(), e.bounds.getWest()]);
+            mapT.refreshMarkers();
         });
         locationFilter.on("enabled", function () {
             console.log("Geofilter enabled");
@@ -113,7 +115,7 @@ class TerroMap {
         // Enable and disable markers according to crossfilter
         let markers = this.pruneCluster.GetMarkers();
         markers.map(function(x) {x.filtered = true; return x;});
-        let filteredEvents = xf.id.bottom(Infinity);
+        let filteredEvents = xf.lat.bottom(Infinity);
         filteredEvents.map(x => x.marker.filtered = false);
         this.pruneCluster.ProcessView();
 
