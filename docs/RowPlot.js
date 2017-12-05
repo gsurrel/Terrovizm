@@ -1,6 +1,6 @@
 "use strict"
 
-var rowPlots = {};
+let rowPlots = {};
 
 class RowPlot{
     constructor(id, dimension, cap, title){

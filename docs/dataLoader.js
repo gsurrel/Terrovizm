@@ -45,7 +45,7 @@ function reformatData(json) {
 
     // Create the date in the iyear field, which we rename
     json.events.map(function(x) {
-        x[columns.date] = Date.UTC(...x[columns.date]);
+        x[columns.date] = new Date(...x[columns.date]);
         return x;
     });
 

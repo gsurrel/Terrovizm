@@ -7,7 +7,7 @@ class RangeChart{
         let startTime = new Date();
 
         this.rangeDimension = rangeDimension;
-        this.rangeGroup = rangeDimension.group();
+        this.rangeGroup = rangeDimension.group(d3.time.month);
 
         let maxDate = new Date(this.rangeDimension.top(1)[0]['date']),
             minDate = new Date(this.rangeDimension.bottom(2)[0]['date']);
@@ -40,7 +40,7 @@ class RangeChart{
 }
 
 function createStackedPlots(){
-    let attacksMonths = xf.dimension(d => d.date);
+    let attacksMonths = xf.dimension(d => new Date(d.date));
     rangeChart = new RangeChart(attacksMonths,"title");
     dc.renderAll();
 }
