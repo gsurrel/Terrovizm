@@ -59,15 +59,15 @@ body {
 }
 
 #stacked-plot{
-    height: 15%;
+    height: 5%;
     width: 100%;
     position: fixed;
     left: 0;
-    bottom: 5%;
+    bottom: 15%;
 }
 
 #range-plot{
-    height: 5%;
+    height: 15%;
     width: 100%;
     position: fixed;
     left: 0;
