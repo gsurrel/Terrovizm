@@ -58,7 +58,7 @@ body {
     overflow: auto;
 }
 
-#stacked-plot{
+#summary{
     height: 5%;
     width: 100%;
     position: fixed;
