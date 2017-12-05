@@ -110,8 +110,12 @@ class TerroMap {
     refreshMarkers() {
         let t1 = new Date();
 
-        //let topLats = xf.lat.top(5);
-        this.pruneCluster.RedrawIcons();
+        // Enable and disable markers according to crossfilter
+        let markers = this.pruneCluster.GetMarkers();
+        markers.map(function(x) {x.filtered = true; return x;});
+        let filteredEvents = xf.id.bottom(Infinity);
+        filteredEvents.map(x => x.marker.filtered = false);
+        this.pruneCluster.ProcessView();
 
         // Log
         let t2 = new Date();

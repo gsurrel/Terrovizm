@@ -63,9 +63,7 @@ function reformatData(json) {
                 "nwound": x.nwound,
                 "icon": (() => undefined),
                 "popup": (() => undefined)
-            },
-            null,
-            true];
+            }];
         return x;
     });
 
