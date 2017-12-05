@@ -76,7 +76,20 @@ function main() {
 
         createRowPlots();
         createStackedPlots();
+        createSummaries();
 
         ready = true;
     }
+}
+
+function createSummaries(){
+    let all = xf.groupAll();
+    let evCount = dc.dataCount('#selected-events')
+        .dimension(xf)
+        .group(all)
+        .html({
+            some: '<strong>%filter-count</strong> attacks filtered out of <strong>%total-count</strong> records' +
+            ' | <a href=\'javascript:dc.filterAll(); dc.renderAll();\'>Reset All</a>',
+            all: 'All records selected. Please click on bar charts or time range to apply filters.'
+        });
 }

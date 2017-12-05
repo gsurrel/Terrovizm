@@ -57,7 +57,6 @@ class RowPlot{
 }
 
 function createRowPlots(){
-    console.log("Creating the row plots");
     let startTime = new Date();
 
     let regionDim = xf.dimension(d => data.refs.region[d.region]);
@@ -82,5 +81,5 @@ function createRowPlots(){
     rowPlots['suicide-row-plot'] = new RowPlot("suicide-row-plot", suicideDim, Infinity, "Suicide attacks");
 
     dc.renderAll();
-    console.log(`Took ${new Date() - startTime} ms`);
+    console.log(`Creating the row plots took ${new Date() - startTime} ms`);
 }
