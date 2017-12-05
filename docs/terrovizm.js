@@ -79,7 +79,15 @@ function main() {
         createSummaries();
 
         ready = true;
-    }
+
+        // hook on dc to refresh the map when filters are applied on barcharts or timeline
+        dc.chartRegistry.list().forEach(chart => chart.on('filtered', refreshView));
+    };
+}
+
+function refreshView(){
+    mapT.refreshMarkers();
+    dc.redrawAll();
 }
 
 function createSummaries(){

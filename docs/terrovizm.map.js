@@ -17,7 +17,8 @@ class TerroMap {
 
             xf.lat.filter([e.bounds.getSouth(), e.bounds.getNorth()]);
             xf.lon.filter([e.bounds.getWest(), e.bounds.getEast()]);
-            mapT.refreshMarkers();
+
+            refreshView();
         });
         locationFilter.on("enabled", function () {
             console.log("Geofilter enabled");
