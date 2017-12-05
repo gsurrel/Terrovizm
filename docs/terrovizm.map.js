@@ -14,8 +14,9 @@ class TerroMap {
         // Add the map filtering
         let locationFilter = new L.LocationFilter().addTo(this.map);
         locationFilter.on("change", function (e) {
+
             xf.lat.filter([e.bounds.getSouth(), e.bounds.getNorth()]);
-            xf.lon.filter([e.bounds.getEast(), e.bounds.getWest()]);
+            xf.lon.filter([e.bounds.getWest(), e.bounds.getEast()]);
             mapT.refreshMarkers();
         });
         locationFilter.on("enabled", function () {
