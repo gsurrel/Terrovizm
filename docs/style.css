@@ -8,7 +8,7 @@ body {
     background: #000;
     color: #fff;
     height: 100%;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 /* Splash screen */
@@ -42,21 +42,23 @@ body {
     background: none;
 }
 
-/* Side charts */
-.dc-chart > h3 {
-    margin-left: 3mm;
-    margin-bottom: 0;
+/* Row plots props*/
+::-webkit-scrollbar{
+    width: 0px;
+    background: transparent;
 }
-
 #row-plots{
     display: block;
+
+    position: fixed;
     height: 80%;
     width: 20%;
-    position: fixed;
     right: 0;
     top: 0;
-    overflow: auto;
+
+    overflow: scroll;
 }
+
 
 #summary{
     height: 5%;
@@ -76,9 +78,17 @@ body {
 
 /*
 ------- Row plots CSS------
-
  Row plots label color and font-size
  */
+.dc-chart{
+    text-align: center;
+}
+
+.dc-chart > span {
+    margin-top: 5%;
+    display: inline-block;
+}
+
 .dc-chart g.row text {
     fill: white;
     font-size: 0.8em;
