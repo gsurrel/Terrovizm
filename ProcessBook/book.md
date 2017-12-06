@@ -295,9 +295,9 @@ Having around 170k entries in our dataset we had to find an approach for filteri
 Using the *dc.js* proved to be a great implementation choice as it provided ready to use and adjustable functionalities for barcharts and time faceting. Incrementally working on our visualization, we observed that *dc.js* by using the *crossfilter* in the underlying implementation scaled rather well for the barplots, making the filtering by the categorical variables fast and the user experience was enjoyable.
 
 The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance. 
-![Slow time faceting](TimeFacetingBag.jpg)
+![](TimeFacetingBad.png)
 We noticed that the timefaceting was implemented as a barchart over which brushing functionality was added. This made us analyse how the data was mapped to a bar and basically only the events with exactly the same time where clustered together. After consulting with the TA - Volodymyr Miz, he guided us towards clustering the events by months in the barchart. This was indeed a good approach as it is now implemented and successfully solves our problem.
-![Fast time faceting](TimeFacetingSolved.jpg)
+![](TimeFacetingSolved.png)
 
 ## Designs
 
