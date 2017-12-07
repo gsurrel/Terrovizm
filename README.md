@@ -27,18 +27,18 @@ The [visualization is hosted on Github Pages](https://gsurrel.github.io/Terroviz
 - 2017-11-28 (Week 11): Functional project prototype review
     - [x] Have an initial JSON structure. [Suggestion](scripts/suggestion.json). [Suggestion 2](scripts/suggestion2.json).
     - [x] [Script it (notebook)](scripts/DataCleaning.ipynb), [standalone-script](scripts/DataCleaning.py)
-    - [ ] Create different panels on the web interface
+    - [x] Create different panels on the web interface
     - [x] Load and make data nice
     - [x] Load it in [Crossfilter.js](https://github.com/crossfilter/crossfilter)
-    - [ ] Have a [Leaflet](https://github.com/Leaflet/Leaflet)
+    - [x] Have a [Leaflet](https://github.com/Leaflet/Leaflet)
         - [x] Instantiate library
         - [x] Setup base layer
         - [x] Kill it without clustering
         - [x] Use prune plugin to display the data
-        - [ ] Add filtering of the data
-        - [ ] React to filtering updates
-    - [ ] Have a timeline, with time filtering
-    - [ ] Have facets, with enable/disable toggles
-    - [ ] Update the other views according to the filters
+        - [x] Add filtering of the data
+        - [x] React to filtering updates
+    - [x] Have a timeline, with time filtering
+    - [x] Have facets, with enable/disable toggles
+    - [x] Update the other views according to the filters
 - 2017-12-12 (Week 13): Final project with screencast, story telling and peer-evaluations
 - 2017-12-19 (Week 14): Project presentations
