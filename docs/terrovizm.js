@@ -119,5 +119,5 @@ function createIntroductionSymbols() {
 }
 
 function toggleWelcomeScreen() {
-    document.getElementById("loader").style.display = (welcome = !welcome) ? "none" : "block";
+    document.getElementById("loader").style.display = (welcome = !welcome) ? "block" : "none";
 }
