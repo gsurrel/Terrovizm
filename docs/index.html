@@ -10,69 +10,102 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="main()">
-        <div id="loader">
-            <h1>Terr💣vizm</h1>
+        <h1 id="logo" onclick="toggleWelcomeScreen()">Terr💣vizm</h1>
+        <div id="loader"><div id="loader_text">
+            <p id="intro">Click on the logo for the visualization</p>
             <h2>What is this?</h2>
-            <p>
-                This visualization lets you explore the details of terrorist acts. Besides the media coverage, it is hard to have a good insight of the prevalence of terrorism worldwide.
-            </p>
-            <p>
-                There are several tools available to explore the data:
-            </p>
-            <table>
+            <p>This visualization lets you explore the details of recorded terrorist acts. It is possible to filter and select exactly the data relevant to you using the provided tools.</p>
+            <p>The details about the inclusion in the database is explained in the part "What is the data?"</p>
+            <h3>Marker color code</h3>
+            <table class=".leaflet-container">
                 <thead>
                     <tr>
-                        <td>Symbol</td>
-                        <td>Meaning</td>
                         <td>Symbol</td>
                         <td>Meaning</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><img src="images/cluster_example.png" style="width: 24px; height: 24px;" /></td>
-                        <td>Two events happened at this place. The length of the colored crown shows the proportion of events without any casualties (one in this example). The red fraction is the proportion of killed persons, whereas the orange one the proportion of injured persons.</td>
+                        <td id="event_icon_dead"></td>
+                        <td>Marker for an event where all the casualties are dead.</td>
+                    </tr>
+                    <tr>
+                        <td id="event_icon_wounded"></td>
+                        <td>Marker for an event where all the casualties are wounded.</td>
+                    </tr>
+                    <tr>
+                        <td id="event_icon_mixed"></td>
+                        <td>Marker for an event where all the casualties are 25% killed and 75% wounded.</td>
+                    </tr>
+                    <tr>
+                        <td id="event_icon_noharm"></td>
+                        <td>Marker for an event where there are no casualties.</td>
                     </tr>
                 </tbody>
             </table>
-            <ul>
-                <li>
-                     This marker contains 2 events.
-                </li>
-            </ul>
+
+            <h3>Marker grouping code</h3>
+            <table class=".leaflet-container">
+                <thead>
+                    <tr>
+                        <td>Symbol</td>
+                        <td>Meaning</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="cluster_icon_mixed"></td>
+                        <td>Group of 16 events where casualties are 25% killed and 75% wounded.</td>
+                    </tr>
+                    <tr>
+                        <td id="cluster_icon_hard"></td>
+                        <td>Group of 16 events where 50% of them caused no harm to humans, whereas the 50% remaining have casualties which are 25% killed and 75% wounded.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Marker size code</h3>
+            <table class=".leaflet-container">
+                <thead>
+                    <tr>
+                        <td>Symbol</td>
+                        <td>Meaning</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="cluster_icon_small"></td>
+                        <td>Group of 20 events where the total number of casualties is 10.</td>
+                    </tr>
+                    <tr>
+                        <td id="marker_icon_medium"></td>
+                        <td>Single event where the total number of casualties is 500.</td>
+                    </tr>
+                    <tr>
+                        <td id="cluster_icon_big"></td>
+                        <td>Group of 20 events where the total number of casualties is 10'000.</td>
+                    </tr>
+                    <tr>
+                        <td id="cluster_icon_huge"></td>
+                        <td>Group of 3213 events where the total number of casualties is 100'000.</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <h2>What is the data?</h2>
-            <p>
-                The Global Terrorism Database is an open-source database including information on terrorist events around the world from 1970 through 2016. The GTD includes systematic data on domestic as well as international terrorist incidents that have occurred during this time period and now includes more than 170,000 cases. The criterions about inclusion in the database are the following:
-            </p>
+            <p>The Global Terrorism Database includes information on terrorist events around the world from 1970 through 2016. More than 160'000 cases are recorded. The criterions about inclusion in the database are the following:</p>
             <quote>
-                <p>
-                    The GTD defines a terrorist attack as the threatened or actual use of illegal force and violence by a non-state actor to attain a political, economic, religious, or social goal through fear, coercion, or intimidation. In practice this means in order to consider an incident for inclusion in the GTD, all three of the following attributes must be present:
-                </p>
+                <p>The GTD defines a terrorist attack as the threatened or actual use of illegal force and violence by a non-state actor to attain a political, economic, religious, or social goal through fear, coercion, or intimidation. In practice this means in order to consider an incident for inclusion in the GTD, all three of the following attributes must be present:</p>
                 <ul>
-                    <li>
-                        The incident must be intentional - the result of a conscious calculation on the part of a perpetrator.
-                    </li>
-                    <li>
-                        The incident must entail some level of violence or immediate threat of violence - including property violence, as well as violence against people.
-                    </li>
-                    <li>
-                        The perpetrators of the incidents must be sub-national actors. The database does not include acts of state terrorism.
-                    </li>
+                    <li>The incident must be intentional - the result of a conscious calculation on the part of a perpetrator.</li>
+                    <li>The incident must entail some level of violence or immediate threat of violence - including property violence, as well as violence against people.</li>
+                    <li>The perpetrators of the incidents must be sub-national actors. The database does not include acts of state terrorism.</li>
                 </ul>
-                <p>
-                    In addition, at least two of the following three criteria must be present for an incident to be included in the GTD:
-                </p>
+                <p>In addition, at least two of the following three criteria must be present for an incident to be included in the GTD:</p>
                 <ul>
-                    <li>
-                        Criterion 1: The act must be aimed at attaining a political, economic, religious, or social goal. In terms of economic goals, the exclusive pursuit of profit does not satisfy this criterion. It must involve the pursuit of more profound, systemic economic change.
-                    </li>
-                    <li>
-                        Criterion 2: There must be evidence of an intention to coerce, intimidate, or convey some other message to a larger audience (or audiences) than the immediate victims. It is the act taken as a totality that is considered, irrespective if every individual involved in carrying out the act was aware of this intention. As long as any of the planners or decision-makers behind the attack intended to coerce, intimidate or publicize, the intentionality criterion is met.
-                    </li>
-                    <li>
-                        Criterion 3: The action must be outside the context of legitimate warfare activities. That is, the act must be outside the parameters permitted by international humanitarian law (particularly the prohibition against deliberately targeting civilians or non-combatants).
-                    </li>
+                    <li>Criterion 1: The act must be aimed at attaining a political, economic, religious, or social goal. In terms of economic goals, the exclusive pursuit of profit does not satisfy this criterion. It must involve the pursuit of more profound, systemic economic change.</li>
+                    <li>Criterion 2: There must be evidence of an intention to coerce, intimidate, or convey some other message to a larger audience (or audiences) than the immediate victims. It is the act taken as a totality that is considered, irrespective if every individual involved in carrying out the act was aware of this intention. As long as any of the planners or decision-makers behind the attack intended to coerce, intimidate or publicize, the intentionality criterion is met.</li>
+                    <li>Criterion 3: The action must be outside the context of legitimate warfare activities. That is, the act must be outside the parameters permitted by international humanitarian law (particularly the prohibition against deliberately targeting civilians or non-combatants).</li>
                 </ul>
             </quote>
 
@@ -90,7 +123,7 @@
             <h2>How?</h2>
 
             <footer id="footer"></footer>
-        </div>
+        </div></div>
 
         <div id="map">
         </div>
@@ -99,7 +132,7 @@
         <div id="range-plot">
             <div id="summary">
                 <div id="selected-events" class="dc-data-count"></div>
-                <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+                <span class="reset" style="display: none;">Range: <span class="filter"></span></span>
             </div>
         </div>
         <!-- Scripts at the end of the page for non-blocking loading -->

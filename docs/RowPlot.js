@@ -81,5 +81,5 @@ function createRowPlots(){
     rowPlots['suicide-row-plot'] = new RowPlot("suicide-row-plot", suicideDim, Infinity, "Suicide attacks");
 
     dc.renderAll();
-    console.log(`Creating the row plots took ${new Date() - startTime} ms`);
+    console.log(`Creating the row plots`, new Date() - startTime);
 }

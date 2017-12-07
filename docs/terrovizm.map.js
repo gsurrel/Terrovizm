@@ -2,8 +2,6 @@
 
 class TerroMap {
     // References to UI objects
-    //let map;
-
     constructor() {
         this.map = L.map('map').setView([0, 0], 2);
 
@@ -14,17 +12,20 @@ class TerroMap {
         // Add the map filtering
         let locationFilter = new L.LocationFilter().addTo(this.map);
         locationFilter.on("change", function (e) {
-
             xf.lat.filter([e.bounds.getSouth(), e.bounds.getNorth()]);
             xf.lon.filter([e.bounds.getWest(), e.bounds.getEast()]);
-
             refreshView();
         });
         locationFilter.on("enabled", function () {
-            console.log("Geofilter enabled");
+            let bounds = locationFilter.getBounds();
+            xf.lat.filter([bounds.getSouth(), bounds.getNorth()]);
+            xf.lon.filter([bounds.getWest(), bounds.getEast()]);
+            refreshView();
         });
         locationFilter.on("disabled", function () {
-            console.log("Geofilter disabled");
+            xf.lat.filter(null);
+            xf.lon.filter(null);
+            refreshView();
         });
 
         // Create and add the PruneCluster layer
@@ -34,10 +35,10 @@ class TerroMap {
             let markers = cluster.GetClusterMarkers();
             let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
             let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
-            let nocasualties = markers.reduce((acc, x) => acc + x.data.nkill == 0 & x.data.nwound == 0, 0);
-            let iconSize = 24 + Math.sqrt(cluster.population/80);
+            let nocasualties = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
+            let iconSize = TerroMap.markerSize(nkill+nwound);
             return new L.divIcon({
-                html: TerroMap.createMarkerPie(nkill, nwound, iconSize, cluster.population, nocasualties).node().outerHTML,
+                html: TerroMap.createMarkerPie(nkill, nwound, nocasualties, iconSize, cluster.population).node().outerHTML,
                 iconAnchor: [iconSize/2, iconSize/2],
                 className: "killwoundmarker"
             });
@@ -61,54 +62,77 @@ class TerroMap {
         <ul>
             ${event.weaptype.reduce((acc, y) => `<li>${data.refs.weaptype[y]}</li>`, "")}
         </ul>
-        <h3>More…</h3>
-        <a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">Details</a>`
+        <h3><a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">More…</a></h3>`;
     }
 
-    static createMarkerPie(nkill, nwound, markersize, clustersize, nocasualties) {
+    static createMarkerPie(nkill, nwound, nocasualties, markersize, clustersize) {
         let len = markersize;
+
+        // Compute fractions
+        let fractionWithoutCasaulties = nocasualties/(clustersize !== void 0 ? clustersize : 1);
+        let fractionWithCasaulties = 1 - fractionWithoutCasaulties;
+        let fractionKilled = (nocasualties & clustersize === void 0) ? 0 : nkill/(nkill+nwound);
+        let fractionInjured = 1 - fractionKilled;
+
+        // Compute ABSOLUTE angles
+        let angleStart = 0;
+        let angleKill  = 2*Math.PI*fractionWithCasaulties*fractionKilled;
+        let angleWound = angleKill + 2*Math.PI*fractionWithCasaulties*fractionInjured;
+        let angleNoHarm = 2*Math.PI;
+
+        // The piechart svg reference
         let svg = d3.select(document.createElement("div"))
-        //let svg = d3.select("body")
             .append("svg")
             .attr("width", len)
-            .attr("height", len);
-        if(nkill + nwound != 0) {
-            svg.append("path")
-                .attr("d", d3.svg.arc()
-                    .innerRadius(0)
-                    .outerRadius(len/2)
-                    .startAngle(0)
-                    .endAngle(-nkill / (nwound + nkill) * Math.PI * 2 * (clustersize === void 0 ? 1 : (1-nocasualties/clustersize))))
-                .attr("fill", "red")
-                .attr("transform", `translate(${len/2},${len/2})`);
-            svg.append("path")
-                .attr("d", d3.svg.arc()
-                    .innerRadius(0)
-                    .outerRadius(len/2)
-                    .startAngle(0)
-                    .endAngle(nwound / (nwound + nkill) * Math.PI * 2 * (clustersize === void 0 ? 1 : (1-nocasualties/clustersize))))
-                .attr("fill", "orange")
-                .attr("transform", `translate(${len/2},${len/2})`);
-        }
-        let circle = svg.append("circle")
+            .attr("height", len)
+            .attr("class", "cluster_icon");
+        svg.append("circle")
             .attr("r", len*2/5)
             .attr("cx", len/2)
             .attr("cy", len/2)
-            .attr("fill", clustersize === void 0 ? "white" : "#ddd");
-        if(nkill + nwound == 0) {
-            circle.attr("stroke", "black");
-        }
+            .attr("fill", "#fff");
+        // The killed part
+        svg.append("path")
+            .attr("d", d3.svg.arc()
+                .innerRadius(len/3)
+                .outerRadius(len/2)
+                .startAngle(0)
+                .endAngle(angleKill))
+            .attr("fill", "#f00")
+            .attr("transform", `translate(${len/2},${len/2})`);
+        svg.append("path")
+            .attr("d", d3.svg.arc()
+                .innerRadius(len/3)
+                .outerRadius(len/2)
+                .startAngle(angleKill)
+                // Going clockwise
+                .endAngle(angleWound))
+            .attr("fill", "#ffa500")
+            .attr("transform", `translate(${len/2},${len/2})`);
+        svg.append("path")
+            .attr("d", d3.svg.arc()
+                .innerRadius(len/3)
+                .outerRadius(len/2)
+                .startAngle(angleWound)
+                .endAngle(angleNoHarm))
+            .attr("fill", "#76b2e4")
+            .attr("transform", `translate(${len/2},${len/2})`);
+
         if (clustersize !== void 0) {
             svg.append("text")
                 .attr("x", len/2)
                 .attr("y", len/2)
-                .attr("dy", 5)
+                .attr("dy", 4)
                 .attr("text-anchor", "middle")
                 .attr("fill", "black")
                 .text(clustersize);
         }
 
         return svg;
+    }
+
+    static markerSize(peopleInvolved) {
+        return 24 + Math.sqrt(peopleInvolved/50);
     }
 
     refreshMarkers() {
