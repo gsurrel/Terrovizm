@@ -83,7 +83,7 @@ function createSummaries(){
         .html({
             some: 'Selected <strong>%filter-count</strong> attacks out of <strong>%total-count</strong> records' +
             '<span class="reset" onclick="javascript:dc.filterAll(); dc.renderAll();">Reset all</span>',
-            all: 'All records selected. Please click on bar charts or time range to apply filters.'
+            all: 'All records selected. Please click on bar charts or select a time range to apply filters.'
         });
 }
 
