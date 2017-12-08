@@ -20,7 +20,7 @@ body {
     position: sticky;
     z-index: 1600 /* Above the welcome screen */;
     margin: auto;
-    width: 5em;
+    width: 6em;
     text-align: center;
     padding: 2mm;
     color: black;
