@@ -5,6 +5,9 @@
         constructor() {
             this.map = L.map('map').setView([0, 0], 2);
             this.map.options.minZoom = 2;
+            this.map.options.maxBounds = L.latLngBounds(
+                L.latLng(100, -200),
+                 L.latLng(-100, 200));
 
             L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
                 attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -53,14 +56,14 @@
                     icon: mapT.pruneCluster.BuildLeafletClusterIcon(cluster)
                 });
 
-                let markers = cluster.GetClusterMarkers();
-                let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
-                let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
-                let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
-                let popup = L.popup()
-                    .setLatLng(position)
-                    .setContent(`nkill: ${nkill}<br>nwound: ${nwound}<br>novictims: ${novictims}<br>`);
                 m.on('mouseover', function() {
+                    let markers = cluster.GetClusterMarkers();
+                    let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
+                    let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
+                    let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
+                    let popup = L.popup()
+                        .setLatLng(cluster.averagePosition)
+                        .setContent(`nkill: ${nkill}<br>nwound: ${nwound}<br>novictims: ${novictims}<br>`);
                     popup.openOn(mapT.map);
                 });
                 m.on('mouseout', function() {
@@ -76,7 +79,7 @@
 
         static createrMarkerText(event) {
             return `<h2>${(new Date(event.date)).toDateString()}</h2>
-            <h3>Casualties</h3>
+            <h3>Victims</h3>
             <ul>
                 <li>Killed: ${event.nkill}</li>
                 <li>Wounded: ${event.nwound}</li>
