@@ -73,6 +73,16 @@ function main() {
 function refreshView(){
     mapT.refreshMarkers();
     dc.redrawAll();
+
+    // Test if markers are in view (needs conversion to bounds used by PruneCLuster)
+    let b = mapT.map.getBounds();
+    let markers = mapT.pruneCluster.Cluster.FindMarkersInArea(
+        {"minLat": b.getSouth(),
+         "maxLat": b.getNorth(),
+         "minLng": b.getWest(),
+         "maxLng": b.getEast()
+     });
+     alert(markers.length);
 }
 
 function createSummaries(){
