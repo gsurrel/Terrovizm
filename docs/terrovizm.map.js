@@ -4,6 +4,7 @@ class TerroMap {
     // References to UI objects
     constructor() {
         this.map = L.map('map').setView([0, 0], 2);
+        this.map.options.minZoom = 2;
 
         L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
             attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
