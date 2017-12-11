@@ -35,10 +35,10 @@ class TerroMap {
             let markers = cluster.GetClusterMarkers();
             let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
             let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
-            let nocasualties = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
+            let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
             let iconSize = TerroMap.markerSize(nkill+nwound);
             return new L.divIcon({
-                html: TerroMap.createMarkerPie(nkill, nwound, nocasualties, iconSize, cluster.population).node().outerHTML,
+                html: TerroMap.createMarkerPie(nkill, nwound, novictims, iconSize, cluster.population).node().outerHTML,
                 iconAnchor: [iconSize/2, iconSize/2],
                 className: "killwoundmarker"
             });
@@ -65,19 +65,19 @@ class TerroMap {
         <h3><a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">More…</a></h3>`;
     }
 
-    static createMarkerPie(nkill, nwound, nocasualties, markersize, clustersize) {
+    static createMarkerPie(nkill, nwound, novictims, markersize, clustersize) {
         let len = markersize;
 
         // Compute fractions
-        let fractionWithoutCasaulties = nocasualties/(clustersize !== void 0 ? clustersize : 1);
-        let fractionWithCasaulties = 1 - fractionWithoutCasaulties;
-        let fractionKilled = (nocasualties & clustersize === void 0) ? 0 : nkill/(nkill+nwound);
+        let fractionWithoutVictims = novictims/(clustersize !== void 0 ? clustersize : 1);
+        let fractionWithVictims = 1 - fractionWithoutVictims;
+        let fractionKilled = (novictims & clustersize === void 0) ? 0 : nkill/(nkill+nwound);
         let fractionInjured = 1 - fractionKilled;
 
         // Compute ABSOLUTE angles
         let angleStart = 0;
-        let angleKill  = 2*Math.PI*fractionWithCasaulties*fractionKilled;
-        let angleWound = angleKill + 2*Math.PI*fractionWithCasaulties*fractionInjured;
+        let angleKill  = 2*Math.PI*fractionWithVictims*fractionKilled;
+        let angleWound = angleKill + 2*Math.PI*fractionWithVictims*fractionInjured;
         let angleNoHarm = 2*Math.PI;
 
         // The piechart svg reference
