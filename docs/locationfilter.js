@@ -95,11 +95,11 @@ L.LocationFilter = L.Layer.extend({
 
     options: {
         enableButton: {
-            enableText: "Select area",
-            disableText: "Remove selection"
+            enableText: "Filter area",
+            disableText: "Remove area filter"
         },
         adjustButton: {
-            text: "Select area within current zoom"
+            text: "Set to current view"
         },
         buttonPosition: 'topleft'
     },
