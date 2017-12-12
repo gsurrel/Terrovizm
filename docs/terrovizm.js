@@ -5,6 +5,9 @@
 let data = new Object();
 let xf;
 
+// Global summaries
+let victimsSummaries;
+
 // Ready flag
 let ready = false;
 
@@ -105,19 +108,46 @@ function refreshView(){
                 }
             }
         }
+
+    // update the summaries
+    d3.select('#selected-events-details')
+        .html(`#killed <strong>${victimsSummaries.value()['nkill'].toLocaleString()}</strong> - #wounded <strong>${victimsSummaries.value()['nwound'].toLocaleString()}</strong>`)
     }
 
-    function createSummaries(){
-        let all = xf.groupAll();
-        let evCount = dc.dataCount('#selected-events')
+function filterAll(){
+    dc.chartRegistry.list().forEach(chart => {
+        if(chart.hasFilter()){
+            chart.filterAll();
+            chart.redraw();
+        }
+    });
+}
+
+function createSummaries(){
+    let all = xf.groupAll();
+    let evCount = dc.dataCount('#selected-events')
         .dimension(xf)
         .group(all)
         .html({
             some: 'Selected <strong>%filter-count</strong> attacks out of <strong>%total-count</strong> records' +
-            '<span class="reset" onclick="javascript:dc.filterAll(); dc.renderAll();">Reset all</span>',
+            '<span class="reset" onclick="javascript:filterAll();">Reset all</span>',
             all: 'All records selected. Please click on bar charts or select a time range to apply filters.'
         });
-    }
+    victimsSummaries = xf.groupAll();
+    victimsSummaries = victimsSummaries.reduce(
+        (p,v) => {
+            p['nkill'] += v['nkill'];
+            p['nwound'] += v['nwound'];
+            return p;
+        },
+        (p,v) => {
+            p['nkill'] -= v['nkill'];
+            p['nwound'] -= v['nwound'];
+            return p;
+        },
+        () =>{return {nkill:0, nwound:0};}
+    );
+}
 
     function updateLoader() {
         let strings = ["Downloading terrorists",
