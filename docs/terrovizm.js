@@ -100,6 +100,13 @@ function refreshView(){
                     L.latLng(minLat, minLng),
                     L.latLng(maxLat, maxLng)));
                 }
+            } else {
+                let resetFilters = window.confirm('All attacks are filtered out. Remove all filters?');
+                if(resetFilters) {
+                    dc.filterAll();
+                    dc.renderAll();
+                    mapT.map.flyToBounds(mapT.locationFilter.getBounds());
+                }
             }
         }
 
