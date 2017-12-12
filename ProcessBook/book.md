@@ -284,21 +284,6 @@ The data provided by the Global Terrorism Database, as described above, containe
 6. We serializa the data to a special formatted JSON with 2 main fields:
     * refs - containing the mapping of the text values as specified above
     * events - containing an array of arrays, described at point 4.
-## The battle for speed
-### Markers clustering
-
-### Faceting and brushing
-#### Finding a viable solution
-Having around 170k entries in our dataset we had to find an approach for filtering that would scale to such extent. Knowing exactly the details, it was easy to find a solution for our problem: **Crossfilter** - *a JavaScript library for exploring large multivariate datasets in the browser that supports extremely fast (<30ms) interaction with coordinated views, even with datasets containing a million or more records*. This was exactly what we needed. Moreover, we manage to find a library that would fit our requirments and use both *d3.js* and *crossfilter*, this being **dc.js**.
-
-#### Making the solution work
-Using the *dc.js* proved to be a great implementation choice as it provided ready to use and adjustable functionalities for barcharts and time faceting. Incrementally working on our visualization, we observed that *dc.js* by using the *crossfilter* in the underlying implementation scaled rather well for the barplots, making the filtering by the categorical variables fast and the user experience was enjoyable.
-
-The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance. 
-![](TimeFacetingBad.png)
-We noticed that the timefaceting was implemented as a barchart over which brushing functionality was added. This made us analyse how the data was mapped to a bar and basically only the events with exactly the same time where clustered together. After consulting with the TA - Volodymyr Miz, he guided us towards clustering the events by months in the barchart. This was indeed a good approach as it is now implemented and successfully solves our problem.
-![](TimeFacetingSolved.png)
-
 ## Designs
 
 *What are the different visualizations you considered? Justify the design decisions you made using the perceptual and design principles.*
@@ -329,6 +314,22 @@ The following first blueprint show an initial idea for showing the data:
 *Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.*
 
 ## Technical setup
+
+## The battle for speed
+### Markers clustering
+TODO: Write here about the challenges faced with clustering
+
+### Faceting and brushing
+#### Finding a viable solution
+Having around 170k entries in our dataset we had to find an approach for filtering that would scale to such extent. Knowing exactly the details, it was easy to find a solution for our problem: **Crossfilter** - *a JavaScript library for exploring large multivariate datasets in the browser that supports extremely fast (<30ms) interaction with coordinated views, even with datasets containing a million or more records*. This was exactly what we needed. Moreover, we manage to find a library that would fit our requirments and use both *d3.js* and *crossfilter*, this being **dc.js**.
+
+#### Making the solution work
+Using the *dc.js* proved to be a great implementation choice as it provided ready to use and adjustable functionalities for barcharts and time faceting. Incrementally working on our visualization, we observed that *dc.js* by using the *crossfilter* in the underlying implementation scaled rather well for the barplots, making the filtering by the categorical variables fast and the user experience was enjoyable.
+
+The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance. 
+![](TimeFacetingBad.png)
+We noticed that the timefaceting was implemented as a barchart over which brushing functionality was added. This made us analyse how the data was mapped to a bar and basically only the events with exactly the same time where clustered together. After consulting with the TA - Volodymyr Miz, he guided us towards clustering the events by months in the barchart. This was indeed a good approach as it is now implemented and successfully solves our problem.
+![](TimeFacetingSolved.png)
 
 
 
