@@ -36,11 +36,11 @@ function main() {
             // Create the marker icon in the right spot before destructuring
             let markerSize = TerroMap.markerSize(x.nkill+x.nwound);
             x.marker[2].icon = (() => new L.divIcon({
-                    html: TerroMap.createMarkerPie(x.nkill, x.nwound, (x.nkill+x.nwound)==0,
-                        markerSize).node().outerHTML,
-                    iconAnchor: [markerSize/2, markerSize/2],
-                    className: "killwoundmarker"
-                }));
+                html: TerroMap.createMarkerPie(x.nkill, x.nwound, (x.nkill+x.nwound)==0,
+                markerSize).node().outerHTML,
+                iconAnchor: [markerSize/2, markerSize/2],
+                className: "killwoundmarker"
+            }));
             x.marker[2].popup = (() => TerroMap.createrMarkerText(x));
 
             // Create markers in the PruneCluser destructuring the returned data
@@ -78,16 +78,29 @@ function refreshView(){
     let b = mapT.map.getBounds();
     let markers = mapT.pruneCluster.Cluster.FindMarkersInArea(
         {"minLat": b.getSouth(),
-         "maxLat": b.getNorth(),
-         "minLng": b.getWest(),
-         "maxLng": b.getEast()
-     });
-     alert(markers.length);
-}
+        "maxLat": b.getNorth(),
+        "minLng": b.getWest(),
+        "maxLng": b.getEast()
+    });
+    let markersInView = markers.reduce((acc, x) => acc + !(x.filtered), 0);
+    let markersOnMap = mapT.pruneCluster.GetMarkers().reduce((acc, x) => acc + !(x.filtered), 0);
+    if(markersInView == 0 && markersOnMap != 0) {
+        let zoomToMarkers = window.confirm('No attacks in this area. Show the attacks?');
+        if(zoomToMarkers) {
+            let minLat = xf.lat.bottom(1)[0].latitude;
+            let maxLat = xf.lat.top(1)[0].latitude;
+            let minLng = xf.lon.bottom(1)[0].longitude;
+            let maxLng = xf.lon.top(1)[0].longitude;
+            mapT.map.flyToBounds(L.latLngBounds(
+                L.latLng(minLat, minLng),
+                L.latLng(maxLat, maxLng)));
+            }
+        }
+    }
 
-function createSummaries(){
-    let all = xf.groupAll();
-    let evCount = dc.dataCount('#selected-events')
+    function createSummaries(){
+        let all = xf.groupAll();
+        let evCount = dc.dataCount('#selected-events')
         .dimension(xf)
         .group(all)
         .html({
@@ -95,10 +108,10 @@ function createSummaries(){
             '<span class="reset" onclick="javascript:dc.filterAll(); dc.renderAll();">Reset all</span>',
             all: 'All records selected. Please click on bar charts or select a time range to apply filters.'
         });
-}
+    }
 
-function updateLoader() {
-    let strings = ["Downloading terrorists",
+    function updateLoader() {
+        let strings = ["Downloading terrorists",
         "Planning evil plots",
         "Building master plan",
         "Contacting law enforcment",
