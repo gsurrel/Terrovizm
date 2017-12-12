@@ -63,7 +63,7 @@ function main() {
         mapT.refreshMarkers();
 
         createRowPlots();
-        createStackedPlots();
+        createRangePlot();
         createSummaries();
 
         ready = true;

@@ -41,7 +41,7 @@ class RangeChart{
     }
 }
 
-function createStackedPlots(){
+function createRangePlot(){
     let attacksMonths = xf.dimension(d => new Date(d.date));
     rangeChart = new RangeChart(attacksMonths, "title");
     dc.renderAll();
