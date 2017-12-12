@@ -13,7 +13,11 @@ class RowPlot{
         //create the placeholder div for the plot
         this.placeholder = d3.select("#row-plots")
             .append("div")
-            .attr("id", id);
+            .attr("id", id)
+            .attr("data-close", true)
+            .on("click", function(d){
+                this.dataset.close = !(this.dataset.close == 'true');
+            });
 
         // set the width to the one of the placeholder
         this.width = this.placeholder.node().getBoundingClientRect()['width'];

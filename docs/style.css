@@ -164,11 +164,26 @@ body {
  */
 .dc-chart{
     text-align: center;
+    overflow: hidden;
+    transition: max-height .25s;
+    max-height: 100%;
+    color: #76B2E4;
+}
+
+.dc-chart[data-close="true"] {
+    max-height: 2em;
+    font-weight: lighter;
+}
+
+.reset[style^="visibility"] {
+    /* Shameless hack over DC's styling decisions */
+    display: none;
 }
 
 .dc-chart > .row-plot-title {
     margin-top: 5%;
     display: inline-block;
+    cursor: pointer;
 }
 
 .dc-chart g.row text {

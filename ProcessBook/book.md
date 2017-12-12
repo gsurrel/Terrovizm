@@ -272,18 +272,6 @@ It's possible to have a general idea of the contents by creating facets over the
 
 ![First facetting](facets1.png) ![Second facetting](facets2.png)
 
-## Data wrangling - The battle for size
-The data provided by the Global Terrorism Database, as described above, containes a lot of information that goes beyond the scope of our visualization so we have to do some preprocessing. The challenge we encounter is that the original data is *xlsx* format and in order to easily work with it JavaScript, we want it to be in JSON format. This raises a size issue: as the initial xls file has a considerable 82.9MB amount of data, when serializing the dimension would increase to more than double. This has driven us to make the following decisions:
-1. We aggregate the columns expressing multiple values of the same attribute, like attacktype1, attacktype2, attacktype3 into an array for each attribute.
-2. We map the categorical variables in our database to integer values in order to save space. These are the columns with "_txt" suffix. They are specified in the columns analysis above by the **as ref** value in the **keep** column. 
-3. We keep only the columns that are marked with a certain yes. This assures a drastic size decrease while we keep only the necessary information for the visualization.
-4. Given that a big part of our project relies on the geo-location dimension of the database, we drop the attacks that do not have the latitude and longitude specified. This is analysed more in the jupyter notebook DataCleaning.ipynb
-5. In order to reduce the size of the JSON object sent to client, we serialize the terrorist events to a special JSON format in the following way:
-    * we create a mapping from the column position to column name
-    * we keep the events data as rows in a matrix where each column number can be correlated to a column name through the above mentioned mapping
-6. We serializa the data to a special formatted JSON with 2 main fields:
-    * refs - containing the mapping of the text values as specified above
-    * events - containing an array of arrays, described at point 4.
 ## Designs
 
 *What are the different visualizations you considered? Justify the design decisions you made using the perceptual and design principles.*
@@ -314,16 +302,28 @@ The following first blueprint show an initial idea for showing the data:
 *Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.*
 
 ## Technical setup
+### Data wrangling - The battle for size
+The data provided by the Global Terrorism Database, as described above, containes a lot of information that goes beyond the scope of our visualization so we have to do some preprocessing. The challenge we encounter is that the original data is *xlsx* format and in order to easily work with it JavaScript, we want it to be in JSON format. This raises a size issue: as the initial xls file has a considerable 82.9MB amount of data, when serializing the dimension would increase to more than double. This has driven us to make the following decisions:
+1. We aggregate the columns expressing multiple values of the same attribute, like attacktype1, attacktype2, attacktype3 into an array for each attribute.
+2. We map the categorical variables in our database to integer values in order to save space. These are the columns with "_txt" suffix. They are specified in the columns analysis above by the **as ref** value in the **keep** column. 
+3. We keep only the columns that are marked with a certain yes. This assures a drastic size decrease while we keep only the necessary information for the visualization.
+4. Given that a big part of our project relies on the geo-location dimension of the database, we drop the attacks that do not have the latitude and longitude specified. This is analysed more in the jupyter notebook DataCleaning.ipynb
+5. In order to reduce the size of the JSON object sent to client, we serialize the terrorist events to a special JSON format in the following way:
+    * we create a mapping from the column position to column name
+    * we keep the events data as rows in a matrix where each column number can be correlated to a column name through the above mentioned mapping
+6. We serializa the data to a special formatted JSON with 2 main fields:
+    * refs - containing the mapping of the text values as specified above
+    * events - containing an array of arrays, described at point 4.
 
-## The battle for speed
-### Markers clustering
+### The battle for speed
+#### Markers clustering
 TODO: Write here about the challenges faced with clustering
 
-### Faceting and brushing
-#### Finding a viable solution
+#### Faceting and brushing
+##### Finding a viable solution
 Having around 170k entries in our dataset we had to find an approach for filtering that would scale to such extent. Knowing exactly the details, it was easy to find a solution for our problem: **Crossfilter** - *a JavaScript library for exploring large multivariate datasets in the browser that supports extremely fast (<30ms) interaction with coordinated views, even with datasets containing a million or more records*. This was exactly what we needed. Moreover, we manage to find a library that would fit our requirments and use both *d3.js* and *crossfilter*, this being **dc.js**.
 
-#### Making the solution work
+##### Making the solution work
 Using the *dc.js* proved to be a great implementation choice as it provided ready to use and adjustable functionalities for barcharts and time faceting. Incrementally working on our visualization, we observed that *dc.js* by using the *crossfilter* in the underlying implementation scaled rather well for the barplots, making the filtering by the categorical variables fast and the user experience was enjoyable.
 
 The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance. 
