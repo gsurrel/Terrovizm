@@ -70,6 +70,7 @@ function main() {
 
         // Hook on dc to refresh the map when filters are applied on barcharts or timeline
         dc.chartRegistry.list().forEach(chart => chart.on('filtered', refreshView));
+        refreshView();
     };
 }
 
