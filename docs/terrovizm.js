@@ -84,10 +84,19 @@ function refreshView(){
          "minLng": b.getWest(),
          "maxLng": b.getEast()
      });
-     alert(markers.length);
+     //alert(markers.length);
     // update the summaries
     d3.select('#selected-events-details')
         .html(`#killed <strong>${victimsSummaries.value()['nkill'].toLocaleString()}</strong> - #wounded <strong>${victimsSummaries.value()['nwound'].toLocaleString()}</strong>`)
+}
+
+function filterAll(){
+    dc.chartRegistry.list().forEach(chart => {
+        if(chart.hasFilter()){
+            chart.filterAll();
+            chart.redraw();
+        }
+    });
 }
 
 function createSummaries(){
@@ -97,7 +106,7 @@ function createSummaries(){
         .group(all)
         .html({
             some: 'Selected <strong>%filter-count</strong> attacks out of <strong>%total-count</strong> records' +
-            '<span class="reset" onclick="javascript:dc.filterAll(); dc.renderAll();">Reset all</span>',
+            '<span class="reset" onclick="javascript:filterAll();">Reset all</span>',
             all: 'All records selected. Please click on bar charts or select a time range to apply filters.'
         });
 
