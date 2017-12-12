@@ -104,7 +104,7 @@
             // Compute fractions
             let fractionWithoutVictims = novictims/(clustersize !== void 0 ? clustersize : 1);
             let fractionWithVictims = 1 - fractionWithoutVictims;
-            let fractionKilled = (novictims & clustersize === void 0) ? 0 : nkill/(nkill+nwound);
+            let fractionKilled = (novictims & clustersize === void 0 || nkill+nwound == 0) ? 0 : nkill/(nkill+nwound);
             let fractionInjured = 1 - fractionKilled;
 
             // Compute ABSOLUTE angles
