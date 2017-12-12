@@ -3,6 +3,8 @@
     class TerroMap {
         // References to UI objects
         constructor() {
+            let _this = this; // Used when implementing event listenenrs
+
             this.map = L.map('map').setView([0, 0], 2);
             this.map.options.minZoom = 2;
             this.map.options.maxBounds = L.latLngBounds(
@@ -14,19 +16,19 @@
             }).addTo(this.map);
 
             // Add the map filtering
-            let locationFilter = new L.LocationFilter().addTo(this.map);
-            locationFilter.on("change", function (e) {
+            this.locationFilter = new L.LocationFilter().addTo(this.map);
+            this.locationFilter.on("change", function (e) {
                 xf.lat.filter([e.bounds.getSouth(), e.bounds.getNorth()]);
                 xf.lon.filter([e.bounds.getWest(), e.bounds.getEast()]);
                 refreshView();
             });
-            locationFilter.on("enabled", function () {
-                let bounds = locationFilter.getBounds();
+            this.locationFilter.on("enabled", function () {
+                let bounds = _this.locationFilter.getBounds();
                 xf.lat.filter([bounds.getSouth(), bounds.getNorth()]);
                 xf.lon.filter([bounds.getWest(), bounds.getEast()]);
                 refreshView();
             });
-            locationFilter.on("disabled", function () {
+            this.locationFilter.on("disabled", function () {
                 xf.lat.filter(null);
                 xf.lon.filter(null);
                 refreshView();
@@ -51,7 +53,6 @@
             };
 
             // Custom cluster behavior (for adding the mouseover mpopup)
-            let _this = this;
             this.pruneCluster.BuildLeafletCluster = function(cluster, position) {
                 let m = new L.Marker(position, {
                     icon: _this.pruneCluster.BuildLeafletClusterIcon(cluster)
