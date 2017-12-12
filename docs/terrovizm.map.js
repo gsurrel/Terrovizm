@@ -51,9 +51,10 @@
             };
 
             // Custom cluster behavior (for adding the mouseover mpopup)
+            let _this = this;
             this.pruneCluster.BuildLeafletCluster = function(cluster, position) {
                 let m = new L.Marker(position, {
-                    icon: mapT.pruneCluster.BuildLeafletClusterIcon(cluster)
+                    icon: _this.pruneCluster.BuildLeafletClusterIcon(cluster)
                 });
 
                 m.on('mouseover', function() {
@@ -64,10 +65,10 @@
                     let popup = L.popup()
                         .setLatLng(cluster.averagePosition)
                         .setContent(`nkill: ${nkill}<br>nwound: ${nwound}<br>novictims: ${novictims}<br>`);
-                    popup.openOn(mapT.map);
+                    popup.openOn(_this.map);
                 });
                 m.on('mouseout', function() {
-                    mapT.map.closePopup();
+                    _this.map.closePopup();
                 });
 
                 return m;
