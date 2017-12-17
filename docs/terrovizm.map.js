@@ -69,6 +69,7 @@
 
             // Custom cluster icon
             this.pruneCluster.BuildLeafletClusterIcon = function(cluster) {
+                if(mapT.map.getZoom()<=5) return new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"});
                 let markers = cluster.GetClusterMarkers();
                 let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
                 let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);

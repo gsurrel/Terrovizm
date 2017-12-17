@@ -80,7 +80,8 @@ function refreshView(){
 
     // Update the heatmap data
     mapT.heatmapLayer.clear();
-    mapT.heatmapLayer.addData(mapT.pruneCluster.Cluster.GetMarkers().filter((x) => !(x.filtered)));
+    let mapDataPoints = mapT.pruneCluster.Cluster.GetMarkers().filter((x) => !(x.filtered));
+    if(mapDataPoints.length != 0) {mapT.heatmapLayer.addData(mapDataPoints);}
 
     // Test if markers are in view (needs conversion to bounds used by PruneCLuster)
     let b = mapT.map.getBounds();
@@ -91,7 +92,7 @@ function refreshView(){
         "maxLng": b.getEast()
     });
     let markersInView = markers.filter((x) => !(x.filtered));
-    let numMarkersInView = markers.length;
+    let numMarkersInView = markersInView.length;
     if(numMarkersInView == 0) {
         let markersOnMap = mapT.pruneCluster.GetMarkers().reduce((acc, x) => acc + !(x.filtered), 0);
         if(markersOnMap != 0) {
