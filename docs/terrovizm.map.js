@@ -34,6 +34,34 @@
                 refreshView();
             });
 
+            // Create heatmap layer
+            let cfgHeatMap = {
+                // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+                // if scaleRadius is false it will be the constant radius used in pixels
+                "radius": 16,
+                "maxOpacity": .8,
+                // scales the radius based on map zoom
+                "scaleRadius": false,
+                // if set to false the heatmap uses the global maximum for colorization
+                // if activated: uses the data maximum within the current map boundaries
+                //   (there will always be a red spot with useLocalExtremas true)
+                "useLocalExtrema": true,
+                // which field name in your data represents the latitude - default "lat"
+                latField: ((x) => x.position.lat),
+                // which field name in your data represents the longitude - default "lng"
+                lngField: ((x) => x.position.lng),
+                // which field name in your data represents the data value - default "value"
+                valueField: ((x) => (!x.filtered) * (x.data.nkill*2+x.data.nwound)),
+                gradient: {
+                    // enter n keys between 0 and 1 here for gradient color customization
+                    '.3': 'blue',
+                    '.90': 'red',
+                    '.98': '#FCC'
+                },
+            };
+            this.heatmapLayer = new HeatmapOverlay(cfgHeatMap);
+            this.map.addLayer(this.heatmapLayer);
+
             // Create and add the PruneCluster layer
             this.pruneCluster = new PruneClusterForLeaflet(100, 20);
             PruneCluster.Cluster.ENABLE_MARKERS_LIST = true
@@ -53,10 +81,9 @@
             };
 
             // Custom cluster behavior (for adding the mouseover mpopup)
+            _this.pruneCluster.defaultBuildLeafletCluster = _this.pruneCluster.BuildLeafletCluster;
             this.pruneCluster.BuildLeafletCluster = function(cluster, position) {
-                let m = new L.Marker(position, {
-                    icon: _this.pruneCluster.BuildLeafletClusterIcon(cluster)
-                });
+                let m = _this.pruneCluster.defaultBuildLeafletCluster(cluster, position);
 
                 m.on('mouseover', function() {
                     let markers = cluster.GetClusterMarkers();
@@ -74,7 +101,6 @@
 
                 return m;
             };
-
 
             this.map.addLayer(this.pruneCluster);
         }

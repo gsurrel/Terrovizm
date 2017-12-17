@@ -86,8 +86,14 @@ function refreshView(){
         "minLng": b.getWest(),
         "maxLng": b.getEast()
     });
-    let markersInView = markers.reduce((acc, x) => acc + !(x.filtered), 0);
-    if(markersInView == 0) {
+    let markersInView = markers.filter((x) => !(x.filtered));
+
+    // Update the heatmap data
+    mapT.heatmapLayer.clear();
+    mapT.heatmapLayer.addData(markersInView);
+
+    let numMarkersInView = markers.length;
+    if(numMarkersInView == 0) {
         let markersOnMap = mapT.pruneCluster.GetMarkers().reduce((acc, x) => acc + !(x.filtered), 0);
         if(markersOnMap != 0) {
             let zoomToMarkers = window.confirm('No attacks in this area. Show the attacks?');
