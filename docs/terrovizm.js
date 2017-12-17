@@ -137,7 +137,7 @@ function startViz(data) {
     mapT.refreshMarkers();
 
     createRowPlots(plotsConf);
-    //createRangePlot();
+    createRangePlot();
     createSummaries();
 
     ready = true;

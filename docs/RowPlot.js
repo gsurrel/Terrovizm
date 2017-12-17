@@ -1,9 +1,9 @@
 "use strict"
 
-let rowPlots = {};
+let rowPlots = [];
 
 class RowPlot{
-    constructor(id, cap, title, dimension){
+    constructor(id, cap, title, dimension, plotNumber){
         this.dimension = dimension;
         this.group = dimension.group();
         this.id = id;
@@ -15,7 +15,7 @@ class RowPlot{
             .append("div")
             .attr("id", id)
             .attr("data-close", true)
-            .on("click", function(d){
+            .on("click", function(){
                 this.dataset.close = !(this.dataset.close == 'true');
             });
 
@@ -32,9 +32,11 @@ class RowPlot{
         // Create the reset functionality for the plot. This is mostly taken care of by dc.js library
         this.placeholder.append('span')
             .attr('class','reset')
-            .attr('onclick',`javascript:rowPlots["${id}"].plot.filterAll();dc.renderAll();`)
             .attr('style','visibility:hidden')
-            .html('reset');
+            .html('reset')
+            .on("click", function() {
+                rowPlots[plotNumber].plot.filterAll();dc.renderAll();
+            });
 
         // config the actual rowplot
         this.plot = dc.rowChart(`#${id}`);
@@ -67,7 +69,7 @@ function createRowPlots(plotsConf){
     console.log(`Created dimensions`, midTime - startTime);
 
     // Create plots
-    rowPlots = plotsConf.map(x => new RowPlot(...x[1]));
+    rowPlots = plotsConf.map((x, i) => new RowPlot(...x[1], i));
 
     let endTime = new Date();
     console.log(`Created plots`, endTime - midTime);
