@@ -78,6 +78,10 @@ function refreshView(){
     mapT.refreshMarkers();
     dc.redrawAll();
 
+    // Update the heatmap data
+    mapT.heatmapLayer.clear();
+    mapT.heatmapLayer.addData(mapT.pruneCluster.Cluster.GetMarkers().filter((x) => !(x.filtered)));
+
     // Test if markers are in view (needs conversion to bounds used by PruneCLuster)
     let b = mapT.map.getBounds();
     let markers = mapT.pruneCluster.Cluster.FindMarkersInArea(
@@ -87,11 +91,6 @@ function refreshView(){
         "maxLng": b.getEast()
     });
     let markersInView = markers.filter((x) => !(x.filtered));
-
-    // Update the heatmap data
-    mapT.heatmapLayer.clear();
-    mapT.heatmapLayer.addData(markersInView);
-
     let numMarkersInView = markers.length;
     if(numMarkersInView == 0) {
         let markersOnMap = mapT.pruneCluster.GetMarkers().reduce((acc, x) => acc + !(x.filtered), 0);

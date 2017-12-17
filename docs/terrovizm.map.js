@@ -54,7 +54,8 @@
                 valueField: ((x) => (!x.filtered) * (x.data.nkill*2+x.data.nwound)),
                 gradient: {
                     // enter n keys between 0 and 1 here for gradient color customization
-                    '.3': 'blue',
+                    '.1': 'blue',
+                    '.5': 'orange',
                     '.90': 'red',
                     '.98': '#FCC'
                 },
