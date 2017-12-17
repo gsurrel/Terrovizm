@@ -67,6 +67,17 @@ function reformatData(json) {
     let eventKeys = Object.keys(columns);
     let data = json.events.map(x => _.object(eventKeys, x));
 
+    // Replace the references with the full names
+    data.map(function(d) {
+        d.region = refs.region[d.region];
+        d.country = refs.country[d.country];
+        d.attacktype = d.attacktype.map(x => refs.attacktype[x]);
+        d.targtype = d.targtype.map(x => refs.targtype[x]);
+        d.weaptype = d.weaptype.map(x => refs.weaptype[x]);
+        d.suicide = d.suicide == 1 ? "Yes" : "No";
+        return d;
+    });
+
     // Create the Leaflet markers once and for all
     data.map(function(x) {
         let markerSize = TerroMap.markerSize(x.nkill+x.nwound);
@@ -108,13 +119,13 @@ function startViz(data) {
     xf = crossfilter(data);
     // Create references and crossfilter dimensions
     plotsConf = [
-        [[d => refs.region[d.region]], ["region-row-plot", Infinity, "Attacks by region"]],
-        [[d => refs.country[d.country]], ["country-row-plot", 10, "Attacks by country"]],
+        [[d => d.region], ["region-row-plot", Infinity, "Attacks by region"]],
+        [[d => d.country], ["country-row-plot", 10, "Attacks by country"]],
         [[d => d.gname, true], ["gname-row-plot", 15, "Terrorist group"]],
-        [[d => refs.attacktype[d.attacktype], true], ["attacktype-row-plot", 10, "Type of attacks"]],
-        [[d => d.targtype.map(targ => refs.targtype[targ])], ["targtype-row-plot", 10, "Type of target"]],
-        [[d => refs.weaptype[d.weaptype],true], ["weaptype-row-plot", 10, "Type of weapon"]],
-        [[d => d.suicide == 1 ? "Yes":"No"], ["suicide-row-plot", Infinity, "Suicide attacks"]],
+        [[d => d.attacktype, true], ["attacktype-row-plot", 10, "Type of attacks"]],
+        [[d => d.targtype], ["targtype-row-plot", 10, "Type of target"]],
+        [[d => d.weaptype,true], ["weaptype-row-plot", 10, "Type of weapon"]],
+        [[d => d.suicide], ["suicide-row-plot", Infinity, "Suicide attacks"]],
     ];
     xf.lat = xf.dimension(x => x.latitude),
     xf.lon = xf.dimension(x => x.longitude);
