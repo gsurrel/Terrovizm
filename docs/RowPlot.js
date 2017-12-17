@@ -3,7 +3,7 @@
 let rowPlots = {};
 
 class RowPlot{
-    constructor(id, dimension, cap, title){
+    constructor(id, cap, title, dimension){
         this.dimension = dimension;
         this.group = dimension.group();
         this.id = id;
@@ -60,30 +60,18 @@ class RowPlot{
     }
 }
 
-function createRowPlots(){
+function createRowPlots(plotsConf){
     let startTime = new Date();
 
-    let regionDim = xf.dimension(d => data.refs.region[d.region]);
-    rowPlots['region-row-plot'] = new RowPlot("region-row-plot", regionDim, Infinity, "Attacks by region");
+    let midTime = new Date();
+    console.log(`Created dimensions`, midTime - startTime);
 
-    let countryDim = xf.dimension(d => data.refs.country[d.country]);
-    rowPlots['country-row-plot'] = new RowPlot("country-row-plot", countryDim, 10, "Attacks by country");
+    // Create plots
+    rowPlots = plotsConf.map(x => new RowPlot(...x[1]));
 
-    let gnameDim = xf.dimension(d => d.gname, true);
-    rowPlots['gname-row-plot'] = new RowPlot("gname-row-plot", gnameDim, 15, "Terrorist group");
-
-    let attackTypeDim = xf.dimension(d => data.refs.attacktype[d.attacktype], true);
-    rowPlots['attacktype-row-plot'] = new RowPlot("attacktype-row-plot", attackTypeDim, 10, "Type of attacks");
-
-    let targTypeDim = xf.dimension(d => d.targtype.map(targ => data.refs.targtype[targ]));
-    rowPlots['targtype-row-plot'] = new RowPlot("targtype-row-plot", targTypeDim, 10, "Type of target");
-
-    let weapTypeDim = xf.dimension(d => data.refs.weaptype[d.weaptype],true);
-    rowPlots['weaptype-row-plot'] = new RowPlot("weaptype-row-plot", weapTypeDim, 10, "Type of weapon");
-
-    let suicideDim = xf.dimension(d => d.suicide == 1 ? "Yes":"No");
-    rowPlots['suicide-row-plot'] = new RowPlot("suicide-row-plot", suicideDim, Infinity, "Suicide attacks");
+    let endTime = new Date();
+    console.log(`Created plots`, endTime - midTime);
 
     dc.renderAll();
-    console.log(`Creating the row plots`, new Date() - startTime);
+    console.log(`Rendered all DC plots`, new Date() - endTime);
 }

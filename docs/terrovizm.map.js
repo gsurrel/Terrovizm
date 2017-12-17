@@ -69,7 +69,6 @@
 
             // Custom cluster icon
             this.pruneCluster.BuildLeafletClusterIcon = function(cluster) {
-                if(mapT.map.getZoom()<=5) return new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"});
                 let markers = cluster.GetClusterMarkers();
                 let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
                 let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
@@ -85,8 +84,8 @@
             // Custom cluster behavior (for adding the mouseover mpopup)
             _this.pruneCluster.defaultBuildLeafletCluster = _this.pruneCluster.BuildLeafletCluster;
             this.pruneCluster.BuildLeafletCluster = function(cluster, position) {
+                if(mapT.map.getZoom()<=5) return new L.Marker(position, {icon: new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"})});
                 let m = _this.pruneCluster.defaultBuildLeafletCluster(cluster, position);
-
                 m.on('mouseover', function() {
                     let markers = cluster.GetClusterMarkers();
                     let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
@@ -94,7 +93,12 @@
                     let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
                     let popup = L.popup()
                         .setLatLng(cluster.averagePosition)
-                        .setContent(`nkill: ${nkill}<br>nwound: ${nwound}<br>novictims: ${novictims}<br>`);
+                        .setContent(`<h2>Zone of ${markers.length} attacks</h2>
+                            <h3>Victims</h3>
+                            <ul>
+                                <li>Killed: ${nkill}</li>
+                                <li>Wounded: ${nwound}</li>
+                            </ul>`);
                     popup.openOn(_this.map);
                 });
                 m.on('mouseout', function() {
@@ -117,11 +121,11 @@
             </ul>
             <h3>Target(s)</h3>
             <ul>
-                ${event.targtype.reduce((acc, y) => `<li>${data.refs.targtype[y]}</li>`, "")}
+                ${event.targtype.reduce((acc, y) => `<li>${refs.targtype[y]}</li>`, "")}
             </ul>
             <h3>Weapons(s)</h3>
             <ul>
-                ${event.weaptype.reduce((acc, y) => `<li>${data.refs.weaptype[y]}</li>`, "")}
+                ${event.weaptype.reduce((acc, y) => `<li>${refs.weaptype[y]}</li>`, "")}
             </ul>
             <h3><a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">More…</a></h3>`;
         }

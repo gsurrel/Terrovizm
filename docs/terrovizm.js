@@ -1,9 +1,11 @@
 // Commented out for prototyping in the browser's console
 "use strict"
 
-// Main data object and crossfilter reference
-let data = new Object();
+// Crossfilter reference
 let xf;
+
+// References for number <-> string mappings
+let refs;
 
 // Global summaries
 let victimsSummaries;
@@ -11,8 +13,9 @@ let victimsSummaries;
 // Ready flag
 let ready = false;
 
-// References to map class instance
+// References to visual objects
 let mapT;
+let plotsConf;
 
 // Welcome screen status
 let welcome = true;
@@ -22,57 +25,117 @@ function main() {
     updateLoader();
     mapT = new TerroMap();
 
-    let dataLoader = new Worker('dataLoader.js');
-    dataLoader.postMessage({"dateString": "2017-11-25", "imports": ["d3.v3.min.js", "underscore.min.js"]});
-    dataLoader.onmessage = function(e) {
-        let t1 = new Date();
-        console.log("Transmitting data from worker finished");
-        // Save the data sent from the worker
-        let dataWorker = JSON.parse(e.data);
-        data["refs"] = dataWorker.refs;
+    let startTime = new Date();
+    d3.json(`db-2017-11-25.json`, function(error, json) {
+        // Log
+        if (error) return console.error(error);
+        let downloadTime = new Date();
+        console.log("Download and parsing finished", downloadTime - startTime);
 
-        let t2 = new Date();
-        console.log("Parsed data from worker", t2-t1);
+        // Process data
+        json = reformatData(json);
 
-        // Complete the icon marker generation
-        dataWorker.events.map(function(x) {
-            // Create the marker icon in the right spot before destructuring
-            let markerSize = TerroMap.markerSize(x.nkill+x.nwound);
-            x.marker[2].icon = (() => new L.divIcon({
-                html: TerroMap.createMarkerPie(x.nkill, x.nwound, (x.nkill+x.nwound)==0,
-                markerSize).node().outerHTML,
+        // Fire up everything
+        startViz(json);
+    });
+
+}
+
+function reformatData(json) {
+    let downloadTime = new Date();
+    // We did not use a dictionnary for the events to save network space.
+    // Let's recreate a nice data structure.
+
+    // Split the columns names apart, then all the refs are fine
+    let columns = json.refs.columns;
+    refs = json.refs;
+
+    // Set unknown days and months to 1st day and month
+    json.events.map(function(x) {
+        x[columns.date].filter(y => y == 0).map(y => y = 1);
+        x[columns.date][1]--; // Months start at 0 and not 1
+        return x;
+    });
+
+    // Create the date in the iyear field, which we rename
+    json.events.map(function(x) {
+        x[columns.date] = new Date(...x[columns.date]);
+        return x;
+    });
+
+    // Transform data from unlabled array to an object
+    let eventKeys = Object.keys(columns);
+    let data = json.events.map(x => _.object(eventKeys, x));
+
+    // Create the Leaflet markers once and for all
+    data.map(function(x) {
+        let markerSize = TerroMap.markerSize(x.nkill+x.nwound);
+        let extras = {
+            icon: (() => new L.divIcon({
+                html: TerroMap.createMarkerPie(x.nkill, x.nwound, (x.nkill+x.nwound)==0, markerSize).node().outerHTML,
                 iconAnchor: [markerSize/2, markerSize/2],
                 className: "killwoundmarker"
-            }));
-            x.marker[2].popup = (() => TerroMap.createrMarkerText(x));
+            })),
+            popup: (() => TerroMap.createrMarkerText(x)),
+            nkill: x.nkill,
+            nwound: x.nwound,
+        };
+        x["marker"] = new PruneCluster.Marker(
+            x.latitude,
+            x.longitude,
+            extras
+        );
+        return x;
+    });
 
-            // Create markers in the PruneCluser destructuring the returned data
-            x.marker = new PruneCluster.Marker(...x.marker);
-            mapT.pruneCluster.RegisterMarker(x.marker);
-            return x;
-        });
+    // Log processing time
+    let reformatTime = new Date();
+    console.log("Reformatting of data finished", reformatTime - downloadTime);
 
-        let t3 = new Date();
-        console.log("Instantiated marker data", t3-t2);
-
-        // Fill-in the data crossfiltered
-        xf = crossfilter(dataWorker.events);
-        xf.lat = xf.dimension(x => x.latitude),
-        xf.lon = xf.dimension(x => x.longitude);
-
-        mapT.refreshMarkers();
-
-        createRowPlots();
-        createRangePlot();
-        createSummaries();
-
-        ready = true;
-
-        // Hook on dc to refresh the map when filters are applied on barcharts or timeline
-        dc.chartRegistry.list().forEach(chart => chart.on('filtered', refreshView));
-        refreshView();
-    };
+    return data;
 }
+
+
+function startViz(data) {
+    let t2 = new Date();
+
+    data.map(x => mapT.pruneCluster.RegisterMarker(x.marker));
+
+    let t3 = new Date();
+    console.log("Instantiated marker data", t3-t2);
+
+    // Fill-in the data crossfiltered
+    xf = crossfilter(data);
+    // Create references and crossfilter dimensions
+    plotsConf = [
+        [[d => refs.region[d.region]], ["region-row-plot", Infinity, "Attacks by region"]],
+        [[d => refs.country[d.country]], ["country-row-plot", 10, "Attacks by country"]],
+        [[d => d.gname, true], ["gname-row-plot", 15, "Terrorist group"]],
+        [[d => refs.attacktype[d.attacktype], true], ["attacktype-row-plot", 10, "Type of attacks"]],
+        [[d => d.targtype.map(targ => refs.targtype[targ])], ["targtype-row-plot", 10, "Type of target"]],
+        [[d => refs.weaptype[d.weaptype],true], ["weaptype-row-plot", 10, "Type of weapon"]],
+        [[d => d.suicide == 1 ? "Yes":"No"], ["suicide-row-plot", Infinity, "Suicide attacks"]],
+    ];
+    xf.lat = xf.dimension(x => x.latitude),
+    xf.lon = xf.dimension(x => x.longitude);
+    //let dims = [];
+    //dims.push(xf.dimension(...plotsConf[0][0]));
+    // Create dimensions for bar charts
+    plotsConf.map(x => x[1].push(xf.dimension(...x[0])));
+
+    mapT.refreshMarkers();
+
+    createRowPlots(plotsConf);
+    //createRangePlot();
+    createSummaries();
+
+    ready = true;
+
+    // Hook on dc to refresh the map when filters are applied on barcharts or timeline
+    dc.chartRegistry.list().forEach(chart => chart.on('filtered', refreshView));
+    refreshView();
+};
+
 
 function refreshView(){
     mapT.refreshMarkers();
@@ -116,23 +179,23 @@ function refreshView(){
             }
         }
 
-    // update the summaries
-    d3.select('#selected-events-details')
+        // update the summaries
+        d3.select('#selected-events-details')
         .html(`#killed <strong>${victimsSummaries.value()['nkill'].toLocaleString()}</strong> - #wounded <strong>${victimsSummaries.value()['nwound'].toLocaleString()}</strong>`)
     }
 
-function filterAll(){
-    dc.chartRegistry.list().forEach(chart => {
-        if(chart.hasFilter()){
-            chart.filterAll();
-            chart.redraw();
-        }
-    });
-}
+    function filterAll(){
+        dc.chartRegistry.list().forEach(chart => {
+            if(chart.hasFilter()){
+                chart.filterAll();
+                chart.redraw();
+            }
+        });
+    }
 
-function createSummaries(){
-    let all = xf.groupAll();
-    let evCount = dc.dataCount('#selected-events')
+    function createSummaries(){
+        let all = xf.groupAll();
+        let evCount = dc.dataCount('#selected-events')
         .dimension(xf)
         .group(all)
         .html({
@@ -140,21 +203,21 @@ function createSummaries(){
             '<span class="reset" onclick="javascript:filterAll();">Reset all</span>',
             all: 'All records selected. Please click on bar charts or select a time range to apply filters.'
         });
-    victimsSummaries = xf.groupAll();
-    victimsSummaries = victimsSummaries.reduce(
-        (p,v) => {
-            p['nkill'] += v['nkill'];
-            p['nwound'] += v['nwound'];
-            return p;
-        },
-        (p,v) => {
-            p['nkill'] -= v['nkill'];
-            p['nwound'] -= v['nwound'];
-            return p;
-        },
-        () =>{return {nkill:0, nwound:0};}
-    );
-}
+        victimsSummaries = xf.groupAll();
+        victimsSummaries = victimsSummaries.reduce(
+            (p,v) => {
+                p['nkill'] += v['nkill'];
+                p['nwound'] += v['nwound'];
+                return p;
+            },
+            (p,v) => {
+                p['nkill'] -= v['nkill'];
+                p['nwound'] -= v['nwound'];
+                return p;
+            },
+            () =>{return {nkill:0, nwound:0};}
+        );
+    }
 
     function updateLoader() {
         let strings = ["Downloading terrorists",
