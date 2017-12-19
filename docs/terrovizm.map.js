@@ -84,20 +84,20 @@
             // Custom cluster behavior (for adding the mouseover mpopup)
             _this.pruneCluster.defaultBuildLeafletCluster = _this.pruneCluster.BuildLeafletCluster;
             this.pruneCluster.BuildLeafletCluster = function(cluster, position) {
-                if(mapT.map.getZoom()<=5) return new L.Marker(position, {icon: new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"})});
+                let markers = cluster.GetClusterMarkers();
+                let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
+                let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
+                let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
+                if(mapT.map.getZoom()<=12 && (nkill+nwound) > 500) return new L.Marker(position, {icon: new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"})});
                 let m = _this.pruneCluster.defaultBuildLeafletCluster(cluster, position);
                 m.on('mouseover', function() {
-                    let markers = cluster.GetClusterMarkers();
-                    let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
-                    let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
-                    let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
                     let popup = L.popup()
                         .setLatLng(cluster.averagePosition)
                         .setContent(`<h2>Zone of ${markers.length} attacks</h2>
                             <h3>Victims</h3>
                             <ul>
-                                <li>Killed: ${nkill}</li>
-                                <li>Wounded: ${nwound}</li>
+                                <li class='killed'>Killed: ${nkill}</li>
+                                <li class='wounded'>Wounded: ${nwound}</li>
                             </ul>`);
                     popup.openOn(_this.map);
                 });
@@ -115,23 +115,23 @@
             return `<h2>${(new Date(event.date)).toDateString()}</h2>
             <h3>Victims</h3>
             <ul>
-                <li>Killed: ${event.nkill}</li>
-                <li>Wounded: ${event.nwound}</li>
+                <li class='killed'>Killed: ${event.nkill}</li>
+                <li class='wounded'>Wounded: ${event.nwound}</li>
                 <li>Suicide: ${event.suicide ? "yes" : "no"}</li>
             </ul>
             <h3>Target(s)</h3>
             <ul>
-                ${event.targtype.reduce((acc, y) => `<li>${refs.targtype[y]}</li>`, "")}
+                ${event.targtype.reduce((acc, y) => `<li>${y}</li>`, "")}
             </ul>
             <h3>Weapons(s)</h3>
             <ul>
-                ${event.weaptype.reduce((acc, y) => `<li>${refs.weaptype[y]}</li>`, "")}
+                ${event.weaptype.reduce((acc, y) => `<li>${y}</li>`, "")}
             </ul>
             <h3><a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">More…</a></h3>`;
         }
 
         static createMarkerPie(nkill, nwound, novictims, markersize, clustersize) {
-            let len = markersize;
+            let len = markersize*.8; novictims = 0;
 
             // Compute fractions
             let fractionWithoutVictims = novictims/(clustersize !== void 0 ? clustersize : 1);
@@ -148,14 +148,25 @@
             // The piechart svg reference
             let svg = d3.select(document.createElement("div"))
                 .append("svg")
-                .attr("width", len)
-                .attr("height", len)
+                .attr("width", markersize)
+                .attr("height", markersize)
                 .attr("class", "cluster_icon");
-            svg.append("circle")
+            if(clustersize === void 0) {
+                svg.append("circle")
                 .attr("r", len*2/5)
-                .attr("cx", len/2)
-                .attr("cy", len/2)
-                .attr("fill", "#fff");
+                .attr("cx", markersize/2)
+                .attr("cy", markersize/2)
+                .attr("fill", "#888");
+            } else {
+                svg.append("path")
+                    .attr("d", d3.svg.arc()
+                        .innerRadius((4*len)/(3*6))
+                        .outerRadius((11*len)/(3*6))
+                        .startAngle(0)
+                        .endAngle(2*Math.PI))
+                    .attr("fill", "#fff")
+                    .attr("transform", `translate(${markersize/2},${markersize/2})`);
+            }
             // The killed part
             svg.append("path")
                 .attr("d", d3.svg.arc()
@@ -164,7 +175,7 @@
                     .startAngle(0)
                     .endAngle(angleKill))
                 .attr("fill", "#f00")
-                .attr("transform", `translate(${len/2},${len/2})`);
+                .attr("transform", `translate(${markersize/2},${markersize/2})`);
             svg.append("path")
                 .attr("d", d3.svg.arc()
                     .innerRadius(len/3)
@@ -173,7 +184,7 @@
                     // Going clockwise
                     .endAngle(angleWound))
                 .attr("fill", "#ffa500")
-                .attr("transform", `translate(${len/2},${len/2})`);
+                .attr("transform", `translate(${markersize/2},${markersize/2})`);
             svg.append("path")
                 .attr("d", d3.svg.arc()
                     .innerRadius(len/3)
@@ -181,12 +192,12 @@
                     .startAngle(angleWound)
                     .endAngle(angleNoHarm))
                 .attr("fill", "#76b2e4")
-                .attr("transform", `translate(${len/2},${len/2})`);
+                .attr("transform", `translate(${markersize/2},${markersize/2})`);
 
-            if (clustersize !== void 0) {
+            if (false && clustersize !== void 0) {
                 svg.append("text")
-                    .attr("x", len/2)
-                    .attr("y", len/2)
+                    .attr("x", markersize/2)
+                    .attr("y", markersize/2)
                     .attr("dy", 4)
                     .attr("text-anchor", "middle")
                     .attr("fill", "black")
@@ -197,7 +208,7 @@
         }
 
         static markerSize(peopleInvolved) {
-            return 24 + Math.sqrt(peopleInvolved/50);
+            return 24 + Math.sqrt(peopleInvolved);
         }
 
         refreshMarkers() {
