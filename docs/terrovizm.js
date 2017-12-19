@@ -22,10 +22,10 @@ let welcome = true;
 
 function main() {
     createIntroductionSymbols();
-    updateLoader();
     mapT = new TerroMap();
 
     let startTime = new Date();
+    updateLoader("Downloading data");
     d3.json(`db-2017-11-25.json`, function(error, json) {
         // Log
         if (error) return console.error(error);
@@ -42,6 +42,7 @@ function main() {
 }
 
 function reformatData(json) {
+    updateLoader("Reading data");
     let downloadTime = new Date();
     // We did not use a dictionnary for the events to save network space.
     // Let's recreate a nice data structure.
@@ -78,6 +79,8 @@ function reformatData(json) {
         return d;
     });
 
+    updateLoader("Create map markers");
+
     // Create the Leaflet markers once and for all
     data.map(function(x) {
         let markerSize = TerroMap.markerSize(x.nkill+x.nwound);
@@ -110,10 +113,14 @@ function reformatData(json) {
 function startViz(data) {
     let t2 = new Date();
 
+    updateLoader("Add attacks to map");
+
     data.map(x => mapT.pruneCluster.RegisterMarker(x.marker));
 
     let t3 = new Date();
     console.log("Instantiated marker data", t3-t2);
+
+    updateLoader("Filter data");
 
     // Fill-in the data crossfiltered
     xf = crossfilter(data);
@@ -133,11 +140,17 @@ function startViz(data) {
 
     mapT.refreshMarkers();
 
+    updateLoader("Create charts");
+
     createRowPlots(plotsConf);
     createRangePlot();
     createSummaries();
 
+    updateLoader("Click the logo to access the data!");
+
     ready = true;
+    document.getElementById("loaders").classList.add("hidden");
+    document.getElementById("logo").classList.remove("hidden");
 
     // Hook on dc to refresh the map when filters are applied on barcharts or timeline
     dc.chartRegistry.list().forEach(chart => chart.on('filtered', refreshView));
@@ -227,21 +240,10 @@ function refreshView(){
         );
     }
 
-    function updateLoader() {
-        let strings = ["Downloading terrorists",
-        "Planning evil plots",
-        "Building master plan",
-        "Contacting law enforcment",
-        "Downloading cocktails molotov",
-        "Freeing hostages",
-        "Investigating really hard",
-        "Imposing massive surveillance",
-    ];
-    document.getElementById("footer").textContent = strings[Math.floor(Math.random()*strings.length)];
-    if(ready) document.getElementById("footer").innerHTML = "<span id='close' onclick='document.getElementById(\"loader\").style.display = \"none\"'>Close</span>";
-    if(!ready) {
-        window.setTimeout(updateLoader, 200*Math.random()+100);
-    }
+    function updateLoader(message) {
+    document.getElementById("intro").textContent = message;
+    console.log(message);
+    if(ready) document.getElementById("intro").onclick(document.getElementById("loader").style.display = "none");
 }
 
 function createIntroductionSymbols() {

@@ -11,9 +11,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body onload="main()">
-        <h1 id="logo" onclick="toggleWelcomeScreen()">Terr💣vizm</h1>
+        <h1 id="logo" class="hidden" onclick="toggleWelcomeScreen()">Terr💣vizm</h1>
         <div id="loader"><div id="loader_text">
             <p id="intro">Click on the logo for the visualization</p>
+            <div id="loaders">
+                <div class="loader clockwise"></div>
+                <div class="loader anticlockwise"></div>
+            </div>
             <h2>What is this?</h2>
             <p>This visualization lets you explore the details of recorded terrorist acts. It is possible to filter and select exactly the data relevant to you using the provided tools.</p>
             <p>The details about the inclusion in the database are explained in the part "What is the data?"</p>
@@ -122,8 +126,6 @@
             </p>
 
             <h2>How?</h2>
-
-            <footer id="footer"></footer>
         </div></div>
 
         <div id="map">

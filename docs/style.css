@@ -21,6 +21,7 @@ body {
     z-index: 1600 /* Above the welcome screen */;
     margin: auto;
     width: 6em;
+    height: 1em;
     text-align: center;
     padding: 2mm;
     color: black;
@@ -28,6 +29,14 @@ body {
     border-radius: 0pt 0pt 5pt 5pt;
     font-weight: normal;
     cursor: pointer;
+    overflow: hidden;
+    transition: height .5s linear, padding .5s linear;
+}
+
+#logo.hidden {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* Splash screen */
@@ -42,6 +51,45 @@ body {
     padding: 1cm;
     z-index: 1500; /* Above leaflet map and tools */
     overflow: scroll;
+}
+
+#loaders {
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    opacity: 1;
+    transition: opacity .5s linear;
+}
+
+#loaders.hidden {
+    opacity: 0;
+}
+
+.loader {
+   border-radius: 50%;
+   width: 110px;
+   height: 110px;
+   border: 16px solid rgba(0,0,0,0);
+   position: absolute;
+}
+
+.clockwise {
+    border-top: 16px solid #ffa500;
+    border-left: 16px solid #ffa500;
+    animation: spin1 1.8s linear infinite;
+}
+.anticlockwise {
+    border-top: 16px solid red;
+    animation: spin2 2.3s linear infinite;
+}
+
+@keyframes spin1 {
+   0% { transform: rotate(0deg); }
+   100% { transform: rotate(360deg); }
+}
+@keyframes spin2 {
+   0% { transform: rotate(0deg); }
+   100% { transform: rotate(-360deg); }
 }
 
 #loader_text {
