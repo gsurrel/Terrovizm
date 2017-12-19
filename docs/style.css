@@ -103,13 +103,19 @@ body {
     left: 0;
     width: 80%;
     height: 80%;
-    border: thin #333 solid;
 }
 
 .cluster_icon {
     /*text-shadow: white 1px 1px 1px, white -1px -1px 1px;*/
     font-size: 8pt;
     font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.killed {
+    color: red;
+}
+.wounded {
+    color: #ffa500;
 }
 
 /* Row plots props*/
