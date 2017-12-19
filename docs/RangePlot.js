@@ -7,7 +7,7 @@ class RangeChart{
         let startTime = new Date();
 
         this.rangeDimension = rangeDimension;
-        this.rangeGroup = rangeDimension.group(d3.time.month);
+        this.rangeGroup = rangeDimension.group(d3.time.month).reduceSum(v => v.nkill+v.nwound);
 
         let maxDate = new Date(this.rangeDimension.top(1)[0]['date']),
             minDate = new Date(this.rangeDimension.bottom(2)[0]['date']);
