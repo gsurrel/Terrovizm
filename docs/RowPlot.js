@@ -6,6 +6,7 @@ class RowPlot{
     constructor(id, cap, title, dimension, plotNumber){
         this.dimension = dimension;
         this.group = dimension.group();
+        this.group.reduceSum(v => v.nkill + v.nwound);
         this.id = id;
         this.cap = cap;
         this.title = title;
