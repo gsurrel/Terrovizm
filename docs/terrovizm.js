@@ -192,7 +192,6 @@ function refreshView(){
 
         // update the summaries
         d3.select('#selected-events-details')
-        .html(`#killed <strong>${victimsSummaries.value()['nkill'].toLocaleString()}</strong> - #wounded <strong>${victimsSummaries.value()['nwound'].toLocaleString()}</strong>`)
     }
 
     function filterAll(){

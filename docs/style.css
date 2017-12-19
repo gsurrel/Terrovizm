@@ -142,6 +142,10 @@ body {
     bottom: 15%;
 }
 
+#selected-events-details {
+    text-align: center;
+}
+
 #range-plot{
     height: 20%;
     width: 100%;
