@@ -14,10 +14,7 @@ class RowPlot{
         this.placeholder = d3.select("#row-plots")
             .append("div")
             .attr("id", id)
-            .attr("data-close", true)
-            .on("click", function(){
-                this.dataset.close = !(this.dataset.close == 'true');
-            });
+            .attr("data-close", true);
 
         // set the width to the one of the placeholder
         this.width = this.placeholder.node().getBoundingClientRect()['width'];
@@ -27,7 +24,11 @@ class RowPlot{
         // Append header with the title of the rowplot
         this.placeholder.append('span')
             .attr('class','row-plot-title')
-            .html(this.title + " ");
+            .html(this.title + " ")
+            .on("click", function(){
+                let parent = this.parentNode
+                parent.dataset.close = !(parent.dataset.close == 'true');
+            });
 
         // Create the reset functionality for the plot. This is mostly taken care of by dc.js library
         this.placeholder.append('span')

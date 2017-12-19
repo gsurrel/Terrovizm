@@ -180,8 +180,13 @@ body {
     color: #76B2E4;
 }
 
+.dc-chart > svg {
+    padding-bottom: 5pt;
+    overflow: visible;
+}
+
 .dc-chart[data-close="true"] {
-    max-height: 2em;
+    max-height: 2.3em;
     font-weight: lighter;
 }
 
@@ -191,7 +196,7 @@ body {
 }
 
 .dc-chart > .row-plot-title {
-    margin-top: 5%;
+    margin: 6% 0;
     display: inline-block;
     cursor: pointer;
 }

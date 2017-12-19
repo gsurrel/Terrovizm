@@ -129,9 +129,6 @@ function startViz(data) {
     ];
     xf.lat = xf.dimension(x => x.latitude),
     xf.lon = xf.dimension(x => x.longitude);
-    //let dims = [];
-    //dims.push(xf.dimension(...plotsConf[0][0]));
-    // Create dimensions for bar charts
     plotsConf.map(x => x[1].push(xf.dimension(...x[0])));
 
     mapT.refreshMarkers();
@@ -192,6 +189,7 @@ function refreshView(){
 
         // update the summaries
         d3.select('#selected-events-details')
+        .html(`<span class='killed'>Victims killed: ${victimsSummaries.value()['nkill'].toLocaleString()}</span> - <span class='wounded'>Victims wounded ${victimsSummaries.value()['nwound'].toLocaleString()}</span>`)
     }
 
     function filterAll(){
