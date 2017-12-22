@@ -4,13 +4,17 @@ This is a project for visualizing the data from the [Global Terrorism Database](
 
 > National Consortium for the Study of Terrorism and Responses to Terrorism (START). (2017). Global Terrorism Database [Data file]. Retrieved from https://www.start.umd.edu/gtd
 
-It can be downloaded through the [following form](http://www.start.umd.edu/gtd/contact/), even though a direct link for downlaoding the data [is available](http://apps.start.umd.edu/gtd/downloads/dataset/GTD_0617dist.zip) but not given publicly.
+It can be downloaded through the [following form](http://www.start.umd.edu/gtd/contact/), even though a direct link for downloading the data [is available](http://apps.start.umd.edu/gtd/downloads/dataset/GTD_0617dist.zip) but not given publicly.
 
-The [vizualization itself is hosted on Github Pages: https://gsurrel.github.io/Terrovizm/](https://gsurrel.github.io/Terrovizm/).
+The [visualization itself is hosted on Github Pages: https://gsurrel.github.io/Terrovizm/](https://gsurrel.github.io/Terrovizm/).
 
-# Process book
+# Peer review
 
 *Notice: Even though we were initially three persons in our group, one left really early in the project and thus only took part in the initial discussions and brainstormings. This project has been brought to life by Doru Muşuroi and Grégoire Surrel.*
+
+During the project, both members were adequately prepared for the meetings, actively contributed to its realization, positively  reviewed the suggested ideas in a conflict-free manner.
+
+# Process book
 
 ## Overview, motivation, target audience
 
@@ -22,7 +26,7 @@ Finally, merging these two aspects can enable anyone to explore the evolution of
 
 Therefore, we think the visualization we plan to build is useful both for the general public as well as for journalists because of all the brushing and exploration features available. It can possibly used for political reasons as terrorism is one of the main motivations for governments to adopt and enforce freedom-restrictive laws. Putting the importance of terrorist acts into perspective can change the public's point of view.
 
-## Intented usage
+## Intended usage
 
 As we are targeting a broad audience, we have to create a visualization which is simple and intuitive to use. That is to say, it should quickly react to user interactions, to give a good feedback. It is also necessary that features provided are discoverable and easy to use. One approach for that can be a tutorial, but it has the drawback to get in the user's way, so the interface should encourage the user to play with the provided tools.
 
@@ -38,7 +42,7 @@ Even though the database is somewhat freely available and the topic is getting a
 
 ### Inspiration
 
-Given the Data Visualization course, we discovered many different ways to represent and interact with the data. Our dataset is rather simple, as the main information is geolocated terror acts with a time information, which corresponds to our interests. It is possible to imagine different usage of the database (such as a chord diagram linking terrorist groups and weapon types), but even though it may provide interesting information, it is not what we expect our audience to look for. 
+Given the Data Visualization course, we discovered many different ways to represent and interact with the data. Our dataset is rather simple, as the main information is geolocated terror acts with a time information, which corresponds to our interests. It is possible to imagine different usage of the database (such as a chord diagram linking terrorist groups and weapon types), but even though it may provide interesting information, it is not what we expect our audience to look for.
 
 - [Live tweet map](https://www.mapd.com/demos/tweetmap/)
 - [Hexagon clustering (for the map, though example unrelated to map)](https://bl.ocks.org/mbostock/4248145)
@@ -99,7 +103,7 @@ It's possible to have a general idea of the contents by creating facets over the
 
 ![First facetting](imgs/facets1.png) ![Second facetting](imgs/facets2.png)
 
-This confirms that the database seems usable, especially when using the *categorical* fields, that is to say the ones using a number (integer) to assign the category of the column. This is opposed to the free-text fields such as even description, because even it can be grouped, any typing mistake breaks the clustering. As we did not plan to use these free-text fields in the first place, it is not so important for us to clean this specific part of the dataset. 
+This confirms that the database seems usable, especially when using the *categorical* fields, that is to say the ones using a number (integer) to assign the category of the column. This is opposed to the free-text fields such as even description, because even it can be grouped, any typing mistake breaks the clustering. As we did not plan to use these free-text fields in the first place, it is not so important for us to clean this specific part of the dataset.
 
 ## Designs
 
@@ -134,9 +138,9 @@ If the database contents were poor (sparse data in time and place), the visualiz
 
 *Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.*
 
-More data exploration oriented, our data visualization has a rich set of interaction elements which allow the user to apply various data manipulation operation in order to get the desired view. 
+More data exploration oriented, our data visualization has a rich set of interaction elements which allow the user to apply various data manipulation operation in order to get the desired view.
 
-Our visualization makes great use of the geolocation dimension of the database, hence it is based on a map. 
+Our visualization makes great use of the geolocation dimension of the database, hence it is based on a map.
 
 ![Final view of the map](interaction-elements/map-unzoomed.png)
 
@@ -144,28 +148,28 @@ Our visualization makes great use of the geolocation dimension of the database, 
 There are a few design and interaction elements we employed so that our map conveys meaningful information:
 1. **Heatmap layer** - aggregates the data in a global view make it easy for the user to make a sense of increased activity regions.
 2. **Markers** - in our visualization there are two types of markers:
-   * **Event markers** 
-   
+   * **Event markers**
+
    ![Marker event](interaction-elements/pop-up-event.png)
-   
+
    They have the functionality of summarizing the date in a quick fashion when hovering over them. They are used to give a sense of place on the map, but as there was more information to add to them, we made of area to express the gravity of the event encoded in the number of victims. As there are two type of victims (wounded and killed) we had to make a distinction between them and, as there were only two categories, we used pie-charts to present the ratio between them. Here we also chose the proper channel for transmiting this type of information: RED border for killed victims and dark orange for wounded.
    * **Group markers**
-   
+
    ![Marker group](interaction-elements/pop-up-cluster-hover.png)
-   
+
    Their creation followed the same principles as the ones for event markers, the difference is that they work on a cluster scale.
 3. **Zooming** was highly needed for a suitable exploration. While the global map conveys useful information, a lot of times the point of interest is at another scale, as for example country scale. Hence, having good zooming features which reveals more detailed information with higher zoom was a requirement from the beggining. And we manage to get it as we can see below.
-   
+
    ![Zooming](interaction-elements/map-zoomed.png)
-   
+
 4. **Brushing** on the map is definitely a great element of our visualization. As we provide statistical information about our terrorist attacks like the victims distribution over time, over the terrorist group that claimed the attacks, over the type of attack, target or weapon, the brushing functionality made it possible to examine these statistics with focus only over a certain region, as presented below
-   
+
    ![Brushing on the map](interaction-elements/brushing-both-ways.png)
-   
+
 
 ### Statistical interaction elements
 
-Our desire was to make use of the data as best as possible. This meant exploiting the time dimension of our dataset as well as the categorical variables recorded by it. This resulted in a wide class of filters that can be triggered in order to gain in-depth insight into the database. We created two different types of faceting: 
+Our desire was to make use of the data as best as possible. This meant exploiting the time dimension of our dataset as well as the categorical variables recorded by it. This resulted in a wide class of filters that can be triggered in order to gain in-depth insight into the database. We created two different types of faceting:
 
 1. **Time faceting** - the time-range selector in the lower part of our visualization makes the interaction with the data not only location based as we described it up until now, but also period wise. Here we also choose and aggregated view where each bar represents the number of victims per month. This is both for a nicer visual impact and an user-experience.
 
@@ -177,15 +181,15 @@ The selector allows to choose an arbitrary long range so that the user can set h
 
 2. **Catgorical data filtering**
    We kept seven categorical variables from our database that can be seen below:
-   
+
    ![Plots stacked](interaction-elements/barcharts_categories_stacked.png)
-   
+
    Each of these elements are clickable and they unstack into a row plot.
-   
+
    ![Plots unstacked](interaction-elements/barcharts_categories_unstacked.png)
-   
+
    The unstacked row-plow allows for user interaction by making it possible to select one row and then the entire only the attacks with the respective attribute will be presented by our visualization
-   
+
    ![Selected rowplot](interaction-elements/barchart-clicked.png)
 
 ## Technical setup
@@ -235,7 +239,7 @@ Having around 165k entries in our dataset, we had to find an approach for filter
 
 Using the *dc.js* proved to be a great implementation choice as it provided ready to use and adjustable functionalities for barcharts and time faceting. Incrementally working on our visualization, we observed that *dc.js* by using the *crossfilter* in the underlying implementation scaled rather well for the barplots, making the filtering by the categorical variables fast and the user experience was enjoyable.
 
-The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance. 
+The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance.
 
 ![](imgs/TimeFacetingBad.png)
 
@@ -447,7 +451,3 @@ On the positive aspects, it has been appreciated for how fast and responsive it 
 | scite2 | Text | Second source that was used to compile information on the specific incident | no |
 | scite3 | Text | Third source that was used to compile information on the specific incident | no |
 | dbsource | Text | Identifies the original data collection effort in which each event was recorded | no |
-
-
-
-
