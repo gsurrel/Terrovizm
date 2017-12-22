@@ -175,8 +175,18 @@ The selector allows to choose an arbitrary long range so that the user can set h
 
 ![Time range selected](interaction-elements/TimefacetingSelected.png)
 
-2. **Catgorical data faceting**
+2. **Catgorical data filtering**
+   We kept seven categorical variables from our database that can be seen below:
    
+   ![Plots stacked](interaction-elements/barcharts_categories_stacked.png)
+   
+   Each of these elements are clickable and they unstack into a row plot.
+   
+   ![Plots unstacked](interaction-elements/barcharts_categories_unstacked.png)
+   
+   The unstacked row-plow allows for user interaction by making it possible to select one row and then the entire only the attacks with the respective attribute will be presented by our visualization
+   
+   ![Selected rowplot](interaction-elements/barchart-clicked.png)
 
 ## Technical setup
 
