@@ -25,7 +25,7 @@ function main() {
     mapT = new TerroMap();
 
     let startTime = new Date();
-    updateLoader("Downloading data");
+    updateLoader("Loading, processing, analyzing and rendering data...");
     d3.json(`db-2017-11-25.json`, function(error, json) {
         // Log
         if (error) return console.error(error);
@@ -243,7 +243,7 @@ function refreshView(){
     function updateLoader(message) {
     document.getElementById("intro").textContent = message;
     console.log(message);
-    if(ready) document.getElementById("intro").onclick(document.getElementById("loader").style.display = "none");
+    if(ready) document.getElementById("intro").onclick(document.getElementById("loader").classList.add("hidden"));
 }
 
 function createIntroductionSymbols() {
@@ -261,5 +261,5 @@ function createIntroductionSymbols() {
 }
 
 function toggleWelcomeScreen() {
-    document.getElementById("loader").style.display = (welcome = !welcome) ? "block" : "none";
+    (welcome = !welcome) ? document.getElementById("loader").classList.remove("hidden") : document.getElementById("loader").classList.add("hidden");
 }

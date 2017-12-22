@@ -30,7 +30,7 @@ body {
     font-weight: normal;
     cursor: pointer;
     overflow: hidden;
-    transition: height .5s linear, padding .5s linear;
+    transition: height .5s ease, padding .5s ease;
 }
 
 #logo.hidden {
@@ -51,6 +51,12 @@ body {
     padding: 1cm;
     z-index: 1500; /* Above leaflet map and tools */
     overflow: scroll;
+    transition: bottom .5s ease, padding .5s ease;
+}
+
+#loader.hidden {
+    bottom: 100%;
+    padding: 0;
 }
 
 #loaders {
