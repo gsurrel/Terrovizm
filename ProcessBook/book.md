@@ -134,6 +134,50 @@ If the database contents were poor (sparse data in time and place), the visualiz
 
 *Describe the intent and functionality of the interactive visualizations you implemented. Provide clear and well-referenced images showing the key design and interaction elements.*
 
+More data exploration oriented, our data visualization has a rich set of interaction elements which allow the user to apply various data manipulation operation in order to get the desired view. 
+
+Our visualization makes great use of the geolocation dimension of the database, hence it is based on a map. 
+
+![Final view of the map](interaction-elements/map-unzoomed.png)
+
+### Map view
+There are a few design and interaction elements we employed so that our map conveys meaningful information:
+1. **Heatmap layer** - aggregates the data in a global view make it easy for the user to make a sense of increased activity regions.
+2. **Markers** - in our visualization there are two types of markers:
+   * **Event markers** 
+   
+   ![Marker event](interaction-elements/pop-up-event.png)
+   
+   They have the functionality of summarizing the date in a quick fashion when hovering over them. They are used to give a sense of place on the map, but as there was more information to add to them, we made of area to express the gravity of the event encoded in the number of victims. As there are two type of victims (wounded and killed) we had to make a distinction between them and, as there were only two categories, we used pie-charts to present the ratio between them. Here we also chose the proper channel for transmiting this type of information: RED border for killed victims and dark orange for wounded.
+   * **Group markers**
+   
+   ![Marker group](interaction-elements/pop-up-cluster-hover.png)
+   
+   Their creation followed the same principles as the ones for event markers, the difference is that they work on a cluster scale.
+3. **Zooming** was highly needed for a suitable exploration. While the global map conveys useful information, a lot of times the point of interest is at another scale, as for example country scale. Hence, having good zooming features which reveals more detailed information with higher zoom was a requirement from the beggining. And we manage to get it as we can see below.
+   
+   ![Zooming](interaction-elements/map-zoomed.png)
+   
+4. **Brushing** on the map is definitely a great element of our visualization. As we provide statistical information about our terrorist attacks like the victims distribution over time, over the terrorist group that claimed the attacks, over the type of attack, target or weapon, the brushing functionality made it possible to examine these statistics with focus only over a certain region, as presented below
+   
+   ![Brushing on the map](interaction-elements/brushing-both-ways.png)
+   
+
+### Statistical interaction elements
+
+Our desire was to make use of the data as best as possible. This meant exploiting the time dimension of our dataset as well as the categorical variables recorded by it. This resulted in a wide class of filters that can be triggered in order to gain in-depth insight into the database. We created two different types of faceting: 
+
+1. **Time faceting** - the time-range selector in the lower part of our visualization makes the interaction with the data not only location based as we described it up until now, but also period wise. Here we also choose and aggregated view where each bar represents the number of victims per month. This is both for a nicer visual impact and an user-experience.
+
+![Time range not selected](interaction-elements/TimeFacetingNoselect.png)
+
+The selector allows to choose an arbitrary long range so that the user can set his preferred time range with the unit of measure being the month. Also, once fixed this time-range it can be moved around to check the differences between periods taking into consideration the same time-range. The filter is propagated to the data on the map and also on the bar-plots on the right about which we will talk now.
+
+![Time range selected](interaction-elements/TimefacetingSelected.png)
+
+2. **Catgorical data faceting**
+   
+
 ## Technical setup
 
 ### Data wrangling - The battle for size
