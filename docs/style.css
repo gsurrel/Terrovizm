@@ -225,7 +225,7 @@ body {
     overflow: hidden;
     transition: max-height .25s;
     max-height: 100%;
-    color: #76B2E4;
+    color: #E9330E;
 }
 
 .dc-chart > svg {
@@ -320,6 +320,9 @@ Row plots - nice cursor pointer when hover over bars
 .dc-chart .brush rect.extent {
     fill: #4682b4;
     fill-opacity: .125; }
+
+.dc-chart rect {
+    fill: #E9330E;}
 
 .dc-chart .brush .resize path {
     fill: #eee;
