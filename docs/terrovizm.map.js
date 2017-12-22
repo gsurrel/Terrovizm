@@ -69,12 +69,12 @@
 
             // Custom cluster icon
             this.pruneCluster.BuildLeafletClusterIcon = function(cluster) {
+                if(mapT.map.getZoom()<=12) return new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"});
                 let markers = cluster.GetClusterMarkers();
                 let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
                 let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
                 let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
                 let iconSize = TerroMap.markerSize(nkill+nwound);
-                if(mapT.map.getZoom()<=12 && (nkill+nwound) > 500) return new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"});
                 return new L.divIcon({
                     html: TerroMap.createMarkerPie(nkill, nwound, novictims, iconSize, cluster.population).node().outerHTML,
                     iconAnchor: [iconSize/2, iconSize/2],
@@ -85,11 +85,11 @@
             // Custom cluster behavior (for adding the mouseover mpopup)
             _this.pruneCluster.defaultBuildLeafletCluster = _this.pruneCluster.BuildLeafletCluster;
             this.pruneCluster.BuildLeafletCluster = function(cluster, position) {
+                if(mapT.map.getZoom()<=12) return new L.Marker(position, {icon: new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"})});
                 let markers = cluster.GetClusterMarkers();
                 let nkill = markers.reduce((acc, x) => acc + x.data.nkill, 0);
                 let nwound = markers.reduce((acc, x) => acc + x.data.nwound, 0);
                 let novictims = markers.reduce((acc, x) => acc + ((x.data.nkill + x.data.nwound) == 0), 0);
-                if(mapT.map.getZoom()<=12 && (nkill+nwound) > 500) return new L.Marker(position, {icon: new L.divIcon({html: "<span class='cluster_icon'/>", className: "killwoundmarker"})});
                 let m = _this.pruneCluster.defaultBuildLeafletCluster(cluster, position);
                 m.on('mouseover', function() {
                     let popup = L.popup()
