@@ -268,6 +268,32 @@ On the positive aspects, it has been appreciated for how fast and responsive it 
 
 *What did you learn about the data by using your visualizations? How did you answer your questions? How well does your visualization work, and how could you further improve it?*
 
+We did discover many things with our visualization:
+
+- In western Europe, Irish and Basque independents had deadly acts, whereas the Corsican ones are *only* bombing buildings, harming only few persons,
+- Northern Algeria was a quite dangerous place between 1995 and 2000, especially compared to its neighbors Morocco and Tunisia,
+- Sri Lanka used to be a really hot zone,
+- Overall, Iraq is the country with the most victims. This is especially disturbing as everything starting in 2003. As a corollary, it's not evenly distributed, but usually highly localized,
+- For the last six years, Afghanistan observes a seasonal variation: the number of victims during winter is half as during summer!
+- Central America, Columbia and Peru became much more peaceful than they used to be,
+- There are many victims of terrorism in Africa, and it starts getting a decent media coverage when it reaches a alarming level (such as *Boko Haram* with an average of about 2500 killed per year over the last seven years),
+- Western Europe and North America are extremely safe despite the media coverage (here is Switzerland) when something happens. We must not draw conclusions about the effectiveness of counter-terrorism measures taken or it is simply not busy places,
+- Overall, the number of attacks and victims is rising, but once again, we cannot draw conclusions about the evolution of terrorism. The data collection methodology over time changes, with the Internet becoming much more accessible since the 2000s, worldwide,
+- Most attacks are not linked to any known terrorist group.
+
+The visualization works well, but from the user tests we had we can pinpoint the following problems:
+
+- The bar charts on the right are not immediately discovered. Nevertheless, it's better to have them folded at first as the user sees all the possibilities rather than scroll the plots container by luck,
+- It's not possible to easily search for a specific known thing, with for example a text field,
+- The date selection is not easy to discover: the drag'n'drop over the time plot usually gets discovered but more by accident than on purpose. A specific date selector can be helpful when selecting a specific date/range, especially down to a day accuracy.
+
+For the improvement we are personally interested in are the following:
+- Use a URL anchor to have a permalink to the visualization state: current map zoom and position, as well as currently applied filters, so it can be shared easily,
+- A faster creation of dimensions by crossfilter, to avoid the blocking loading at the beginning. Freezing the web page for some time is a bad user experience,
+- All the bars in the time chart and bar plots could be red and orange according to our legend, showing the number of killed and wounded persons. This is not the case because we initially had an event-centered visualization rather than a victim-centered one. We changed quite late and it would probably have been implemented with a team of three persons rather than only two.
+
+We both like the project so we will most likely try to improve these points in the future, along with updating the dataset according to the GTD releases.
+
 # Appendix
 
 ## Database contents
