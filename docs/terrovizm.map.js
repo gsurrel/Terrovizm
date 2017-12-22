@@ -122,28 +122,30 @@
             </ul>
             <h3>Target(s)</h3>
             <ul>
-                ${event.targtype.reduce((acc, y) => `<li>${y}</li>`, "")}
+                ${event.targtype.reduce((acc, y) => acc+`<li>${y}</li>`, "")}
             </ul>
             <h3>Weapons(s)</h3>
             <ul>
-                ${event.weaptype.reduce((acc, y) => `<li>${y}</li>`, "")}
+                ${event.weaptype.reduce((acc, y) => acc+`<li>${y}</li>`, "")}
             </ul>
             <h3><a href="http://www.start.umd.edu/gtd/search/IncidentSummary.aspx?gtdid=${event.eventid}" target="_blank">More…</a></h3>`;
         }
 
         static createMarkerPie(nkill, nwound, novictims, markersize, clustersize) {
-            let len = markersize*.8; novictims = 0;
+            let len = markersize*.8;
 
             // Compute fractions
-            let fractionWithoutVictims = novictims/(clustersize !== void 0 ? clustersize : 1);
-            let fractionWithVictims = 1 - fractionWithoutVictims;
-            let fractionKilled = (novictims & clustersize === void 0 || nkill+nwound == 0) ? 0 : nkill/(nkill+nwound);
-            let fractionInjured = 1 - fractionKilled;
+            let fractionKilled = 0;
+            let fractionInjured = 0;
+            if(nkill+nwound != 0) {
+                fractionKilled = nkill/(nkill+nwound);
+                fractionInjured = 1 - fractionKilled;
+            }
 
             // Compute ABSOLUTE angles
             let angleStart = 0;
-            let angleKill  = 2*Math.PI*fractionWithVictims*fractionKilled;
-            let angleWound = angleKill + 2*Math.PI*fractionWithVictims*fractionInjured;
+            let angleKill  = 2*Math.PI*fractionKilled;
+            let angleWound = angleKill + 2*Math.PI*fractionInjured;
             let angleNoHarm = 2*Math.PI;
 
             // The piechart svg reference
@@ -177,6 +179,7 @@
                     .endAngle(angleKill))
                 .attr("fill", "#f00")
                 .attr("transform", `translate(${markersize/2},${markersize/2})`);
+            // The wounded part
             svg.append("path")
                 .attr("d", d3.svg.arc()
                     .innerRadius(len/3)
@@ -186,6 +189,7 @@
                     .endAngle(angleWound))
                 .attr("fill", "#ffa500")
                 .attr("transform", `translate(${markersize/2},${markersize/2})`);
+            // The no-victims part
             svg.append("path")
                 .attr("d", d3.svg.arc()
                     .innerRadius(len/3)
