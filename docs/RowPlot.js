@@ -46,6 +46,7 @@ class RowPlot{
             .height(this.height)
             .width(this.width)
             .cap(this.cap)
+            .othersGrouper(undefined)
             .dimension(this.dimension)
             .group(this.group)
             .ordinalColors(['#3182bd'])
