@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Terrovizm</title>
-        <link rel="stylesheet" type="text/css" href="normalize.css" />
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <link rel="stylesheet" type="text/css" href="leaflet.css" />
-        <link rel="stylesheet" type="text/css" href="leaflet-prune.css" />
-        <link rel="stylesheet" type="text/css" href="locationfilter.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body onload="main()">
-        <h1 id="logo" class="hidden" onclick="toggleWelcomeScreen()">Terr💣vizm</h1>
-        <div id="loader"><div id="loader_text">
+<head>
+    <meta charset="utf-8">
+    <title>Terrovizm</title>
+    <link rel="stylesheet" type="text/css" href="normalize.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="leaflet-prune.css" />
+    <link rel="stylesheet" type="text/css" href="locationfilter.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body onload="main()">
+    <h1 id="logo" class="hidden" onclick="toggleWelcomeScreen()">Terr💣vizm</h1>
+    <div id="loader">
+        <div id="loader_text">
             <p id="intro">Click on the logo for the visualization</p>
             <div id="loaders">
                 <div class="loader clockwise"></div>
@@ -20,8 +21,9 @@
             </div>
             <h2>What is this?</h2>
             <p>This visualization lets you explore the details of recorded terrorist acts. It is possible to filter and select exactly the data relevant to you using the provided tools.</p>
-            <p>The details about the inclusion in the database are explained in the part "What is the data?"</p>
-            <h3>Marker color code</h3>
+            <h2>What happened in 1993?</h2>
+            <p><a href="https://www.start.umd.edu/gtd/faq/#q9" target="_blank">Data about year 1993 got lost</a>. Even though there is data provided for this period, we chose not to include it as it would give a wrong representation for this year as it is only a partial reconstruction.</p>
+            <h2>Map markers legend</h2>
             <table class=".leaflet-container">
                 <thead>
                     <tr>
@@ -31,88 +33,42 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td id="event_icon_noharm"></td>
+                        <td>Event <b>without victims</b>.</td>
+                    </tr>
+                    <tr>
                         <td id="event_icon_dead"></td>
-                        <td>Marker for an event where all the victims are dead.</td>
+                        <td>Event where all victims are <b>dead</b>.</td>
                     </tr>
                     <tr>
                         <td id="event_icon_wounded"></td>
-                        <td>Marker for an event where all the victims are wounded.</td>
+                        <td>Event where all victims are <b>wounded</b>.</td>
                     </tr>
                     <tr>
                         <td id="event_icon_mixed"></td>
-                        <td>Marker for an event where the victims are divided between 25% killed and 75% wounded.</td>
+                        <td>Event where the victims are <b>25% killed and 75% wounded</b>.</td>
                     </tr>
-                    <tr>
-                        <td id="event_icon_noharm"></td>
-                        <td>Marker for an event where there are no victims.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Marker grouping code</h3>
-            <table class=".leaflet-container">
-                <thead>
-                    <tr>
-                        <td>Symbol</td>
-                        <td>Meaning</td>
-                    </tr>
-                </thead>
-                <tbody>
                     <tr>
                         <td id="cluster_icon_mixed"></td>
-                        <td>Group of 16 events where victims are 25% killed and 75% wounded.</td>
+                        <td><b>Group of multiple events</b> where victims are 33% killed and 67% wounded.</td>
                     </tr>
                     <tr>
-                        <td id="cluster_icon_hard"></td>
-                        <td>Group of 16 events where 50% of them caused no harm to humans, whereas the 50% remaining have victims which are 25% killed and 75% wounded.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Marker size code</h3>
-            <table class=".leaflet-container">
-                <thead>
-                    <tr>
-                        <td>Symbol</td>
-                        <td>Meaning</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="cluster_icon_small"></td>
-                        <td>Group of 20 events where the total number of victims is 10.</td>
+                        <td id="cluster_icon_30"></td>
+                        <td>Group of multiple events with a total of <b>30 victims</b>.</td>
                     </tr>
                     <tr>
-                        <td id="marker_icon_medium"></td>
-                        <td>Single event where the total number of victims is 500.</td>
+                        <td id="marker_icon_100"></td>
+                        <td>Event with <b>100 victims</b>.</td>
                     </tr>
                     <tr>
-                        <td id="cluster_icon_big"></td>
-                        <td>Group of 20 events where the total number of victims is 10'000.</td>
-                    </tr>
-                    <tr>
-                        <td id="cluster_icon_huge"></td>
-                        <td>Group of 3213 events where the total number of victims is 100'000.</td>
+                        <td id="cluster_icon_1000"></td>
+                        <td>Group of multiple events with a total of <b>1000 victims</b>.</td>
                     </tr>
                 </tbody>
             </table>
 
             <h2>What is the data?</h2>
-            <p>The Global Terrorism Database includes information on terrorist events around the world from 1970 through 2016. More than 160'000 cases are recorded. The criterions about inclusion in the database are the following:</p>
-            <quote>
-                <p>The GTD defines a terrorist attack as the threatened or actual use of illegal force and violence by a non-state actor to attain a political, economic, religious, or social goal through fear, coercion, or intimidation. In practice this means in order to consider an incident for inclusion in the GTD, all three of the following attributes must be present:</p>
-                <ul>
-                    <li>The incident must be intentional - the result of a conscious calculation on the part of a perpetrator.</li>
-                    <li>The incident must entail some level of violence or immediate threat of violence - including property violence, as well as violence against people.</li>
-                    <li>The perpetrators of the incidents must be sub-national actors. The database does not include acts of state terrorism.</li>
-                </ul>
-                <p>In addition, at least two of the following three criteria must be present for an incident to be included in the GTD:</p>
-                <ul>
-                    <li>Criterion 1: The act must be aimed at attaining a political, economic, religious, or social goal. In terms of economic goals, the exclusive pursuit of profit does not satisfy this criterion. It must involve the pursuit of more profound, systemic economic change.</li>
-                    <li>Criterion 2: There must be evidence of an intention to coerce, intimidate, or convey some other message to a larger audience (or audiences) than the immediate victims. It is the act taken as a totality that is considered, irrespective if every individual involved in carrying out the act was aware of this intention. As long as any of the planners or decision-makers behind the attack intended to coerce, intimidate or publicize, the intentionality criterion is met.</li>
-                    <li>Criterion 3: The action must be outside the context of legitimate warfare activities. That is, the act must be outside the parameters permitted by international humanitarian law (particularly the prohibition against deliberately targeting civilians or non-combatants).</li>
-                </ul>
-            </quote>
+            <p>The Global Terrorism Database includes information on terrorist events around the world from 1970 through 2016. <a hred="https://www.start.umd.edu/gtd/about/" target="_blank">More information is available on their website</a>.</p>
 
             <h2>Why?</h2>
             <p>
@@ -125,33 +81,33 @@
                 Finally, merging these two aspects can enable anyone to explore the evolution of terrorist acts in specified zones of the world. As the database is feature-rich, we plan to implement additional tools to filer according to the different organizations and motivations.
             </p>
 
-            <h2>How?</h2>
-        </div></div>
+        </div>
+    </div>
 
-        <div id="map">
+    <div id="map">
+    </div>
+    <div id="row-plots">
+    </div>
+    <div id="range-plot">
+        <div id="summary">
+            <div id="selected-events" class="dc-data-count"></div>
+            <div id="selected-events-details"></div>
+            <span class="reset" style="display: none;">Range: <span class="filter"></span></span>
         </div>
-        <div id="row-plots">
-        </div>
-        <div id="range-plot">
-            <div id="summary">
-                <div id="selected-events" class="dc-data-count"></div>
-                <div id="selected-events-details"></div>
-                <span class="reset" style="display: none;">Range: <span class="filter"></span></span>
-            </div>
-        </div>
-        <!-- Scripts at the end of the page for non-blocking loading -->
-        <script src="d3.v3.min.js" defer></script>
-        <script src="underscore.min.js" defer></script>
-        <script src="leaflet.js" defer></script>
-        <script src="PruneCluster.js" defer></script>
-        <script src="locationfilter.js" defer></script>
-        <script src="crossfilter.min.js" defer></script>
-        <script src="dc.min.js" defer></script>
-        <script src="terrovizm.map.js" defer></script>
-        <script src="RowPlot.js" defer></script>
-        <script src="RangePlot.js" defer></script>
-        <script src="heatmap.min.js"></script>
-        <script src="leaflet-heatmap.js" defer></script>
-        <script src="terrovizm.js" defer></script>
-    </body>
+    </div>
+    <!-- Scripts at the end of the page for non-blocking loading -->
+    <script src="d3.v3.min.js" defer></script>
+    <script src="underscore.min.js" defer></script>
+    <script src="leaflet.js" defer></script>
+    <script src="PruneCluster.js" defer></script>
+    <script src="locationfilter.js" defer></script>
+    <script src="crossfilter.min.js" defer></script>
+    <script src="dc.min.js" defer></script>
+    <script src="terrovizm.map.js" defer></script>
+    <script src="RowPlot.js" defer></script>
+    <script src="RangePlot.js" defer></script>
+    <script src="heatmap.min.js"></script>
+    <script src="leaflet-heatmap.js" defer></script>
+    <script src="terrovizm.js" defer></script>
+</body>
 </html>

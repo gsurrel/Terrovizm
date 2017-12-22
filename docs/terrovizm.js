@@ -247,17 +247,16 @@ function refreshView(){
 }
 
 function createIntroductionSymbols() {
-    let markerSize = TerroMap.markerSize(10);
-    d3.select("#event_icon_dead")   .node().appendChild(TerroMap.createMarkerPie(4, 0, false, markerSize).node());
-    d3.select("#event_icon_wounded").node().appendChild(TerroMap.createMarkerPie(0, 4, false, markerSize).node());
-    d3.select("#event_icon_mixed")  .node().appendChild(TerroMap.createMarkerPie(1, 3, false, markerSize).node());
-    d3.select("#event_icon_noharm") .node().appendChild(TerroMap.createMarkerPie(0, 0, true, markerSize).node());
-    d3.select("#cluster_icon_mixed").node().appendChild(TerroMap.createMarkerPie(1, 3, false, markerSize, 16).node());
-    d3.select("#cluster_icon_hard") .node().appendChild(TerroMap.createMarkerPie(1, 3, 8, markerSize, 16).node());
-    d3.select("#cluster_icon_small").node().appendChild(TerroMap.createMarkerPie(8, 2, 2, TerroMap.markerSize(8+2), 20).node());
-    d3.select("#marker_icon_medium").node().appendChild(TerroMap.createMarkerPie(150, 350, false, TerroMap.markerSize(150+350)).node());
-    d3.select("#cluster_icon_big")  .node().appendChild(TerroMap.createMarkerPie(8000, 2000, 14, TerroMap.markerSize(8000+2000), 20).node());
-    d3.select("#cluster_icon_huge") .node().appendChild(TerroMap.createMarkerPie(40000, 60000, 600, TerroMap.markerSize(40000+60000), 3213).node());
+    d3.select("#event_icon_noharm") .node().appendChild(TerroMap.createMarkerPie(0, 0, true, TerroMap.markerSize(0)).node());
+    d3.select("#event_icon_dead")   .node().appendChild(TerroMap.createMarkerPie(4, 0, false, TerroMap.markerSize(10)).node());
+    d3.select("#event_icon_wounded").node().appendChild(TerroMap.createMarkerPie(0, 4, false, TerroMap.markerSize(10)).node());
+    d3.select("#event_icon_mixed")  .node().appendChild(TerroMap.createMarkerPie(1, 3, false, TerroMap.markerSize(10)).node());
+    d3.select("#cluster_icon_mixed").node().appendChild(TerroMap.createMarkerPie(1, 2, false, TerroMap.markerSize(10), 16).node());
+    //d3.select("#cluster_icon_hard") .node().appendChild(TerroMap.createMarkerPie(1, 3, 8, markerSize, 16).node());
+    d3.select("#cluster_icon_30").node().appendChild(TerroMap.createMarkerPie(18, 12, 2, TerroMap.markerSize(30), 20).node());
+    d3.select("#marker_icon_100").node().appendChild(TerroMap.createMarkerPie(10, 90, false, TerroMap.markerSize(100)).node());
+    d3.select("#cluster_icon_1000")  .node().appendChild(TerroMap.createMarkerPie(700, 300, 14, TerroMap.markerSize(1000), 20).node());
+    //d3.select("#cluster_icon_huge") .node().appendChild(TerroMap.createMarkerPie(40000, 60000, 600, TerroMap.markerSize(40000+60000), 3213).node());
 }
 
 function toggleWelcomeScreen() {
