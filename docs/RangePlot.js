@@ -42,6 +42,7 @@ class RangeChart{
 }
 
 function createRangePlot(){
+    dc.dateFormat = d3.time.format("%Y-%m-%d");
     let attacksMonths = xf.dimension(d => new Date(d.date));
     rangeChart = new RangeChart(attacksMonths, "title");
     dc.renderAll();
