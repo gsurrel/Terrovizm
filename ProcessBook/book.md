@@ -93,11 +93,11 @@ The database contains may dimensions and therefore the exhaustive description of
 
 First, it's a hand-made database (with tool assistance), so we wanted to have an overview of the data itself, without having to read all the fields over 170k entries. To do so, we used OpenRefine:
 
-![OpenRefine logo](logo-gem-150.png)
+![OpenRefine logo](imgs/logo-gem-150.png)
 
 It's possible to have a general idea of the contents by creating facets over the different fields. The results are the following (we excluded the "free text input" fields such as description and summary, as they cannot be grouped anyhow in a useful way for the final vizualization):
 
-![First facetting](facets1.png) ![Second facetting](facets2.png)
+![First facetting](imgs/facets1.png) ![Second facetting](imgs/facets2.png)
 
 This confirms that the database seems usable, especially when using the *categorical* fields, that is to say the ones using a number (integer) to assign the category of the column. This is opposed to the free-text fields such as even description, because even it can be grouped, any typing mistake breaks the clustering. As we did not plan to use these free-text fields in the first place, it is not so important for us to clean this specific part of the dataset. 
 
@@ -109,9 +109,9 @@ This confirms that the database seems usable, especially when using the *categor
 
 We used the provided design worksheets to give a structure to the initial idea, refining it according to the available data, the target audience and the information we want to show.
 
-![Worksheet 1: Understand](worksheet-understand.jpg)
+![Worksheet 1: Understand](imgs/worksheet-understand.jpg)
 
-![Worksheet 2: Ideate](worksheet-ideate.jpg)
+![Worksheet 2: Ideate](imgs/worksheet-ideate.jpg)
 
 ### Selected approach
 
@@ -122,9 +122,9 @@ The following first blueprint show an initial idea for showing the data:
 - Right panels: horizontal histograms ranking, according to the filtered data, the perpetrators, targets, etc. Each can be enabled or disabled according to the filters.
 - Top-left button: resets all filters (as a failsafe feature if the discoverability is poor)
 
-![First blueprint](blueprint-01.jpg)
+![First blueprint](imgs/blueprint-01.jpg)
 
-![Two ways cross-filtering concept](blueprint-02.jpg)
+![Two ways cross-filtering concept](imgs/blueprint-02.jpg)
 
 ## Did you deviate from your initial proposal?
 
@@ -153,7 +153,7 @@ The data provided by the Global Terrorism Database, as described above, containe
 
 The final JSON file is 18.01 MB big, which is not acceptable to transfer over the network. It turns out that, because we are transferring plain-text with a redundent structure, it compresses really well. With a static web server with GZIP compression, the amount of data actually transferred is 3.77 MB, which is acceptable. This is the measurements taken from the browser's network inspector:
 
-![Data sizes](DB_size.png)
+![Data sizes](imgs/DB_size.png)
 
 ### The battle for speed
 
@@ -183,11 +183,11 @@ Using the *dc.js* proved to be a great implementation choice as it provided read
 
 The entire experience changed when we implemented the time faceting as it turned out to be a real bottleneck for reaching interactive framerates: filtering by a timerange now took over 2 seconds. This lowered the usage quality of our visualization so a solution was needed with an outmost importance. 
 
-![](TimeFacetingBad.png)
+![](imgs/TimeFacetingBad.png)
 
 We noticed that the timefaceting was implemented as a barchart over which brushing functionality was added. This made us analyse how the data was mapped to a bar and basically only the events with exactly the same time where clustered together. After consulting with the TA - Volodymyr Miz, he guided us towards clustering the events by months in the barchart. This was indeed a good approach as it is now implemented and successfully solves our problem.
 
-![](TimeFacetingSolved.png)
+![](imgs/TimeFacetingSolved.png)
 
 #### Web workers
 
