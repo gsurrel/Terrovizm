@@ -206,6 +206,7 @@ function refreshView(){
     }
 
     function filterAll(){
+        mapT.locationFilter.disable();
         dc.chartRegistry.list().forEach(chart => {
             if(chart.hasFilter()){
                 chart.filterAll();
