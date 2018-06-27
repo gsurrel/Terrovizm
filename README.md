@@ -15,7 +15,7 @@ The [visualization is hosted on Github Pages](https://gsurrel.github.io/Terroviz
     - [x] Initial sketch done
 - [x] Python scripting to clean and **shrink** the dataset. Most textual details can probably be removed as we can give just a link to the official GTD event description and details. Scripting has the benefit of maintainability to update our dataset according to the original DB updates. ([process book link](ProcessBook/book.md#technical-setup))
 - [x] Reprocess transferred data to have nice a JavaScript object to use
-- [ ] Screencast:
+- [x] Screencast:
     - Demonstrate what you can do with your viz in a fun, engaging and impactful manner
     - Talk about your main contributions rather than on technical details
     - 2 min video not more (max +5 sec)
