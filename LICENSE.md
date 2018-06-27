@@ -1,4 +1,21 @@
-                    GNU GENERAL PUBLIC LICENSE
+# Third party file
+
+The following document is released and licenced by the Global Terrorism
+Database: ProcessBook/Codebook.pdf
+
+Copyright © 2009-2017 University of Maryland
+National Consortium for the Study of Terrorism and Responses to Terrorism
+A Center of Excellence of the U.S. Department of Homeland Security
+University of Maryland, College Park, MD 20740, USA 301.405.6600 
+
+
+
+# Remaining files
+
+All the other files are our own work, released under the GNU GPL V3:
+
+
+                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
