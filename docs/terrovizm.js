@@ -26,7 +26,7 @@ function main() {
 
     let startTime = new Date();
     updateLoader("Loading, processing, analyzing and rendering data...");
-    d3.json(`db-2017-11-25.json`, function(error, json) {
+    d3.json(`db-2020-12-04.json`, function(error, json) {
         // Log
         if (error) return console.error(error);
         let downloadTime = new Date();

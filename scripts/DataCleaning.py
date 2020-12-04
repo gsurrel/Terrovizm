@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-data_filepath = os.path.join('data','globalterrorismdb_0617dist.xlsx')
+data_filepath = os.path.join('data','globalterrorismdb_0919dist.xlsx')
 
 data = pd.read_excel(data_filepath)
 
