@@ -11,7 +11,7 @@
                 L.latLng(100, -200),
                  L.latLng(-100, 200));
 
-            L.tileLayer('http://{s}.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+            L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {
                 attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(this.map);
 
