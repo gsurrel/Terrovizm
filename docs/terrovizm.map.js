@@ -7,13 +7,15 @@
 
             this.map = L.map('map').setView([0, 0], 2);
             this.map.options.minZoom = 2;
+            this.map.options.maxZoom = 18;
             this.map.options.maxBounds = L.latLngBounds(
                 L.latLng(100, -200),
-                 L.latLng(-100, 200));
+                L.latLng(-100, 200));
 
-            L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {
-                attribution: 'Map tiles by <a href="http://stamen.com/">Stamen Design</a>, &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(this.map);
+            L.maplibreGL({
+                style: 'https://tiles.openfreemap.org/styles/dark',
+                attribution: '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> <a href="https://www.openmaptiles.org/" target="_blank">© OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+            }).addTo(this.map)
 
             // Add the map filtering
             this.locationFilter = new L.LocationFilter().addTo(this.map);
