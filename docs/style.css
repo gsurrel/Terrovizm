@@ -361,3 +361,11 @@ Row plots - nice cursor pointer when hover over bars
 
 .dc-chart g.deselected text {
     display: none; }
+
+/* Override Leaflet's style */
+.leaflet-control-attribution {
+  background: black;
+  color: grey; }
+
+.leaflet-top.leaflet-left {
+  filter: brightness(0.5); }
