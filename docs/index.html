@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Terrovizm</title>
@@ -11,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="maplibre-gl.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body onload="main()">
     <h1 id="logo" class="hidden" onclick="toggleWelcomeScreen()">Terr💣vizm</h1>
     <div id="loader">
@@ -21,15 +23,24 @@
                 <div class="loader anticlockwise"></div>
             </div>
             <h2>What is this?</h2>
-            <p>This visualization lets you explore the details of recorded terrorist acts. It is possible to filter and select exactly the data relevant to you using the provided tools.</p>
+            <p>This visualization lets you explore the details of recorded terrorist acts. It is possible to filter and
+                select exactly the data relevant to you using the provided tools.</p>
             <h2>What happened in 1993?</h2>
-            <p><a href="https://www.start.umd.edu/gtd/faq/#q9" target="_blank">Data about year 1993 got lost</a>. Even though there is data provided for this period, we chose not to include it as it would give a wrong representation for this year as it is only a partial reconstruction.</p>
+            <p><a href="https://www.start.umd.edu/gtd/faq/#q9" target="_blank">Data about year 1993 got lost</a>. Even
+                though there is data provided for this period, we chose not to include it as it would give a wrong
+                representation for this year as it is only a partial reconstruction.</p>
             <h2>Screencast and related links</h2>
-            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Pi3Yy-UxsGA?rel=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+            <iframe width="560" height="315"
+                src="https://www.youtube-nocookie.com/embed/Pi3Yy-UxsGA?rel=0&amp;showinfo=0" frameborder="0"
+                gesture="media" allow="encrypted-media" allowfullscreen></iframe>
             <ul>
                 <li><a target="_blank" href="">Github repository</a></li>
-                <li><a target="_blank" href="https://github.com/gsurrel/Terrovizm/raw/master/ProcessBook/processbook.pdf">Process book (PDF)</a></li>
-                <li><a target="_blank" href="https://github.com/gsurrel/Terrovizm/blob/master/ProcessBook/book.md">Process book (HTML)</a></li>
+                <li><a target="_blank"
+                        href="https://github.com/gsurrel/Terrovizm/raw/master/ProcessBook/processbook.pdf">Process book
+                        (PDF)</a></li>
+                <li><a target="_blank"
+                        href="https://github.com/gsurrel/Terrovizm/blob/master/ProcessBook/book.md">Process book
+                        (HTML)</a></li>
             </ul>
             <h2>Map markers legend</h2>
             <table class=".leaflet-container">
@@ -76,17 +87,29 @@
             </table>
 
             <h2>What is the data?</h2>
-            <p>The Global Terrorism Database includes information on terrorist events around the world from 1970 through 2016. <a hred="https://www.start.umd.edu/gtd/about/" target="_blank">More information is available on their website</a>.</p>
+            <p>The Global Terrorism Database includes information on terrorist events around the world from 1970 through
+                2016. <a hred="https://www.start.umd.edu/gtd/about/" target="_blank">More information is available on
+                    their website</a>.</p>
 
             <h2>Why?</h2>
             <p>
-                Terrorism gets a very unequal mass-media coverage depending on the location of the act itself and how unexpected it is. Some talk about the death-kilometer score to explain the media-coverage of each event: the closer and/or more tragic an act is, the more the press talks about it. We believe that having an exhaustive overview of the terrorist acts across the world can really change the perception of terrorism and put it in perspective with its actual prevalence worldwide.
+                Terrorism gets a very unequal mass-media coverage depending on the location of the act itself and how
+                unexpected it is. Some talk about the death-kilometer score to explain the media-coverage of each event:
+                the closer and/or more tragic an act is, the more the press talks about it. We believe that having an
+                exhaustive overview of the terrorist acts across the world can really change the perception of terrorism
+                and put it in perspective with its actual prevalence worldwide.
             </p>
             <p>
-                Another key point is the evolution of terrorism. In our ever-more connected life, we hear about any news in a matter of hours or just minutes, thus biasing our perception and giving us the impression that it's a real and rising worldwide threat. Having the ability to see the evolution of terrorist acts since 1970 is interesting as we can see the trends and evolution with respect to the zones of conflicts and influences.
+                Another key point is the evolution of terrorism. In our ever-more connected life, we hear about any news
+                in a matter of hours or just minutes, thus biasing our perception and giving us the impression that it's
+                a real and rising worldwide threat. Having the ability to see the evolution of terrorist acts since 1970
+                is interesting as we can see the trends and evolution with respect to the zones of conflicts and
+                influences.
             </p>
             <p>
-                Finally, merging these two aspects can enable anyone to explore the evolution of terrorist acts in specified zones of the world. As the database is feature-rich, we plan to implement additional tools to filer according to the different organizations and motivations.
+                Finally, merging these two aspects can enable anyone to explore the evolution of terrorist acts in
+                specified zones of the world. As the database is feature-rich, we plan to implement additional tools to
+                filer according to the different organizations and motivations.
             </p>
         </div>
     </div>
@@ -119,4 +142,5 @@
     <script src="maplibre-gl.js" defer></script>
     <script src="leaflet-maplibre-gl.js" defer></script>
 </body>
+
 </html>

@@ -2,8 +2,8 @@
 
 let rowPlots = [];
 
-class RowPlot{
-    constructor(id, cap, title, dimension, plotNumber){
+class RowPlot {
+    constructor(id, cap, title, dimension, plotNumber) {
         this.dimension = dimension;
         this.group = dimension.group();
         this.group.reduceSum(v => v.nkill + v.nwound);
@@ -24,20 +24,20 @@ class RowPlot{
 
         // Append header with the title of the rowplot
         this.placeholder.append('span')
-            .attr('class','row-plot-title')
+            .attr('class', 'row-plot-title')
             .html(this.title + " ")
-            .on("click", function(){
+            .on("click", function () {
                 let parent = this.parentNode
                 parent.dataset.close = !(parent.dataset.close == 'true');
             });
 
         // Create the reset functionality for the plot. This is mostly taken care of by dc.js library
         this.placeholder.append('span')
-            .attr('class','reset')
-            .attr('style','visibility:hidden')
+            .attr('class', 'reset')
+            .attr('style', 'visibility:hidden')
             .html('reset')
-            .on("click", function() {
-                rowPlots[plotNumber].plot.filterAll();dc.renderAll();
+            .on("click", function () {
+                rowPlots[plotNumber].plot.filterAll(); dc.renderAll();
             });
 
         // config the actual rowplot
@@ -65,7 +65,7 @@ class RowPlot{
     }
 }
 
-function createRowPlots(plotsConf){
+function createRowPlots(plotsConf) {
     let startTime = new Date();
 
     let midTime = new Date();
