@@ -20,14 +20,16 @@ body {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1600 /* Above the welcome screen */;
+    z-index: 1600
+        /* Above the welcome screen */
+    ;
     margin: auto;
     width: 6em;
     height: 1em;
     text-align: center;
     padding: 2mm;
     color: black;
-    background: rgba(200,200,200,0.7);
+    background: rgba(200, 200, 200, 0.7);
     border-radius: 0pt 0pt 5pt 5pt;
     font-weight: normal;
     cursor: pointer;
@@ -42,7 +44,7 @@ body {
 }
 
 /* Splash screen */
-#loader{
+#loader {
     position: absolute;
     top: 0;
     left: 0;
@@ -51,7 +53,8 @@ body {
     background: #eee;
     color: #000;
     padding: 1cm;
-    z-index: 1500; /* Above leaflet map and tools */
+    z-index: 1500;
+    /* Above leaflet map and tools */
     overflow: scroll;
     transition: bottom .5s ease, padding .5s ease;
 }
@@ -74,11 +77,11 @@ body {
 }
 
 .loader {
-   border-radius: 50%;
-   width: 110px;
-   height: 110px;
-   border: 16px solid rgba(0,0,0,0);
-   position: absolute;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    border: 16px solid rgba(0, 0, 0, 0);
+    position: absolute;
 }
 
 .clockwise {
@@ -86,18 +89,30 @@ body {
     border-left: 16px solid #ffa500;
     animation: spin1 1.8s linear infinite;
 }
+
 .anticlockwise {
     border-top: 16px solid red;
     animation: spin2 2.3s linear infinite;
 }
 
 @keyframes spin1 {
-   0% { transform: rotate(0deg); }
-   100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes spin2 {
-   0% { transform: rotate(0deg); }
-   100% { transform: rotate(-360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(-360deg);
+    }
 }
 
 #loader_text {
@@ -115,20 +130,20 @@ body {
     text-align: center;
 }
 
-#loader_text > table {
+#loader_text>table {
     margin: 0 1cm;
 }
 
-#loader_text > table > thead > tr > td {
+#loader_text>table>thead>tr>td {
     font-variant: small-caps;
     text-align: center;
 }
 
-#loader_text > table > tbody > tr > td {
+#loader_text>table>tbody>tr>td {
     border-top: thin #777 solid;
 }
 
-#loader_text > table > * > tr > td {
+#loader_text>table>*>tr>td {
     padding: 1mm;
 }
 
@@ -137,16 +152,17 @@ body {
     display: block;
 }
 
-#loader_text > h1,
-#loader_text > #footer {
+#loader_text>h1,
+#loader_text>#footer {
     text-align: center;
 }
+
 #close {
     font-style: italic;
     cursor: pointer;
 }
 
-#loader_text > quote {
+#loader_text>quote {
     padding: 0 5mm;
     border-left: 2pt #500 solid;
     display: block;
@@ -154,7 +170,7 @@ body {
 
 /* Map properties */
 #map {
-    position:fixed;
+    position: fixed;
     top: 0;
     left: 0;
     width: 80%;
@@ -170,16 +186,18 @@ body {
 .killed {
     color: red;
 }
+
 .wounded {
     color: #ffa500;
 }
 
 /* Row plots props*/
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     width: 0px;
     background: transparent;
 }
-#row-plots{
+
+#row-plots {
     display: block;
     position: fixed;
     height: 80%;
@@ -190,7 +208,7 @@ body {
 }
 
 
-#summary{
+#summary {
     height: 5%;
     width: 100%;
     position: fixed;
@@ -202,7 +220,7 @@ body {
     text-align: center;
 }
 
-#range-plot{
+#range-plot {
     height: 20%;
     width: 100%;
     position: fixed;
@@ -217,9 +235,11 @@ body {
     cursor: pointer;
     font-style: italic;
 }
+
 .reset::before {
     content: "(";
 }
+
 .reset::after {
     content: ")";
 }
@@ -228,7 +248,7 @@ body {
 ------- Row plots CSS------
  Row plots label color and font-size
  */
-.dc-chart{
+.dc-chart {
     text-align: center;
     overflow: hidden;
     transition: max-height .25s;
@@ -236,7 +256,7 @@ body {
     color: #E9330E;
 }
 
-.dc-chart > svg {
+.dc-chart>svg {
     padding-bottom: 5pt;
     overflow: visible;
 }
@@ -251,7 +271,7 @@ body {
     display: none;
 }
 
-.dc-chart > .row-plot-title {
+.dc-chart>.row-plot-title {
     margin: 6% 0;
     display: inline-block;
     cursor: pointer;
@@ -261,6 +281,7 @@ body {
     fill: white;
     font-size: 0.8em;
 }
+
 /*
 Row plots xticks label color and font size
  */
@@ -274,12 +295,14 @@ Row plots bars - on click change color of the other bars
  */
 .dc-chart rect.deselected {
     stroke: none;
-    fill: #a7a8a7; }
+    fill: #a7a8a7;
+}
 
-.dc-chart .selected path{
+.dc-chart .selected path {
     stroke-width: 3;
     stroke: #ccc;
-    fill-opacity: 1; }
+    fill-opacity: 1;
+}
 
 
 /*
@@ -287,14 +310,17 @@ Row plots - nice cursor pointer when hover over bars
  */
 .dc-chart g.row rect {
     stroke: none;
-    cursor: pointer; }
+    cursor: pointer;
+}
 
 .dc-chart g.row rect:hover {
-    fill-opacity: 0.6; }
+    fill-opacity: 0.6;
+}
 
 .dc-chart g.row text {
     stroke: none;
-    cursor: pointer; }
+    cursor: pointer;
+}
 
 .dc-chart g.axis text {
     -webkit-touch-callout: none;
@@ -303,69 +329,93 @@ Row plots - nice cursor pointer when hover over bars
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    pointer-events: none; }
+    pointer-events: none;
+}
 
 /*
 -------------------
  */
-.dc-chart .axis path, .dc-chart .axis line {
+.dc-chart .axis path,
+.dc-chart .axis line {
     fill: none;
     stroke: #000;
-    shape-rendering: crispEdges; }
+    shape-rendering: crispEdges;
+}
 
 .dc-chart .axis text {
-    font: 10px sans-serif; }
+    font: 10px sans-serif;
+}
 
-.dc-chart .grid-line, .dc-chart .axis .grid-line, .dc-chart .grid-line line, .dc-chart .axis .grid-line line {
+.dc-chart .grid-line,
+.dc-chart .axis .grid-line,
+.dc-chart .grid-line line,
+.dc-chart .axis .grid-line line {
     fill: none;
     stroke: #ccc;
     opacity: .5;
-    shape-rendering: crispEdges; }
+    shape-rendering: crispEdges;
+}
 
 .dc-chart .brush rect.background {
-    z-index: -999; }
+    z-index: -999;
+}
 
 .dc-chart .brush rect.extent {
     fill: #4682b4;
-    fill-opacity: .125; }
+    fill-opacity: .125;
+}
 
 .dc-chart rect {
-    fill: #E9330E;}
+    fill: #E9330E;
+}
 
 .dc-chart .brush .resize path {
     fill: #eee;
-    stroke: #666; }
+    stroke: #666;
+}
 
 .dc-chart path.line {
     fill: none;
-    stroke-width: 1.5px; }
+    stroke-width: 1.5px;
+}
 
 .dc-chart path.area {
     fill-opacity: .3;
-    stroke: none; }
+    stroke: none;
+}
 
 .dc-chart path.highlight {
     stroke-width: 3;
     fill-opacity: 1;
-    stroke-opacity: 1; }
+    stroke-opacity: 1;
+}
 
 .dc-chart g.state {
-    cursor: pointer; }
+    cursor: pointer;
+}
+
 .dc-chart g.state :hover {
-    fill-opacity: .8; }
+    fill-opacity: .8;
+}
+
 .dc-chart g.state path {
-    stroke: #fff; }
+    stroke: #fff;
+}
 
 .dc-chart g.deselected path {
-    fill: #808080; }
+    fill: #808080;
+}
 
 .dc-chart g.deselected text {
-    display: none; }
+    display: none;
+}
 
 /* Override Leaflet's style */
 .leaflet-control-attribution {
-  background: black;
-  color: grey; }
+    background: black;
+    color: grey;
+}
 
 .leaflet-top.leaflet-left {
-  filter: brightness(0.5); }
+    filter: brightness(0.5);
+}

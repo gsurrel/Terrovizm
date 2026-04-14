@@ -7,13 +7,13 @@ let reformatTime;
 let transmissionTime;
 let data = {};
 
-onmessage = function(e) {
+onmessage = function (e) {
     console.log("Loading data", e.data.dateString);
     startTime = new Date();
 
     importScripts(...e.data.imports);
 
-    d3.json(`db-${e.data.dateString}.json`, function(error, json) {
+    d3.json(`db-${e.data.dateString}.json`, function (error, json) {
         // Log
         if (error) return console.error(error);
         downloadTime = new Date();
@@ -37,14 +37,14 @@ function reformatData(json) {
     data.refs = json.refs;
 
     // Set unknown days and months to 1st day and month
-    json.events.map(function(x) {
+    json.events.map(function (x) {
         x[columns.date].filter(y => y == 0).map(y => y = 1);
         x[columns.date][1]--; // Months start at 0 and not 1
         return x;
     });
 
     // Create the date in the iyear field, which we rename
-    json.events.map(function(x) {
+    json.events.map(function (x) {
         x[columns.date] = new Date(...x[columns.date]);
         return x;
     });
@@ -54,7 +54,7 @@ function reformatData(json) {
     data.events = json.events.map(x => _.object(eventKeys, x));
 
     // Create the Leaflet markers once and for all
-    data.events.map(function(x) {
+    data.events.map(function (x) {
         x["marker"] = [
             x.latitude,
             x.longitude,
